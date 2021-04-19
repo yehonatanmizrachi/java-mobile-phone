@@ -28,7 +28,7 @@
 In case there is conflicts - solve them in VS code
 
 ## Remarks
-1) For bugfixes or hotfixes open a branch: bugfixe/XX, hotfix/XX
+1) For bugfixes or hotfixes open a branch: bugfix/XX, hotfix/XX
 2) Don't work on the master branch!
 
 ## Extra:
