@@ -18,9 +18,9 @@
 7) At the end of the day: git push origin feature/XX OR git push (when you inside the branch)
 
 ## When the feature is completed:
-1) git push OR git push origin feature/XX
+1) add -> commit -> push
 2) Create PR on github
-3) Confirm PR (OR wait for your friends CR)
+3) Confirm PR (or wait for your friends CR)
 
 ## Pull develop updates to your current branch:
 1) git checkout feature/XX
