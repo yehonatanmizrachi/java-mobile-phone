@@ -6,7 +6,7 @@ https://drive.google.com/file/d/1BhWTOfFhSiSLO6ZeSvqNYclcsLmOue4q/view?usp=shari
 
 ## On the first time:
 1) git clone https://github.com/yehonatanmizrachi/java-ex2.git
-2) cd java-ex1
+2) cd java-ex2
 
 ## Creating a new feature branch:
 1) git checkout develop
