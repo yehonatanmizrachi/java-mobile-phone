@@ -11,7 +11,7 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
-public class PhoneBook {
+public class PhoneBook implements App{
 
 	private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
@@ -253,4 +253,134 @@ public class PhoneBook {
 
 			scan.close();
 		}
+		
+		public void run() throws IOException {
+			String name;
+			String phoneNumber;
+			int input = 0;
+			
+			while (input != 11)
+			{
+				String s = JOptionPane.showInputDialog("Phone Book system\nPress:\n1- Add contact\n2- Delete contact\n3- Print phone book\n"
+						+ "4- Search contact\n5- Sort by name\n6- Sort by phone number\n7- Remove duplicates\n"
+						+ "8- Reverse phonebook\n9- Export phone book to text file\n10- Import phone book from text file\n11- Exit");
+
+				if(s != null) {
+					try {
+						input = Integer.parseInt(s);
+					}
+					// invalid input
+					catch(Exception e){
+						input = 12;
+					}
+				}
+				// cancel
+				else {input = 11;}
+
+				switch(input)
+				{
+				// add contact
+				case 1:
+					name = JOptionPane.showInputDialog("Enter full name\n");
+					if(name == null) {break;}
+					phoneNumber = JOptionPane.showInputDialog("Enter Phone number\n");
+					if(phoneNumber == null) {break;}
+					
+					String check = phoneNumber.replaceFirst("-", "");
+					try {
+						Integer.parseInt(check);
+						this.addContact(name, phoneNumber);
+					}
+					catch(Exception e){
+						JOptionPane.showMessageDialog(null,"Invalid phone number!");
+					}
+					break;
+				// remove contact
+				case 2:
+					if(!this.isEmpty()) {
+						name = JOptionPane.showInputDialog("Enter full name\n");
+						if(name == null) {break;}
+						this.removeContact(name);
+						break;
+					}
+					break;
+				// print phone book
+				case 3:
+					if(!this.isEmpty()) {
+						this.printPhoneBook();
+						break;
+					}
+					break;
+				// search contact by name				
+				case 4:
+					if(!this.isEmpty()) {
+					name = JOptionPane.showInputDialog("Enter full name\n");
+					if(name == null) {break;}
+					this.searchContact(name);
+					break;
+					}
+					break;
+				// sort phone book by name				
+				case 5:
+					if(!this.isEmpty()) {
+					this.sortByName();
+					JOptionPane.showMessageDialog(null,"The phone Book has been sorted by increasing name.");
+					break;
+					}
+					break;
+				// sort phone book by phone number
+				case 6:
+					if(!this.isEmpty()) {
+					this.sortNumeric();
+					JOptionPane.showMessageDialog(null,"The phone Book has been sorted by decreasing phone Number.");
+					break;
+					}
+					break;
+				// remove duplicates
+				case 7:
+					if(!this.isEmpty()) {
+					this.removeDuplicates();
+					JOptionPane.showMessageDialog(null,"All duplications have been successfully removed.");
+					break;
+					}
+					break;
+				// reverse phone book
+				case 8:
+					if(!this.isEmpty()) {
+					this.swapPhoneBook();
+					JOptionPane.showMessageDialog(null,"The Phone Book has been successfully reversed.");
+					break;
+					}
+					break;
+				// export phone book to text file
+				case 9:
+					name = JOptionPane.showInputDialog("Enter name of text file:");
+					if(name == null) {break;}
+					this.toFile(name);
+					JOptionPane.showMessageDialog(null,"The Phone Book has been successfully exported to the file " + name + ".");
+					break;
+				// import phone book from text file 
+				case 10:
+					name = JOptionPane.showInputDialog("Enter name of text file:");
+					if(name == null) {break;}
+					try {
+						this.fromFile(name);
+						JOptionPane.showMessageDialog(null,"The Phone Book has been successfully imported from the file " + name + ".");
+					}
+					catch (Exception e) {
+						JOptionPane.showMessageDialog(null,e);
+					}
+					break;
+				// exit
+				case 11:
+					JOptionPane.showMessageDialog(null,"Bye :)");
+					break;
+				// wrong input
+				default:
+					JOptionPane.showMessageDialog(null,"Wrong input! Please try again.");
+					break;
+				}
+			}
+		}
+		
 	}
