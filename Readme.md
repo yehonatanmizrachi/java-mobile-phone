@@ -5,7 +5,7 @@ https://drive.google.com/file/d/1BhWTOfFhSiSLO6ZeSvqNYclcsLmOue4q/view?usp=shari
 # Working with git:
 
 ## On the first time:
-1) git clone https://github.com/yehonatanmizrachi/java-ex1.git
+1) git clone https://github.com/yehonatanmizrachi/java-ex2.git
 2) cd java-ex1
 
 ## Creating a new feature branch:
