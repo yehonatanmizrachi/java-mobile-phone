@@ -14,18 +14,18 @@ public class TestMobilePhone {
 
 	public static void main(String[] args) throws IOException {
 		App[] application = new App[4];
+		int appChosen = 0;
 		application[0] = new PhoneBook();
 		ImageIcon pic = new ImageIcon("appPic.png");
 		Image pic2 = pic.getImage();
 		Image modifiedpic = pic2.getScaledInstance(390, 110, java.awt.Image.SCALE_SMOOTH);
 		pic = new ImageIcon(modifiedpic);
  		String[] buttons = { "CONTACTS", "SMS", "DIARY", "MEDIA"};
- 		int appChosen = JOptionPane.showOptionDialog(null, null,"PHONE",
- 		JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, pic, buttons,null);
- 		
- 		// 0 == CONTACTS , 1 == SMS, 2 == DIARY, 3 == MEDIA , -1 == EXIT
- 		
+ 		 		
  		while(appChosen != -1) {
+ 			
+ 			appChosen = JOptionPane.showOptionDialog(null, null,"PHONE",
+ 			 		JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, pic, buttons,null);
  			
  			if(appChosen == APP.CONTACTS.ordinal()) {
  				application[0].run();
@@ -42,7 +42,7 @@ public class TestMobilePhone {
  			if(appChosen == APP.MEDIA.ordinal()) {
  				application[3].run();
  			}
-	 		
+ 			
  		}
 
 	}

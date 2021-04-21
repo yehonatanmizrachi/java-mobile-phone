@@ -373,7 +373,7 @@ public class PhoneBook implements App{
 					break;
 				// exit
 				case 11:
-					JOptionPane.showMessageDialog(null,"Bye :)");
+					//JOptionPane.showMessageDialog(null,"Bye :)");
 					break;
 				// wrong input
 				default:
