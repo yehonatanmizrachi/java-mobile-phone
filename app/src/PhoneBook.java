@@ -11,19 +11,19 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
-public class PhoneBook implements App{
+public class PhoneBook extends contactsApp implements App{
 
-	private ArrayList<Contact> contacts = new ArrayList<Contact>();
+	//private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
 	public void addContact(String name, String phoneNumber) {
 		Contact newContact = new Contact(name, phoneNumber);
-		this.contacts.add(newContact);
+		contactsApp.contacts.add(newContact);
 	}
 	
 	// get the contacts[i] 
 	public Contact getContact(int i) {
-		if(contacts.size() > 0) {
-			return this.contacts.get(i);
+		if(contactsApp.contacts.size() > 0) {
+			return contactsApp.contacts.get(i);
 		}
 		else {
 			return null;
@@ -32,9 +32,10 @@ public class PhoneBook implements App{
 
 	public void removeContact(String name) {
 		// remove the first occurrence
-		for (Contact contact : this.contacts) { 
+		for (Contact contact : contactsApp.contacts) { 
 		    if (contact.getName().equals(name)) {		    	
-		    	this.contacts.remove(contact);
+		    	contactsApp.contacts.remove(contact);
+		    	sms.delete();
 		    	return;
 		    }
 		}
@@ -47,7 +48,7 @@ public class PhoneBook implements App{
 	{
 		boolean isExist = false;
 		String s = "";
-		for (Contact contact : this.contacts) { 
+		for (Contact contact : contactsApp.contacts) { 
 		    if (contact.getName().equals(name)) {	
 		    	s += contact.toString() + '\n';
 		    	isExist = true;
@@ -64,8 +65,8 @@ public class PhoneBook implements App{
 	 * Average running time - O(nlogn)*/
 	public void sortByName()
 	{
-		if (contacts.size() > 1)
-			mergeSort(0, contacts.size() - 1);
+		if (contactsApp.contacts.size() > 1)
+			mergeSort(0, contactsApp.contacts.size() - 1);
 	}
 	
 	// Split the array to two parts from the middle, sort every part and merge them at the end.
@@ -91,9 +92,9 @@ public class PhoneBook implements App{
 		int len2 = r - (q + 1) + 1;
 		
 		for (int i = l; i < q + 1; i++)
-			temp1.add(new Contact(contacts.get(i)));
+			temp1.add(new Contact(contactsApp.contacts.get(i)));
 		for (int i = q + 1; i < r + 1; i++)
-			temp2.add(new Contact(contacts.get(i)));
+			temp2.add(new Contact(contactsApp.contacts.get(i)));
 		
 		int i = l;
 		int i1 = 0;
@@ -103,30 +104,30 @@ public class PhoneBook implements App{
 			// Compare names by alphabetical order
 			if (temp1.get(i1).getName().compareToIgnoreCase(temp2.get(i2).getName()) <= 0)
 			{
-				contacts.add(i, temp1.get(i1));
+				contactsApp.contacts.add(i, temp1.get(i1));
 				i1++;
 			}
 			else
 			{
-				contacts.add(i, temp2.get(i2));
+				contactsApp.contacts.add(i, temp2.get(i2));
 				i2++;
 			}
 			
-			contacts.remove(i + 1);
+			contactsApp.contacts.remove(i + 1);
 			i++;
 		}
 		
 		while (i1 < len1)
 		{
-			contacts.add(i, temp1.get(i1));
-			contacts.remove(i + 1);
+			contactsApp.contacts.add(i, temp1.get(i1));
+			contactsApp.contacts.remove(i + 1);
 			i1++;
 			i++;
 		}
 		while (i2 < len2)
 		{
-			contacts.add(i, temp2.get(i2));
-			contacts.remove(i + 1);
+			contactsApp.contacts.add(i, temp2.get(i2));
+			contactsApp.contacts.remove(i + 1);
 			i2++;
 			i++;
 		}
@@ -139,19 +140,19 @@ public class PhoneBook implements App{
 	public void removeDuplicates() {
 		Set<Contact> newContacts = new HashSet<Contact>();
 
-		for (Contact contact : this.contacts) {
+		for (Contact contact : contactsApp.contacts) {
 				newContacts.add(contact);		
 		}
 
 		// update this.contacts to the new list
-		this.contacts = new ArrayList<Contact>(newContacts);
+		contactsApp.contacts = new ArrayList<Contact>(newContacts);
 	}
 
 	@Override
 	public String toString() {
 		String str = "";
-		str += "The total number of contacts: "+this.contacts.size()+"\n";
-		for (Contact contact : this.contacts)
+		str += "The total number of contacts: "+contactsApp.contacts.size()+"\n";
+		for (Contact contact : contactsApp.contacts)
 		{ 
 		    str += contact.toString()+ "\n";
 		}
@@ -160,7 +161,7 @@ public class PhoneBook implements App{
 	
 	// method that check if the Phone Book is empty or not 
 	public boolean isEmpty() {
-		if(this.contacts.isEmpty()) {
+		if(contactsApp.contacts.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Error - Phone Book is empty");
 			return true;
 		}
@@ -181,8 +182,8 @@ public class PhoneBook implements App{
 				// for loop that swap the i contact and the j contact in the arrayList
 				// i is running from the end to the beginning
 				// j is running from the beginning to the end
-				for(int i = (this.contacts.size() - 1) ; i >j; i--) {
-					swapContacts(contacts,i,j); 
+				for(int i = (contactsApp.contacts.size() - 1) ; i >j; i--) {
+					swapContacts(contactsApp.contacts,i,j); 
 					j++;
 				}
 			}
@@ -190,15 +191,15 @@ public class PhoneBook implements App{
 		
 		// method that swap 2 contacts in the ArrayList
 		public static void swapContacts(ArrayList<Contact> contacts,int i,int j) {
-			Contact temp = new Contact(contacts.get(j)); // create temp contact object
-			contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
-			contacts.set(i,temp); // set the contacts ArrayList in the i place
+			Contact temp = new Contact(contactsApp.contacts.get(j)); // create temp contact object
+			contactsApp.contacts.set(j,contactsApp.contacts.get(i)); // set the contacts ArrayList in the j place
+			contactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
 		}
 		
 		// method sort numeric
 		public void sortNumeric() {
 			if(!isEmpty()) {
-				QuicksortBS(this.contacts,0,(this.contacts.size()-1)); // calling method QuicksortBS
+				QuicksortBS(contactsApp.contacts,0,(contactsApp.contacts.size()-1)); // calling method QuicksortBS
 			}
 		}
 		
@@ -207,24 +208,24 @@ public class PhoneBook implements App{
 		// Average running time - O(nlogn)
 		private void QuicksortBS(ArrayList<Contact> contacts,int p,int r) {
 			if(p<r) {
-				int q = PartitionBS(contacts,p,r);
-				QuicksortBS(contacts,p,q-1); 
-				QuicksortBS(contacts,q+1,r);
+				int q = PartitionBS(contactsApp.contacts,p,r);
+				QuicksortBS(contactsApp.contacts,p,q-1); 
+				QuicksortBS(contactsApp.contacts,q+1,r);
 			}
 		}
 		// implement PartitionBS function - this function is part of the QuicksortBS algorithm
 		// The function is making the sort based on the pivot - r
 		// and returning the - q 
 		private int PartitionBS(ArrayList<Contact> contacts,int p,int r) {
-			int x = contacts.get(r).getNumericVal();
+			int x = contactsApp.contacts.get(r).getNumericVal();
 			int i = p-1;
 			for(int j = p; j<=r-1;j++) {
-				if(contacts.get(j).getNumericVal() > x) {
+				if(contactsApp.contacts.get(j).getNumericVal() > x) {
 					i = i+1;
 					swapContacts(contacts,i,j);
 				}
 			}
-			swapContacts(contacts,i+1,r);
+			swapContacts(contactsApp.contacts,i+1,r);
 			return i+1;
 		}
 			
@@ -233,7 +234,7 @@ public class PhoneBook implements App{
 			//open a writer
 			FileWriter myWriter = new FileWriter(fileName + ".txt");
 			//run over all contacts in the phonebook and write them to file
-			for (Contact contact : this.contacts) {
+			for (Contact contact : contactsApp.contacts) {
 			    myWriter.write(contact.getName() + ' ' + contact.getPhoneNumber() + '\n');
 			}
 		    myWriter.close();
