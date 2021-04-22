@@ -67,16 +67,12 @@ public class PhoneBookApp extends ContactsApp {
 	 * If the contact is exist, it will print all its occurrences. */
 	public void searchContact(String name)
 	{
-		ArrayList<Contact> foundcontact = super.search(name);
+		Contact foundcontact = super.search(name);
 		if (foundcontact == null)
 			JOptionPane.showMessageDialog(null, "The contact " + name + " doesn't exist!");
 		else {
-				String s = "";
-				for (Contact contact : foundcontact) { 
-			    		s += contact.toString() + '\n';
-				JOptionPane.showMessageDialog(null, s);
-				}
-			}
+			JOptionPane.showMessageDialog(null, foundcontact);
+		}
 	}
 	
 	/* Function that sorts the array in lexicographically by names.
