@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 public class Menu {
 
 	public static void main(String[] args) throws IOException{
-		PhoneBook phoneBook = new PhoneBook();
+		PhoneBookApp phoneBook = new PhoneBookApp();
 		String name;
 		String phoneNumber;
 		int input = 0;

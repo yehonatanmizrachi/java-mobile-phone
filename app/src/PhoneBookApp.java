@@ -11,7 +11,7 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
-public class PhoneBook extends contactsApp implements App{
+public class PhoneBookApp extends contactsApp implements App{
 
 	//private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
