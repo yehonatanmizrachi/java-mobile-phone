@@ -9,35 +9,60 @@ import java.util.Scanner;
 import java.util.Set;
 import javax.swing.JOptionPane;
 
-public class PhoneBook extends contactsApp implements App{
+
+public class PhoneBookApp extends ContactsApp implements App{
+
+	private ContactsApp[] contactsApps;
+
+	public PhoneBookApp(ContactsApp[] contactsApps) {
+		this.contactsApps = contactsApps;
+	}
 
 	public void addContact(String name, String phoneNumber) {
 		Contact newContact = new Contact(name, phoneNumber);
-		contactsApp.contacts.add(newContact);
+		ContactsApp.contacts.add(newContact);
 	}
-	
+
 	// get the contacts[i] 
 	public Contact getContact(int i) {
-		if(contactsApp.contacts.size() > 0) {
-			return contactsApp.contacts.get(i);
+		if(ContactsApp.contacts.size() > 0) {
+			return ContactsApp.contacts.get(i);
 		}
 		else {
 			return null;
 		}
 	}
 	
-	@Override
+
 	public void remove(String name) {
+
 		// remove the first occurrence
-		for (Contact contact : contactsApp.contacts) { 
+		Contact removedContact = null;
+		for (Contact contact : ContactsApp.contacts) { 
 		    if (contact.getName().equals(name)) {
-		    	contactsApp.contacts.remove(contact);
-		    	return;
+		    	ContactsApp.contacts.remove(contact);
+		    	removedContact = contact;
+		    	break;
 		    }
 		}
-		JOptionPane.showMessageDialog(null, "The user " + name + " doesn't exist!");
+
+		if (removedContact == null) {
+			JOptionPane.showMessageDialog(null, "The user " + name + " doesn't exist!");
+			return;
+		}
+
+		// remove all it's information from the contacts applications
+		for (ContactsApp app: this.contactsApps) {
+			app.contactRemoved(removedContact);
+		}
+
 	}
-	
+
+	@Override
+	public void contactRemoved(Contact contact) {
+		// Do nothing
+	}
+
 	/* Search contact in phoneBook by name.
 	 * If the contact is exist, it will print all its occurrences. */
 	public void searchContact(String name)
@@ -54,8 +79,8 @@ public class PhoneBook extends contactsApp implements App{
 	 * Average running time - O(nlogn)*/
 	public void sortByName()
 	{
-		if (contactsApp.contacts.size() > 1)
-			mergeSort(0, contactsApp.contacts.size() - 1);
+		if (ContactsApp.contacts.size() > 1)
+			mergeSort(0, ContactsApp.contacts.size() - 1);
 	}
 	
 	// Split the array to two parts from the middle, sort every part and merge them at the end.
@@ -81,9 +106,9 @@ public class PhoneBook extends contactsApp implements App{
 		int len2 = r - (q + 1) + 1;
 		
 		for (int i = l; i < q + 1; i++)
-			temp1.add(new Contact(contactsApp.contacts.get(i)));
+			temp1.add(new Contact(ContactsApp.contacts.get(i)));
 		for (int i = q + 1; i < r + 1; i++)
-			temp2.add(new Contact(contactsApp.contacts.get(i)));
+			temp2.add(new Contact(ContactsApp.contacts.get(i)));
 		
 		int i = l;
 		int i1 = 0;
@@ -93,30 +118,30 @@ public class PhoneBook extends contactsApp implements App{
 			// Compare names by alphabetical order
 			if (temp1.get(i1).getName().compareToIgnoreCase(temp2.get(i2).getName()) <= 0)
 			{
-				contactsApp.contacts.add(i, temp1.get(i1));
+				ContactsApp.contacts.add(i, temp1.get(i1));
 				i1++;
 			}
 			else
 			{
-				contactsApp.contacts.add(i, temp2.get(i2));
+				ContactsApp.contacts.add(i, temp2.get(i2));
 				i2++;
 			}
 			
-			contactsApp.contacts.remove(i + 1);
+			ContactsApp.contacts.remove(i + 1);
 			i++;
 		}
 		
 		while (i1 < len1)
 		{
-			contactsApp.contacts.add(i, temp1.get(i1));
-			contactsApp.contacts.remove(i + 1);
+			ContactsApp.contacts.add(i, temp1.get(i1));
+			ContactsApp.contacts.remove(i + 1);
 			i1++;
 			i++;
 		}
 		while (i2 < len2)
 		{
-			contactsApp.contacts.add(i, temp2.get(i2));
-			contactsApp.contacts.remove(i + 1);
+			ContactsApp.contacts.add(i, temp2.get(i2));
+			ContactsApp.contacts.remove(i + 1);
 			i2++;
 			i++;
 		}
@@ -129,19 +154,19 @@ public class PhoneBook extends contactsApp implements App{
 	public void removeDuplicates() {
 		Set<Contact> newContacts = new HashSet<Contact>();
 
-		for (Contact contact : contactsApp.contacts) {
+		for (Contact contact : ContactsApp.contacts) {
 				newContacts.add(contact);		
 		}
 
 		// update this.contacts to the new list
-		contactsApp.contacts = new ArrayList<Contact>(newContacts);
+		ContactsApp.contacts = new ArrayList<Contact>(newContacts);
 	}
 
 	@Override
 	public String toString() {
 		String str = "";
-		str += "The total number of contacts: "+contactsApp.contacts.size()+"\n";
-		for (Contact contact : contactsApp.contacts)
+		str += "The total number of contacts: "+ContactsApp.contacts.size()+"\n";
+		for (Contact contact : ContactsApp.contacts)
 		{ 
 		    str += contact.toString()+ "\n";
 		}
@@ -150,7 +175,7 @@ public class PhoneBook extends contactsApp implements App{
 	
 	// method that check if the Phone Book is empty or not 
 	public boolean isEmpty() {
-		if(contactsApp.contacts.isEmpty()) {
+		if(ContactsApp.contacts.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Error - Phone Book is empty");
 			return true;
 		}
@@ -171,8 +196,8 @@ public class PhoneBook extends contactsApp implements App{
 				// for loop that swap the i contact and the j contact in the arrayList
 				// i is running from the end to the beginning
 				// j is running from the beginning to the end
-				for(int i = (contactsApp.contacts.size() - 1) ; i >j; i--) {
-					swapContacts(contactsApp.contacts,i,j); 
+				for(int i = (ContactsApp.contacts.size() - 1) ; i >j; i--) {
+					swapContacts(ContactsApp.contacts,i,j); 
 					j++;
 				}
 			}
@@ -181,14 +206,14 @@ public class PhoneBook extends contactsApp implements App{
 		// method that swap 2 contacts in the ArrayList
 		public static void swapContacts(ArrayList<Contact> contacts,int i,int j) {
 			Contact temp = new Contact(contacts.get(j)); // create temp contact object
-			contactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
-			contactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
+			ContactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
+			ContactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
 		}
 		
 		// method sort numeric
 		public void sortNumeric() {
 			if(!isEmpty()) {
-				QuicksortBS(contactsApp.contacts,0,(contactsApp.contacts.size()-1)); // calling method QuicksortBS
+				QuicksortBS(ContactsApp.contacts,0,(ContactsApp.contacts.size()-1)); // calling method QuicksortBS
 			}
 		}
 		
@@ -223,7 +248,7 @@ public class PhoneBook extends contactsApp implements App{
 			//open a writer
 			FileWriter myWriter = new FileWriter(fileName + ".txt");
 			//run over all contacts in the phonebook and write them to file
-			for (Contact contact : contactsApp.contacts) {
+			for (Contact contact : ContactsApp.contacts) {
 			    myWriter.write(contact.getName() + ' ' + contact.getPhoneNumber() + '\n');
 			}
 		    myWriter.close();
@@ -245,7 +270,7 @@ public class PhoneBook extends contactsApp implements App{
 		}
 		
 		@Override
-		public void run(App[] apps) throws IOException {
+		public void run() throws IOException {
 			String name;
 			String phoneNumber;
 			int input = 0;

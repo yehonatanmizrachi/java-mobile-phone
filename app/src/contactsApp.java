@@ -2,16 +2,16 @@ package src;
 
 import java.util.ArrayList;
 
-public abstract class contactsApp {
+public abstract class ContactsApp {
 	
 	public static ArrayList<Contact> contacts = new ArrayList<Contact>();
 	
-	public abstract void remove(String name);
-	
-	// Search contact method
+	public abstract void contactRemoved(Contact contact);
+
+	// TODO: Rotem
 	public String search(String name) {
 		String s = "";
-		for (Contact contact : contactsApp.contacts) { 
+		for (Contact contact : ContactsApp.contacts) { 
 		    if (contact.getName().equals(name)) {	
 		    	s += contact.toString() + '\n';
 		    }
