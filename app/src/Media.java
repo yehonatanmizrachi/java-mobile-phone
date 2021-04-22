@@ -32,9 +32,9 @@ public abstract class Media {
 	protected String getRandomEmoji() {
 
 		String[] emojiArr = {
-				"§(*￣▽￣*)§",
-				"（〃｀ 3′〃）",
-				"(ﾉ*ФωФ)ﾉ",
+				"~(•o•~)",
+				"( •̀ ω •́ )",
+				"(⌐■_■)",
 				"(〜￣▽￣)〜",
 				"(～o￣3￣)～",
 				"~(￣▽￣)~*",
