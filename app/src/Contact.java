@@ -29,7 +29,6 @@ public class Contact {
 	// transfer the phone number to numeric integer (removing the beginning '0' and the '-')
 	public int getNumericVal() {
 		String s = this.phoneNumber.replace("-", "");
-		s = s.substring(1,s.length());
 		return Integer.parseInt(s);
 	}
 

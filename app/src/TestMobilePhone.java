@@ -2,7 +2,6 @@ package src;
 
 import java.awt.Image;
 import java.io.IOException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
