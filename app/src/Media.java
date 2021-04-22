@@ -3,7 +3,7 @@ package src;
 public abstract class Media {
 
 	protected String name;
-	protected Float length;
+	protected float length;
 
 
 	public Media(String name, Float length) {
