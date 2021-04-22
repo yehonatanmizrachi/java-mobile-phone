@@ -1,6 +1,7 @@
 package testing;
 
 import src.PhoneBook;
+import src.contactsApp;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +23,7 @@ class PhoneBookTest {
 						+ "{ Name: Yehonatan, Phone Number: 052-1231231 }\n";
 
 		PhoneBook phoneBook = new PhoneBook();
-
+		contactsApp.contacts.clear();
 		phoneBook.addContact("Aviel", "058-1234567");
 		phoneBook.addContact("Shay", "058-7654321");
 		phoneBook.addContact("Rotem", "052-1111111");
@@ -39,14 +40,15 @@ class PhoneBookTest {
 						+ "{ Name: Shay, Phone Number: 058-7654321 }\n";
 
 		PhoneBook phoneBook = new PhoneBook();
+		contactsApp.contacts.clear();
 
 		phoneBook.addContact("Aviel", "058-1234567");
 		phoneBook.addContact("Shay", "058-7654321");
 		phoneBook.addContact("Rotem", "052-1111111");
 		phoneBook.addContact("Yehonatan", "052-1231231");
 
-		phoneBook.removeContact("Yehonatan");
-		phoneBook.removeContact("Rotem");
+		phoneBook.remove("Yehonatan");
+		phoneBook.remove("Rotem");
 
 		assertEquals(expectedOutput, phoneBook.toString()); 
 	}
@@ -60,6 +62,7 @@ class PhoneBookTest {
 					+ "{ Name: Aviel, Phone Number: 052-1111111 }\n";
 
 		PhoneBook phoneBook = new PhoneBook();
+		contactsApp.contacts.clear();
 
 		phoneBook.addContact("Aviel", "052-1111111");
 		phoneBook.addContact("Aviel", "058-7654321");
@@ -82,6 +85,7 @@ class PhoneBookTest {
 					+ "{ Name: Rotem, Phone Number: 1 }\n";
 
 		PhoneBook phoneBook = new PhoneBook();
+		contactsApp.contacts.clear();
 
 		phoneBook.addContact("Rotem", "1");
 		phoneBook.addContact("Haim", "2");
@@ -97,7 +101,10 @@ class PhoneBookTest {
 	@Test
 	void testGetNumeric(){
 		int expectedOutput = 546890530;
+		
 		PhoneBook phoneBook = new PhoneBook();
+		contactsApp.contacts.clear();
+
 		phoneBook.addContact("Rotem","054-6890530");
 		assertEquals(expectedOutput, phoneBook.getContact(0).getNumericVal());
 	}
@@ -114,6 +121,7 @@ class PhoneBookTest {
 
 
 		PhoneBook phoneBook = new PhoneBook();
+		contactsApp.contacts.clear();
 
 		phoneBook.addContact("Yosi", "052-3333333");
 		phoneBook.addContact("Haim", "050-2222222");
@@ -138,7 +146,8 @@ class PhoneBookTest {
 		
 		
 		PhoneBook phoneBook = new PhoneBook();
-		
+		contactsApp.contacts.clear();
+
 		phoneBook.addContact("Yosi", "052-3333333");
 		phoneBook.addContact("Haim", "050-2222222");
 		phoneBook.addContact("Rotem", "054-1111111");
@@ -160,6 +169,7 @@ class PhoneBookTest {
 						+ "{ Name: Yehonatan, Phone Number: 052-1231231 }\n";
 
 		PhoneBook phoneBook = new PhoneBook();
+		contactsApp.contacts.clear();
 
 		phoneBook.addContact("Aviel", "058-1234567");
 		phoneBook.addContact("Shay", "058-7654321");
@@ -168,10 +178,10 @@ class PhoneBookTest {
 
 		phoneBook.toFile("test");
 
-		phoneBook.removeContact("Aviel");
-		phoneBook.removeContact("Shay");
-		phoneBook.removeContact("Rotem");
-		phoneBook.removeContact("Yehonatan");
+		phoneBook.remove("Aviel");
+		phoneBook.remove("Shay");
+		phoneBook.remove("Rotem");
+		phoneBook.remove("Yehonatan");
 
 		phoneBook.fromFile("test");
 
