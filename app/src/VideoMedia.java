@@ -8,8 +8,9 @@ public class VideoMedia extends Media{
 	
 	@Override
 	public String play() {
-		return "The video " + this.name + " " + 
-				"is now playing for " + this.length + " minutes... ▶";
+		return "The video \"" + this.name + "\" " + 
+				"is now playing for " + this.length + " minutes... ▶ " + 
+				super.getRandomEmoji();
 	}
 	
 	@Override
