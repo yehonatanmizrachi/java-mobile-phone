@@ -8,9 +8,10 @@ public abstract class ContactsApp {
 	
 	public abstract void contactRemoved(Contact contact);
 
+	// TODO: Rotem
 	public String search(String name) {
 		String s = "";
-		for (Contact contact : contactsApp.contacts) { 
+		for (Contact contact : ContactsApp.contacts) { 
 		    if (contact.getName().equals(name)) {	
 		    	s += contact.toString() + '\n';
 		    }

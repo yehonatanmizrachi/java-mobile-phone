@@ -9,9 +9,10 @@ import java.util.Scanner;
 import java.util.Set;
 import javax.swing.JOptionPane;
 
+
 public class PhoneBookApp extends ContactsApp implements App{
 
-	private ContactsApp[] contactsApps; 
+	private ContactsApp[] contactsApps;
 
 	public PhoneBookApp(ContactsApp[] contactsApps) {
 		this.contactsApps = contactsApps;
@@ -21,7 +22,7 @@ public class PhoneBookApp extends ContactsApp implements App{
 		Contact newContact = new Contact(name, phoneNumber);
 		ContactsApp.contacts.add(newContact);
 	}
-	
+
 	// get the contacts[i] 
 	public Contact getContact(int i) {
 		if(ContactsApp.contacts.size() > 0) {
@@ -34,21 +35,34 @@ public class PhoneBookApp extends ContactsApp implements App{
 	
 
 	public void remove(String name) {
+
 		// remove the first occurrence
-		for (Contact contact : contactsApp.contacts) { 
+		Contact removedContact = null;
+		for (Contact contact : ContactsApp.contacts) { 
 		    if (contact.getName().equals(name)) {
-		    	contactsApp.contacts.remove(contact);
-		    	return;
+		    	ContactsApp.contacts.remove(contact);
+		    	removedContact = contact;
+		    	break;
 		    }
 		}
-		JOptionPane.showMessageDialog(null, "The user " + name + " doesn't exist!");
+
+		if (removedContact == null) {
+			JOptionPane.showMessageDialog(null, "The user " + name + " doesn't exist!");
+			return;
+		}
+
+		// remove all it's information from the contacts applications
+		for (ContactsApp app: this.contactsApps) {
+			app.contactRemoved(removedContact);
+		}
+
 	}
 
 	@Override
-	public void contactRemoved() {
+	public void contactRemoved(Contact contact) {
 		// Do nothing
 	}
-	
+
 	/* Search contact in phoneBook by name.
 	 * If the contact is exist, it will print all its occurrences. */
 	public void searchContact(String name)
@@ -192,8 +206,8 @@ public class PhoneBookApp extends ContactsApp implements App{
 		// method that swap 2 contacts in the ArrayList
 		public static void swapContacts(ArrayList<Contact> contacts,int i,int j) {
 			Contact temp = new Contact(contacts.get(j)); // create temp contact object
-			contactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
-			contactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
+			ContactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
+			ContactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
 		}
 		
 		// method sort numeric
@@ -256,7 +270,7 @@ public class PhoneBookApp extends ContactsApp implements App{
 		}
 		
 		@Override
-		public void run(App[] apps) throws IOException {
+		public void run() throws IOException {
 			String name;
 			String phoneNumber;
 			int input = 0;

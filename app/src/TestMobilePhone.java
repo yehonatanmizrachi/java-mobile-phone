@@ -18,10 +18,14 @@ public class TestMobilePhone {
 
 		// initialize the applications
 		App[] application = new App[APPS.values().length];
+		
+		ContactsApp smsApp = new SmsApp();
+		ContactsApp diaryApp = new DiaryApp();
+		ContactsApp[] contactsApps = { smsApp, diaryApp };
 
-		application[APPS.PHONE_BOOK.ordinal()] = new PhoneBookApp();
-		// application[APPS.SMS.ordinal()] = new SmsApp();
-		// application[APPS.DIARY.ordinal()] = new DiaryApp();
+		application[APPS.PHONE_BOOK.ordinal()] = new PhoneBookApp(contactsApps);
+		application[APPS.SMS.ordinal()] = (App)smsApp;
+		application[APPS.DIARY.ordinal()] = (App)diaryApp;		
 		application[APPS.MEDIA.ordinal()] = new MediaApp();
 
 		// prepare the main screen elements
