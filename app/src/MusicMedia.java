@@ -8,8 +8,9 @@ public class MusicMedia extends Media{
 
 	@Override
 	public String play() {
-		return "The song " + this.name + " " + 
-				"is now playing for " + this.length + " minutes... ♪♪♪";
+		return "The song \"" + this.name + "\" " + 
+				"is now playing for " + this.length + " minutes... ♪♪♪" +
+				super.getRandomEmoji();
 	}
 
 	@Override

@@ -11,7 +11,7 @@ public class TestMobilePhone {
 		PHONE_BOOK,
 		SMS,
 		DIARY,
-		MEDIA;
+		MEDIA
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -24,8 +24,8 @@ public class TestMobilePhone {
 		ContactsApp[] contactsApps = { smsApp, diaryApp };
 
 		application[APPS.PHONE_BOOK.ordinal()] = new PhoneBookApp(contactsApps);
-		application[APPS.SMS.ordinal()] = (App)smsApp;
-		application[APPS.DIARY.ordinal()] = (App)diaryApp;		
+		application[APPS.SMS.ordinal()] = smsApp;
+		application[APPS.DIARY.ordinal()] = diaryApp;		
 		application[APPS.MEDIA.ordinal()] = new MediaApp();
 
 		// prepare the main screen elements
@@ -34,15 +34,16 @@ public class TestMobilePhone {
 
  		int appChosen = 0;
  		while(appChosen != -1) {
-
  			// display the phone main screen
  			appChosen = JOptionPane.showOptionDialog(null, null,"PHONE",
  			 		JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, mainPicture, buttons,null);
-
- 			if(appChosen != -1)
+ 			// run
+ 			if (appChosen != -1) {
  				application[appChosen].run();
-
+ 			}
  		}
+
+ 		JOptionPane.showMessageDialog(null, "Bye Bye ✪ ω ✪");
 
 	}
 
