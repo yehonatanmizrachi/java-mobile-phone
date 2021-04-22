@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 
 
-public class PhoneBookApp extends ContactsApp implements App{
+public class PhoneBookApp extends ContactsApp {
 
 	private ContactsApp[] contactsApps;
 
@@ -51,7 +51,7 @@ public class PhoneBookApp extends ContactsApp implements App{
 			return;
 		}
 		
-		// remove all it's information from the contacts applications
+		// remove all its related information from the contacts applications
 		for (ContactsApp app: this.contactsApps) {
 			app.contactRemoved(removedContact);
 		}

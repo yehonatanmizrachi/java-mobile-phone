@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-public class DiaryApp extends ContactsApp implements App {
+public class DiaryApp extends ContactsApp {
 
 	@Override
 	public void run() throws IOException {

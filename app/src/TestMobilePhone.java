@@ -24,8 +24,8 @@ public class TestMobilePhone {
 		ContactsApp[] contactsApps = { smsApp, diaryApp };
 
 		application[APPS.PHONE_BOOK.ordinal()] = new PhoneBookApp(contactsApps);
-		application[APPS.SMS.ordinal()] = (App)smsApp;
-		application[APPS.DIARY.ordinal()] = (App)diaryApp;		
+		application[APPS.SMS.ordinal()] = smsApp;
+		application[APPS.DIARY.ordinal()] = diaryApp;		
 		application[APPS.MEDIA.ordinal()] = new MediaApp();
 
 		// prepare the main screen elements
