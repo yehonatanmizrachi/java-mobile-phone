@@ -56,27 +56,27 @@ class PhoneBookAppTest {
 		assertEquals(expectedOutput, PhoneBookApp.toString()); 
 	}
 
-	@Test
-	void removeDuplicates() {
-		String expectedOutput = 
-			"The total number of contacts: 3\n"
-					+ "{ Name: Aviel, Phone Number: 058-7654321 }\n"
-					+ "{ Name: Yehonatan, Phone Number: 052-1231231 }\n"
-					+ "{ Name: Aviel, Phone Number: 052-1111111 }\n";
-
-		ContactsApp[] arr = new ContactsApp[0];
-		PhoneBookApp PhoneBookApp = new PhoneBookApp(arr);
-		ContactsApp.contacts.clear();
-
-		PhoneBookApp.addContact("Aviel", "052-1111111");
-		PhoneBookApp.addContact("Aviel", "058-7654321");
-		PhoneBookApp.addContact("Aviel", "052-1111111");
-		PhoneBookApp.addContact("Yehonatan", "052-1231231");
-
-		PhoneBookApp.removeDuplicates();
-
-		assertEquals(expectedOutput, PhoneBookApp.toString());
-	}
+//	@Test
+//	void removeDuplicates() {
+//		String expectedOutput = 
+//			"The total number of contacts: 3\n"
+//					+ "{ Name: Aviel, Phone Number: 058-7654321 }\n"
+//					+ "{ Name: Yehonatan, Phone Number: 052-1231231 }\n"
+//					+ "{ Name: Aviel, Phone Number: 052-1111111 }\n";
+//
+//		ContactsApp[] arr = new ContactsApp[0];
+//		PhoneBookApp PhoneBookApp = new PhoneBookApp(arr);
+//		ContactsApp.contacts.clear();
+//
+//		PhoneBookApp.addContact("Aviel", "052-1111111");
+//		PhoneBookApp.addContact("Aviel", "058-7654321");
+//		PhoneBookApp.addContact("Aviel", "052-1111111");
+//		PhoneBookApp.addContact("Yehonatan", "052-1231231");
+//
+//		PhoneBookApp.removeDuplicates();
+//
+//		assertEquals(expectedOutput, PhoneBookApp.toString());
+//	}
 
 	@Test
 	void testSwap() {

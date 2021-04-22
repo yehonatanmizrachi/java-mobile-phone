@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
+//import java.util.Set;
+
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 
@@ -19,8 +21,15 @@ public class PhoneBookApp extends ContactsApp {
 	}
 
 	public void addContact(String name, String phoneNumber) {
-		Contact newContact = new Contact(name, phoneNumber);
-		ContactsApp.contacts.add(newContact);
+		// Check if the contact already exist
+		Contact check = this.search(name);
+		if(check != null) {
+			this.printError(check.getName()+" is already exists in phone book"); 
+		}
+		else {
+			Contact newContact = new Contact(name, phoneNumber);
+			ContactsApp.contacts.add(newContact);
+		}
 	}
 
 	// get the contacts[i] 
@@ -148,20 +157,20 @@ public class PhoneBookApp extends ContactsApp {
 		}
 	}
 	
-	/*
-	 * Removes all the duplicates from the contacts list
-	 * using HashSet for getting O(n) time complexity.
-	 */
-	public void removeDuplicates() {
-		Set<Contact> newContacts = new HashSet<Contact>();
-
-		for (Contact contact : ContactsApp.contacts) {
-				newContacts.add(contact);		
-		}
-
-		// update this.contacts to the new list
-		ContactsApp.contacts = new ArrayList<Contact>(newContacts);
-	}
+//	/*
+//	 * Removes all the duplicates from the contacts list
+//	 * using HashSet for getting O(n) time complexity.
+//	 */
+//	public void removeDuplicates() {
+//		Set<Contact> newContacts = new HashSet<Contact>();
+//
+//		for (Contact contact : ContactsApp.contacts) {
+//				newContacts.add(contact);		
+//		}
+//
+//		// update this.contacts to the new list
+//		ContactsApp.contacts = new ArrayList<Contact>(newContacts);
+//	}
 
 	@Override
 	public String toString() {
@@ -177,10 +186,16 @@ public class PhoneBookApp extends ContactsApp {
 	// method that check if the Phone Book is empty or not 
 	public boolean isEmpty() {
 		if(ContactsApp.contacts.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Error - Phone Book is empty");
+			this.printError("Your phone book is empty!");
 			return true;
 		}
 		return false;
+	}
+	// function for error messages
+	public void printError(String msg) {
+		JDialog dialog = new JOptionPane(msg,
+				JOptionPane.ERROR_MESSAGE,JOptionPane.DEFAULT_OPTION).createDialog("ERROR"); 
+		dialog.setVisible(true);
 	}
 	
 	// print phone book method
@@ -276,11 +291,12 @@ public class PhoneBookApp extends ContactsApp {
 			String phoneNumber;
 			int input = 0;
 			
-			while (input != 11)
+			while (input != 10)
 			{
-				String s = JOptionPane.showInputDialog("Phone Book system\nPress:\n1- Add contact\n2- Delete contact\n3- Print phone book\n"
-						+ "4- Search contact\n5- Sort by name\n6- Sort by phone number\n7- Remove duplicates\n"
-						+ "8- Reverse phonebook\n9- Export phone book to text file\n10- Import phone book from text file\n11- Exit");
+				String s = JOptionPane.showInputDialog("              Contacts\nPress:\n1- Add contact\n"
+						+ "2- Delete contact\n3- Print phone book\n"
+						+ "4- Search contact\n5- Sort by name\n6- Sort by phone number\n7- Reverse phonebook\n"
+						+ "8- Export phone book to text file\n9- Import phone book from text file\n10- Exit");
 
 				if(s != null) {
 					try {
@@ -292,7 +308,7 @@ public class PhoneBookApp extends ContactsApp {
 					}
 				}
 				// cancel
-				else {input = 11;}
+				else {input = 10;}
 
 				switch(input)
 				{
@@ -309,7 +325,7 @@ public class PhoneBookApp extends ContactsApp {
 						this.addContact(name, phoneNumber);
 					}
 					catch(Exception e){
-						JOptionPane.showMessageDialog(null,"Invalid phone number!");
+						this.printError("Invalid phone number!");
 					}
 					break;
 				// remove contact
@@ -317,14 +333,6 @@ public class PhoneBookApp extends ContactsApp {
 					if(!this.isEmpty()) {
 						name = JOptionPane.showInputDialog("Enter full name\n");
 						if(name == null) {break;}
-//						if(apps[0] instanceof contactsApp) {
-//							contactsApp sms = (contactsApp)apps[0];
-//							sms.remove(name);
-//						}
-//						if(apps[1] instanceof contactsApp) {
-//							contactsApp diary = (contactsApp)apps[0];
-//							diary.remove(name);
-//						}
 						this.remove(name);
 						break;
 					}
@@ -361,16 +369,8 @@ public class PhoneBookApp extends ContactsApp {
 					break;
 					}
 					break;
-				// remove duplicates
-				case 7:
-					if(!this.isEmpty()) {
-					this.removeDuplicates();
-					JOptionPane.showMessageDialog(null,"All duplications have been successfully removed.");
-					break;
-					}
-					break;
 				// reverse phone book
-				case 8:
+				case 7:
 					if(!this.isEmpty()) {
 					this.swapPhoneBook();
 					JOptionPane.showMessageDialog(null,"The Phone Book has been successfully reversed.");
@@ -378,14 +378,14 @@ public class PhoneBookApp extends ContactsApp {
 					}
 					break;
 				// export phone book to text file
-				case 9:
+				case 8:
 					name = JOptionPane.showInputDialog("Enter name of text file:");
 					if(name == null) {break;}
 					this.toFile(name);
 					JOptionPane.showMessageDialog(null,"The Phone Book has been successfully exported to the file " + name + ".");
 					break;
 				// import phone book from text file 
-				case 10:
+				case 9:
 					name = JOptionPane.showInputDialog("Enter name of text file:");
 					if(name == null) {break;}
 					try {
@@ -397,12 +397,11 @@ public class PhoneBookApp extends ContactsApp {
 					}
 					break;
 				// exit
-				case 11:
-					//JOptionPane.showMessageDialog(null,"Bye :)");
+				case 10:
 					break;
 				// wrong input
 				default:
-					JOptionPane.showMessageDialog(null,"Wrong input! Please try again.");
+					this.printError("Wrong input! Please try again.");
 					break;
 				}
 			}
