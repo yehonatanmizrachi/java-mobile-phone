@@ -1,19 +1,15 @@
 package src;
 
-import java.io.File;  // Import the File class
-
+import java.io.File;  
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-
 import javax.swing.JOptionPane;
 
 public class PhoneBook extends contactsApp implements App{
-
-	//private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
 	public void addContact(String name, String phoneNumber) {
 		Contact newContact = new Contact(name, phoneNumber);
@@ -29,13 +25,13 @@ public class PhoneBook extends contactsApp implements App{
 			return null;
 		}
 	}
-
-	public void removeContact(String name) {
+	
+	@Override
+	public void remove(String name) {
 		// remove the first occurrence
 		for (Contact contact : contactsApp.contacts) { 
-		    if (contact.getName().equals(name)) {		    	
+		    if (contact.getName().equals(name)) {
 		    	contactsApp.contacts.remove(contact);
-		    	sms.delete();
 		    	return;
 		    }
 		}
@@ -46,15 +42,8 @@ public class PhoneBook extends contactsApp implements App{
 	 * If the contact is exist, it will print all its occurrences. */
 	public void searchContact(String name)
 	{
-		boolean isExist = false;
-		String s = "";
-		for (Contact contact : contactsApp.contacts) { 
-		    if (contact.getName().equals(name)) {	
-		    	s += contact.toString() + '\n';
-		    	isExist = true;
-		    }
-		}
-		if (!isExist)
+		String s = super.search(name);
+		if (s == "")
 			JOptionPane.showMessageDialog(null, "The contact " + name + " doesn't exist!");
 		else
 			JOptionPane.showMessageDialog(null, s);
@@ -191,8 +180,8 @@ public class PhoneBook extends contactsApp implements App{
 		
 		// method that swap 2 contacts in the ArrayList
 		public static void swapContacts(ArrayList<Contact> contacts,int i,int j) {
-			Contact temp = new Contact(contactsApp.contacts.get(j)); // create temp contact object
-			contactsApp.contacts.set(j,contactsApp.contacts.get(i)); // set the contacts ArrayList in the j place
+			Contact temp = new Contact(contacts.get(j)); // create temp contact object
+			contactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
 			contactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
 		}
 		
@@ -208,24 +197,24 @@ public class PhoneBook extends contactsApp implements App{
 		// Average running time - O(nlogn)
 		private void QuicksortBS(ArrayList<Contact> contacts,int p,int r) {
 			if(p<r) {
-				int q = PartitionBS(contactsApp.contacts,p,r);
-				QuicksortBS(contactsApp.contacts,p,q-1); 
-				QuicksortBS(contactsApp.contacts,q+1,r);
+				int q = PartitionBS(contacts,p,r);
+				QuicksortBS(contacts,p,q-1); 
+				QuicksortBS(contacts,q+1,r);
 			}
 		}
 		// implement PartitionBS function - this function is part of the QuicksortBS algorithm
 		// The function is making the sort based on the pivot - r
 		// and returning the - q 
 		private int PartitionBS(ArrayList<Contact> contacts,int p,int r) {
-			int x = contactsApp.contacts.get(r).getNumericVal();
+			int x = contacts.get(r).getNumericVal();
 			int i = p-1;
 			for(int j = p; j<=r-1;j++) {
-				if(contactsApp.contacts.get(j).getNumericVal() > x) {
+				if(contacts.get(j).getNumericVal() > x) {
 					i = i+1;
 					swapContacts(contacts,i,j);
 				}
 			}
-			swapContacts(contactsApp.contacts,i+1,r);
+			swapContacts(contacts,i+1,r);
 			return i+1;
 		}
 			
@@ -255,7 +244,8 @@ public class PhoneBook extends contactsApp implements App{
 			scan.close();
 		}
 		
-		public void run() throws IOException {
+		@Override
+		public void run(App[] apps) throws IOException {
 			String name;
 			String phoneNumber;
 			int input = 0;
@@ -301,7 +291,15 @@ public class PhoneBook extends contactsApp implements App{
 					if(!this.isEmpty()) {
 						name = JOptionPane.showInputDialog("Enter full name\n");
 						if(name == null) {break;}
-						this.removeContact(name);
+//						if(apps[0] instanceof contactsApp) {
+//							contactsApp sms = (contactsApp)apps[0];
+//							sms.remove(name);
+//						}
+//						if(apps[1] instanceof contactsApp) {
+//							contactsApp diary = (contactsApp)apps[0];
+//							diary.remove(name);
+//						}
+						this.remove(name);
 						break;
 					}
 					break;
