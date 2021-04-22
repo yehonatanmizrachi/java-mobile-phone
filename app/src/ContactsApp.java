@@ -10,15 +10,16 @@ public abstract class ContactsApp implements App{
 	public abstract void contactRemoved(Contact contact);
 	public abstract void run() throws IOException;
 
-	// TODO: Rotem
-	public String search(String name) {
-		String s = "";
+	@SuppressWarnings("null")
+	public ArrayList<Contact> search(String name) {
+		ArrayList<Contact> foundcontact = null;
 		for (Contact contact : ContactsApp.contacts) { 
 		    if (contact.getName().equals(name)) {	
-		    	s += contact.toString() + '\n';
+		    	//s += contact.toString() + '\n';
+		    	foundcontact.add(contact);
 		    }
 		}
-		return s;
+		return foundcontact;
 		// If the return is -->  "" , it means that the contact doesn't exist.
 	}
 
