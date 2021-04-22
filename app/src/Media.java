@@ -1,4 +1,5 @@
 package src;
+import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Media {
 
@@ -28,4 +29,24 @@ public abstract class Media {
 		return this.name.equals(temp.name) && this.length == temp.length;
 	}
 
+	protected String getRandomEmoji() {
+
+		String[] emojiArr = {
+				"§(*￣▽￣*)§",
+				"（〃｀ 3′〃）",
+				"(ﾉ*ФωФ)ﾉ",
+				"(〜￣▽￣)〜",
+				"(～o￣3￣)～",
+				"~(￣▽￣)~*",
+				"( ఠൠఠ )ﾉ",
+				"( ͡° ͜ʖ ͡°)",
+				"（￣︶￣）↗　",
+				"o(*^▽^*)┛",
+				"( •̀ ω •́ )y"
+		};
+		
+		int randomNum = ThreadLocalRandom.current().nextInt(0, emojiArr.length);		
+		return emojiArr[randomNum];
+
+	}
 }

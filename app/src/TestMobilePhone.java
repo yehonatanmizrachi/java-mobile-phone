@@ -11,7 +11,7 @@ public class TestMobilePhone {
 		PHONE_BOOK,
 		SMS,
 		DIARY,
-		MEDIA;
+		MEDIA
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -34,14 +34,16 @@ public class TestMobilePhone {
 
  		int appChosen = 0;
  		while(appChosen != -1) {
-
  			// display the phone main screen
  			appChosen = JOptionPane.showOptionDialog(null, null,"PHONE",
  			 		JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, mainPicture, buttons,null);
-
-			application[appChosen].run();
-
+ 			// run
+ 			if (appChosen != -1) {
+ 				application[appChosen].run();
+ 			}
  		}
+
+ 		JOptionPane.showMessageDialog(null, "Bye Bye ✪ ω ✪");
 
 	}
 

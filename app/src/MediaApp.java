@@ -33,33 +33,42 @@ public class MediaApp implements App{
 				// get media name
 				message = "Please enter the " + type + " name";
 				result = JOptionPane.showInputDialog(message);
-				while(result == null) {
-					result = JOptionPane.showInputDialog(ErrorMessage);
+				if (result == null) {
+					continue;
 				}
 				String name = result;
 
 				// get media length
 				message = "Please Enter the " + type + " length";
 				result = JOptionPane.showInputDialog(message);
+				if (result == null) {
+					continue;
+				}
 				float length = this.parseFloatResult(result);
 				while(length == -1) {
 					result = JOptionPane.showInputDialog(ErrorMessage);
+					if (result == null) {
+						continue;
+					}
 					length = this.parseFloatResult(result);
 				}
 
 				// add
 				this.addMedia(name, length, chosenMedia);
-				message = "The " + type + " " + name + " has been added successfully";
+				message = "The " + type + " \"" + name + "\" has been added successfully ✔";
 				JOptionPane.showMessageDialog(null, message);
 			}
 			else if (input == MENU.PLAY_BY_NAME.ordinal()) {
 
 				message = "Please enter the media name:";
 				result = JOptionPane.showInputDialog(message);
+				if (result == null) {
+					continue;
+				}
 				
 				String playingMedia = this.playMediaByName(result);
 				if (playingMedia == null) {
-					message = "The media " + result + " doesn't exist.";
+					message = "The file \"" + result + "\" doesn't exist ⚆_⚆";
 				} 
 				else {
 					message = playingMedia;
@@ -72,7 +81,7 @@ public class MediaApp implements App{
 
 				String playingMedia = this.playAll();
 				if (playingMedia == null) {
-					message = "The media list is empty. There is nothing to play :(";
+					message = "The media list is empty. There is nothing to play Y.Y";
 				}
 				else {
 					message = playingMedia;
@@ -81,7 +90,6 @@ public class MediaApp implements App{
 				JOptionPane.showMessageDialog(null, message);
 			}
 			else if (input == MENU.EXIT.ordinal()) {
-				JOptionPane.showMessageDialog(null, "Bye Bye ✪ ω ✪");
 				return;
 			}
 			else {
