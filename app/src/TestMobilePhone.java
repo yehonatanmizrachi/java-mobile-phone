@@ -29,7 +29,7 @@ public class TestMobilePhone {
 		application[APPS.MEDIA.ordinal()] = new MediaApp();
 
 		// prepare the main screen elements
-		ImageIcon mainPicture = TestMobilePhone.getMainPicture();
+		ImageIcon mainPicture = TestMobilePhone.getMainPicture("appPic.png",390,110);
  		String[] buttons = { "CONTACTS", "SMS", "DIARY", "MEDIA"};
 
  		int appChosen = 0;
@@ -47,10 +47,10 @@ public class TestMobilePhone {
 
 	}
 
-	private static ImageIcon getMainPicture() {
-		ImageIcon pic = new ImageIcon("appPic.png");
+	private static ImageIcon getMainPicture(String picture,int x,int y) {
+		ImageIcon pic = new ImageIcon(picture);
 		Image pic2 = pic.getImage();
-		Image modifiedpic = pic2.getScaledInstance(390, 110, java.awt.Image.SCALE_SMOOTH);
+		Image modifiedpic = pic2.getScaledInstance(x, y, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(modifiedpic);
 	}
 
