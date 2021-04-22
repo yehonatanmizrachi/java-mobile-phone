@@ -1,4 +1,4 @@
-package testing;
+package unitTesting;
 
 import src.PhoneBookApp;
 import src.ContactsApp;
