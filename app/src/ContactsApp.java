@@ -8,8 +8,16 @@ public abstract class ContactsApp {
 	
 	public abstract void contactRemoved(Contact contact);
 
-	// TODO: implement
-	//	public Contact[] searchContact() {
-	//		
-	//	}
+	// TODO: Rotem
+	public String search(String name) {
+		String s = "";
+		for (Contact contact : ContactsApp.contacts) { 
+		    if (contact.getName().equals(name)) {	
+		    	s += contact.toString() + '\n';
+		    }
+		}
+		return s;
+		// If the return is -->  "" , it means that the contact doesn't exist.
+	}
+
 }
