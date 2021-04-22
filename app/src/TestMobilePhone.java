@@ -39,7 +39,8 @@ public class TestMobilePhone {
  			appChosen = JOptionPane.showOptionDialog(null, null,"PHONE",
  			 		JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, mainPicture, buttons,null);
 
-			application[appChosen].run();
+ 			if(appChosen != -1)
+ 				application[appChosen].run();
 
  		}
 
