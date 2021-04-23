@@ -17,6 +17,7 @@ public class SmsApp extends ContactsApp {
 		int input=0;
 		String name;
 		String message;
+		String sentence;
 		while (input != 6) {
 			
 			String s = JOptionPane.showInputDialog("This is the SMS application\nPlease press:\n1- Add message to contact\n2- Delete messages wtih contact\n"
@@ -46,12 +47,19 @@ public class SmsApp extends ContactsApp {
 					if(name == null) {break;}
 					JOptionPane.showMessageDialog(null,this.printSMS(this.search(name)));
 					break;
-					
+				case 4:
+					sentence = JOptionPane.showInputDialog("Enter sentence to search\n");
+					if(sentence == null) {break;}
+					JOptionPane.showMessageDialog(null,this.printNames(sentence));
+					break;
 				case 5:
 					JOptionPane.showMessageDialog(null,this.printAllSMS());
+					break;
 				case 6:
 					break;
-				// wrong input
+				default:
+					JOptionPane.showMessageDialog(null,"Wrong input! Please try again.");
+					break;
 			}
 		}
 	}
@@ -94,10 +102,23 @@ public class SmsApp extends ContactsApp {
 	    }
 	}
 	
-	
+	public String printNames(String text) {
+		String names = "";
+	    for (Map.Entry<Contact,String> entry : allSMS.entrySet()) {
+	    	if(entry.getValue().contains(text))
+	    		names += entry.getKey().getName() + "\n";
+	    }
+	    if (names == "")
+	    	return "There are no contacts with your text";
+		return "This contacts has your text in thier sms:\n" + names;
+	}
+
+
 	public String printAllSMS() {
 		String allMessages = "";
 		String name = "";
+		if (allSMS.isEmpty())
+			return "There are no messages";
 	    for (Map.Entry<Contact,String> entry : allSMS.entrySet()) {
 	    	name = entry.getKey().getName();
 	        allMessages += name+ ":\n" + entry.getValue() + "\n";
