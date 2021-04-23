@@ -78,7 +78,7 @@ public class PhoneBookApp extends ContactsApp {
 	{
 		Contact foundcontact = super.search(name);
 		if (foundcontact == null)
-			JOptionPane.showMessageDialog(null, "The contact " + name + " doesn't exist!");
+			this.printError("The contact " + name + " doesn't exist!");
 		else {
 			JOptionPane.showMessageDialog(null, foundcontact);
 		}
@@ -157,21 +157,6 @@ public class PhoneBookApp extends ContactsApp {
 		}
 	}
 	
-//	/*
-//	 * Removes all the duplicates from the contacts list
-//	 * using HashSet for getting O(n) time complexity.
-//	 */
-//	public void removeDuplicates() {
-//		Set<Contact> newContacts = new HashSet<Contact>();
-//
-//		for (Contact contact : ContactsApp.contacts) {
-//				newContacts.add(contact);		
-//		}
-//
-//		// update this.contacts to the new list
-//		ContactsApp.contacts = new ArrayList<Contact>(newContacts);
-//	}
-
 	@Override
 	public String toString() {
 		String str = "";
@@ -191,7 +176,7 @@ public class PhoneBookApp extends ContactsApp {
 		}
 		return false;
 	}
-	// function for error messages
+	// method for print error message
 	private void printError(String msg) {
 		JDialog dialog = new JOptionPane(msg,
 				JOptionPane.ERROR_MESSAGE,JOptionPane.DEFAULT_OPTION).createDialog("ERROR"); 
