@@ -192,7 +192,7 @@ public class PhoneBookApp extends ContactsApp {
 		return false;
 	}
 	// function for error messages
-	public void printError(String msg) {
+	private void printError(String msg) {
 		JDialog dialog = new JOptionPane(msg,
 				JOptionPane.ERROR_MESSAGE,JOptionPane.DEFAULT_OPTION).createDialog("ERROR"); 
 		dialog.setVisible(true);
