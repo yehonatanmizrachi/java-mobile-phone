@@ -46,6 +46,9 @@ public class SmsApp extends ContactsApp {
 					if(name == null) {break;}
 					JOptionPane.showMessageDialog(null,this.printSMS(this.search(name)));
 					break;
+					
+				case 5:
+					JOptionPane.showMessageDialog(null,this.printAllSMS());
 				case 6:
 					break;
 				// wrong input
@@ -91,6 +94,16 @@ public class SmsApp extends ContactsApp {
 	    }
 	}
 	
+	
+	public String printAllSMS() {
+		String allMessages = "";
+		String name = "";
+	    for (Map.Entry<Contact,String> entry : allSMS.entrySet()) {
+	    	name = entry.getKey().getName();
+	        allMessages += name+ ":\n" + entry.getValue() + "\n";
+	    }
+		return allMessages;
+	}
 	
 	
 	
