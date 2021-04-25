@@ -20,7 +20,7 @@ public class SmsApp extends ContactsApp {
 		String sentence;
 		while (input != 6) {
 			
-			String s = JOptionPane.showInputDialog("This is the SMS application\nPlease press:\n1- Add message to contact\n2- Delete messages wtih contact\n"
+			String s = JOptionPane.showInputDialog("This is the SMS application\nPlease press:\n1- Add message to contact\n2- Delete messages with contact\n"
 					+ "3- Print all messages with specific contact\n4- Print all contacts that has your sentense in thier messages\n5- Print all messages\n"
 					+ "6- Exit\n");
 			
@@ -46,7 +46,7 @@ public class SmsApp extends ContactsApp {
 					{
 						JOptionPane.showMessageDialog(null,"SMS has added successfully");
 					}
-					else {JOptionPane.showMessageDialog(null,"Sorry, couldn`t complete your request");}
+					else {JOptionPane.showMessageDialog(null,"Sorry, there is not contact with this name");}
 					break;
 				case 2:
 					name = JOptionPane.showInputDialog("Enter contact`s name\n");
