@@ -23,7 +23,7 @@ public class SmsApp extends ContactsApp {
 			String s = JOptionPane.showInputDialog("This is the SMS application\nPlease press:\n1- Add message to contact\n2- Delete messages with contact\n"
 					+ "3- Print all messages with specific contact\n4- Print all contacts that has your sentense in thier messages\n5- Print all messages\n"
 					+ "6- Exit\n");
-			
+		
 			if(s != null) {
 				try {
 					input = Integer.parseInt(s);
