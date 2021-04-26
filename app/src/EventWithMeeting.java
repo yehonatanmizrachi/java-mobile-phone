@@ -9,6 +9,11 @@ public class EventWithMeeting extends DiaryEvent {
 		this.with_contact = with_contact;
 	}
 	
+	public String getMissingDetail()
+	{
+		return with_contact.getName();
+	}
+	
 	@Override
 	public String toString()
 	{

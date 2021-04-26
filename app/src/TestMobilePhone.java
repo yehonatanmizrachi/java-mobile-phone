@@ -18,7 +18,6 @@ public class TestMobilePhone {
 
 		// initialize the applications
 		App[] application = new App[APPS.values().length];
-		
 		ContactsApp smsApp = new SmsApp();
 		ContactsApp diaryApp = new DiaryApp();
 		ContactsApp[] contactsApps = { smsApp, diaryApp };

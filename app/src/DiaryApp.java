@@ -1,14 +1,14 @@
 package src;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
 public class DiaryApp extends ContactsApp {
-	private Map<Date,DiaryEvent> events = new HashMap<Date,DiaryEvent>();
+	private Vector<DiaryEvent> events = new Vector<DiaryEvent>();
 	
 	@Override
 	public void run() throws IOException {
@@ -21,17 +21,22 @@ public class DiaryApp extends ContactsApp {
 			switch(input)
 			{
 				case 1:
-					
+					addEvent();
 					break;
 				case 2:
+					removeEvent();
 					break;
 				case 3:
+					printEventsOnDate();
 					break;
 				case 4:
+					printEventsByContact();
 					break;
 				case 5:
+					removeOverlapping();
 					break;
 				case 6:
+					JOptionPane.showMessageDialog(null,printAllEvents());
 					break;
 				case 7:
 					break;
@@ -40,6 +45,54 @@ public class DiaryApp extends ContactsApp {
 					break;
 			}
 		}
+	}
+	
+	public void removeOverlapping()
+	{
+		int length = events.size();
+		for (int i = 0; i < length - 1; i++)
+		{
+			System.out.print((events.get(i + 1).time_sec - events.get(i).time_sec) + " : " + events.get(i).event_duration * 60);
+			if ((events.get(i).compareTo(events.get(i + 1)) == 0) || 
+					(events.get(i).event_date.compareTo(events.get(i + 1).event_date) == 0 &&
+					 ((events.get(i + 1).time_sec - events.get(i).time_sec)) < events.get(i).event_duration * 60))
+			{
+				System.out.print("\n1111");
+				events.remove(i + 1);
+				length--;
+				i--;
+			}
+		}
+	}
+	
+	public void printEventsByContact()
+	{
+		String contact_name = JOptionPane.showInputDialog("Enter name of contact:");
+		String s = "";
+		
+		for (DiaryEvent ev : events)
+		{
+			if (ev.getMissingDetail().equals(contact_name))
+				s += "Event: \n" + ev.toString() + "\n\n";
+		}
+		if (s == "")
+			JOptionPane.showMessageDialog(null,"There is no meetings with this contact!");
+		else
+			JOptionPane.showMessageDialog(null,s);
+	}
+	
+	public String printAllEvents()
+	{
+		String s = "";
+		int num = 1;
+		for (DiaryEvent d : events)
+		{
+			s += "Event " + num + ":\n" +  d.toString() + "\n\n";
+			num++;
+		}
+		if (events.size() == 0)
+			s += "The diary is empty!";
+		return s;
 	}
 
 	@Override
@@ -51,35 +104,94 @@ public class DiaryApp extends ContactsApp {
 	{
 		String date1;
 		String time1;
+		String duration;
 		String contact_name;
 		String description;
+		
+		date1 = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
+		time1 = JOptionPane.showInputDialog("Enter time (format: \"hour:minute:seconds\"):");
+		duration = JOptionPane.showInputDialog("Enter duration of event:");
+		
+		if (searchEvent(DiaryEvent.formatDate(date1, time1)) != -1)
+		{
+			JOptionPane.showMessageDialog(null,"You already have an event on that time!");
+			return;
+		}
+		
 		int input = TestMobilePhone.SetStartingMenu("Enter:"
 				+ "\n1- Add event with meeting\n2- Add event without meeting", 4, 3);
 		
-		contact_name = JOptionPane.showInputDialog("Enter name of contact:");
-		date1 = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
-		time1 = JOptionPane.showInputDialog("Enter time (format: \"hour:minute:seconds\"):");
-		
+		DiaryEvent d = null;
 		switch(input)
 		{
 		case 1:
-			
+			contact_name = JOptionPane.showInputDialog("Enter name of contact:");
+			Contact c = this.search(contact_name);
+			if (c == null)
+				JOptionPane.showMessageDialog(null,"No such contact!");
+			else
+				d = new EventWithMeeting(date1, time1, Integer.parseInt(duration), c);
 			break;
 		case 2:
-			
+			description = JOptionPane.showInputDialog("Enter description for the event:");
+			d = new EventWithoutMeeting(date1, time1, Integer.parseInt(duration), description);
 			break;
 		case 3:
 			break;
 		default:
 			JOptionPane.showMessageDialog(null,"Wrong input!");
-			break;
+			return;
 		}
 		
-		events.put(ev.event_date, ev);
+		int i = 0;
+		int length = events.size();
+		while (i < length && events.get(i).compareTo(d) == -1)
+			i++;
+		
+		if (length >= 1 && i != length && events.get(i).compareTo(d) == 0)
+			JOptionPane.showMessageDialog(null,"The event is already exist!");
+		else
+			events.insertElementAt(d, i);
 	}
 	
-	public void removeEvent(DiaryEvent ev)
+	public void removeEvent()
 	{
-		events.remove(ev.event_date);
+		String date1 = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
+		String time1 = JOptionPane.showInputDialog("Enter time (format: \"hour:minute:seconds\"):");
+		int index = searchEvent(DiaryEvent.formatDate(date1, time1));
+		if (index != -1)
+			events.remove(index);
+		else
+			JOptionPane.showMessageDialog(null,"The event doesn't exist!");
+	}
+	
+	public int searchEvent(Date d)
+	{
+		int length = events.size();
+		for (int i = 0; i < length; i++)
+			if (events.get(i).event_date.toString().equals(d.toString()))
+				return i;
+		return -1;
+	}
+	
+	public void printEventsOnDate()
+	{
+		String meeting_date = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
+		
+		String[] day_month_year = meeting_date.split("-");
+		String s = "";
+		for (DiaryEvent ev : events)
+		{
+			Calendar c = Calendar.getInstance();
+			c.setTime(ev.event_date);
+			if (c.get(Calendar.YEAR) == Integer.parseInt(day_month_year[2]) && 
+					c.get(Calendar.MONTH) + 1 == Integer.parseInt(day_month_year[1]) && 
+					c.get(Calendar.DAY_OF_MONTH) == Integer.parseInt(day_month_year[0]))
+			{
+				s += "Event:\n" +  ev.toString() + "\n\n";
+			}
+		}
+		if (s == "") JOptionPane.showMessageDialog(null,"You don't have a meeting on this date!");
+		else JOptionPane.showMessageDialog(null,s);
 	}
 }

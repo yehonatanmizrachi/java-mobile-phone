@@ -9,6 +9,11 @@ public class EventWithoutMeeting extends DiaryEvent {
 		this.description = description;
 	}
 	
+	public String getMissingDetail()
+	{
+		return description;
+	}
+	
 	@Override
 	public String toString()
 	{
