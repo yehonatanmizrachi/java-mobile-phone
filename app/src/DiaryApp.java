@@ -12,6 +12,7 @@ public class DiaryApp extends ContactsApp {
 	
 	@Override
 	public void run() throws IOException {
+		
 		int input=0;
 		
 		while (input != 7) {		
@@ -52,7 +53,7 @@ public class DiaryApp extends ContactsApp {
 		}
 	}
 	
-	public void removeOverlapping()
+	private void removeOverlapping()
 	{
 		int length = events.size();
 		Calendar cal1, cal2;
@@ -119,7 +120,7 @@ public class DiaryApp extends ContactsApp {
 		}
 	}
 	
-	public void addEvent()
+	private void addEvent()
 	{
 		String date1;
 		String time1;
@@ -179,7 +180,7 @@ public class DiaryApp extends ContactsApp {
 			events.insertElementAt(d, i);
 	}
 	
-	public void removeEvent()
+	private void removeEvent()
 	{
 		String date1 = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
 		String time1 = JOptionPane.showInputDialog("Enter time (format: \"hour:minute:seconds\"):");
