@@ -30,15 +30,6 @@ public abstract class DiaryEvent implements Comparable<DiaryEvent> {
 	}
 	
 	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + event_date.hashCode();
-		return result;
-	}
-	
-	@Override
 	public int compareTo(DiaryEvent d)
 	{
 		if (event_date.before(d.event_date)) return -1;
@@ -53,7 +44,7 @@ public abstract class DiaryEvent implements Comparable<DiaryEvent> {
 	@Override
 	public String toString()
 	{
-		String newstring = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(event_date);
+		String newstring = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(event_date);
 		String out = "Date And Time: " + newstring + '\n' +
 					 "Duration: " + event_duration + '\n';
 		return out;

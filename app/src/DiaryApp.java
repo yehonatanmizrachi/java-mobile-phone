@@ -17,7 +17,7 @@ public class DiaryApp extends ContactsApp {
 		while (input != 7) {		
 			input = TestMobilePhone.SetStartingMenu("This is the Diary application\nPlease press:\n1- Add Event\n2- Remove Event\n3- Print all event in a specifiec date\n"
 					+ "4- Print meetings with contact\n5- Delete overlapping events\n6- Print all events \n7- Exit\n", 8, 7);
-
+			try {
 			switch(input)
 			{
 				case 1:
@@ -36,7 +36,7 @@ public class DiaryApp extends ContactsApp {
 					removeOverlapping();
 					break;
 				case 6:
-					JOptionPane.showMessageDialog(null,printAllEvents());
+					printAllEvents();
 					break;
 				case 7:
 					break;
@@ -44,25 +44,35 @@ public class DiaryApp extends ContactsApp {
 					JOptionPane.showMessageDialog(null,"Wrong input! Please try again.");
 					break;
 			}
+			}
+			catch (Exception error)
+			{
+				JOptionPane.showMessageDialog(null,"You did something wrong :(\nplease try again.");
+			}
 		}
 	}
 	
 	public void removeOverlapping()
 	{
 		int length = events.size();
+		Calendar cal1, cal2;
 		for (int i = 0; i < length - 1; i++)
 		{
-			System.out.print((events.get(i + 1).time_sec - events.get(i).time_sec) + " : " + events.get(i).event_duration * 60);
+			cal1 = Calendar.getInstance();
+			cal2 = Calendar.getInstance();
+			cal1.setTime(events.get(i).event_date);
+			cal2.setTime(events.get(i + 1).event_date);
+			
 			if ((events.get(i).compareTo(events.get(i + 1)) == 0) || 
-					(events.get(i).event_date.compareTo(events.get(i + 1).event_date) == 0 &&
-					 ((events.get(i + 1).time_sec - events.get(i).time_sec)) < events.get(i).event_duration * 60))
+					(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+					 cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH) && ((events.get(i + 1).time_sec - events.get(i).time_sec)) < events.get(i).event_duration * 60))
 			{
-				System.out.print("\n1111");
 				events.remove(i + 1);
 				length--;
 				i--;
 			}
 		}
+		JOptionPane.showMessageDialog(null,"Done.");
 	}
 	
 	public void printEventsByContact()
@@ -81,7 +91,7 @@ public class DiaryApp extends ContactsApp {
 			JOptionPane.showMessageDialog(null,s);
 	}
 	
-	public String printAllEvents()
+	public void printAllEvents()
 	{
 		String s = "";
 		int num = 1;
@@ -92,12 +102,21 @@ public class DiaryApp extends ContactsApp {
 		}
 		if (events.size() == 0)
 			s += "The diary is empty!";
-		return s;
+		JOptionPane.showMessageDialog(null,s);
 	}
 
 	@Override
 	public void contactRemoved(Contact contact) {
-	
+		int length = events.size();
+		for (int i = 0; i < length; i++)
+		{
+			if (events.get(i).getMissingDetail().equals(contact.getName()))
+			{
+				events.remove(i);
+				i--;
+				length--;
+			}
+		}
 	}
 	
 	public void addEvent()
@@ -115,6 +134,12 @@ public class DiaryApp extends ContactsApp {
 		if (searchEvent(DiaryEvent.formatDate(date1, time1)) != -1)
 		{
 			JOptionPane.showMessageDialog(null,"You already have an event on that time!");
+			return;
+		}
+		
+		if (Integer.parseInt(duration) <= 0 || Integer.parseInt(duration) > 60)
+		{
+			JOptionPane.showMessageDialog(null,"The duration of the meeting must be in range [1,60]!");
 			return;
 		}
 		
