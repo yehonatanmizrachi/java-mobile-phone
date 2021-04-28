@@ -16,7 +16,7 @@ public class DiaryApp extends ContactsApp {
 		int input=0;
 		
 		while (input != 7) {		
-			input = TestMobilePhone.SetStartingMenu("This is the Diary application\nPlease press:\n1- Add Event\n2- Remove Event\n3- Print all event in a specifiec date\n"
+			input = ToolsFuncs.SetStartingMenu("This is the Diary application\nPlease press:\n1- Add Event\n2- Remove Event\n3- Print all event in a specifiec date\n"
 					+ "4- Print meetings with contact\n5- Delete overlapping events\n6- Print all events \n7- Exit\n", 8, 7);
 			try {
 			switch(input)
@@ -156,7 +156,7 @@ public class DiaryApp extends ContactsApp {
 			return;
 		}
 		
-		int input = TestMobilePhone.SetStartingMenu("Enter:"
+		int input = ToolsFuncs.SetStartingMenu("Enter:"
 				+ "\n1- Add event with meeting\n2- Add event without meeting", 4, 3);
 		
 		DiaryEvent d = null;

@@ -4,11 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-//import java.util.HashSet;
 import java.util.Scanner;
-//import java.util.Set;
-
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 
@@ -36,7 +32,7 @@ public class PhoneBookApp extends ContactsApp {
 		// Check if the contact already exist
 		Contact check = this.search(name);
 		if(check != null) {
-			this.printError(check.getName()+" is already exists in phone book"); 
+			ToolsFuncs.printError(check.getName()+" is already exists in phone book"); 
 		}
 		else {
 			Contact newContact = new Contact(name, phoneNumber);
@@ -90,7 +86,7 @@ public class PhoneBookApp extends ContactsApp {
 	{
 		Contact foundcontact = super.search(name);
 		if (foundcontact == null)
-			this.printError("The contact " + name + " doesn't exist!");
+			ToolsFuncs.printError("The contact " + name + " doesn't exist!");
 		else {
 			JOptionPane.showMessageDialog(null, foundcontact);
 		}
@@ -183,16 +179,10 @@ public class PhoneBookApp extends ContactsApp {
 	// method that check if the Phone Book is empty or not 
 	public boolean isEmpty() {
 		if(ContactsApp.contacts.isEmpty()) {
-			this.printError("Your phone book is empty!");
+			ToolsFuncs.printError("Your phone book is empty!");
 			return true;
 		}
 		return false;
-	}
-	// method for print error message
-	private void printError(String msg) {
-		JDialog dialog = new JOptionPane(msg,
-				JOptionPane.ERROR_MESSAGE,JOptionPane.DEFAULT_OPTION).createDialog("ERROR"); 
-		dialog.setVisible(true);
 	}
 	
 	// print phone book method
@@ -322,7 +312,7 @@ public class PhoneBookApp extends ContactsApp {
 					this.addContact(name, phoneNumber);
 				}
 				catch(Exception e){
-					this.printError("Invalid phone number!");
+					ToolsFuncs.printError("Invalid phone number!");
 				}
 				break;
 			// remove contact
@@ -398,7 +388,7 @@ public class PhoneBookApp extends ContactsApp {
 				break;
 			// wrong input
 			default:
-				this.printError("Wrong input! Please try again.");
+				ToolsFuncs.printError("Wrong input! Please try again.");
 				break;
 			}
 		}
