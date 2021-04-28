@@ -1,6 +1,8 @@
 package src;
 
 import java.awt.Image;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -52,6 +54,13 @@ public class ToolsFuncs {
 		JDialog dialog = new JOptionPane(msg,
 				JOptionPane.ERROR_MESSAGE,JOptionPane.DEFAULT_OPTION).createDialog("ERROR"); 
 		dialog.setVisible(true);
+	}
+	
+	// method that swap 2 contacts in the ArrayList
+	public static void swapContacts(ArrayList<Contact> contacts,int i,int j) {
+		Contact temp = new Contact(contacts.get(j)); // create temp contact object
+		ContactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
+		ContactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
 	}
 }
 
