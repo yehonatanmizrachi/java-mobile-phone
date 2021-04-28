@@ -16,8 +16,8 @@ public abstract class Media {
 
 	@Override
 	public String toString() {
-		return "Media name: " + this.name +
-			   "\nMedia lenght: " + this.length;	
+		return "name: " + this.name + ", " +
+			   "lenght: " + this.length;	
 	}
 
 	@Override
@@ -29,24 +29,4 @@ public abstract class Media {
 		return this.name.equals(temp.name) && this.length == temp.length;
 	}
 
-	protected String getRandomEmoji() {
-
-		String[] emojiArr = {
-				"🤯",
-				"🤠",
-				"😎",
-				"😋",
-				"👾",
-				"🙃",
-				"😇",
-				"🥳",
-				"🤓",
-				"😈",
-				"🐱‍👤"
-		};
-		
-		int randomNum = ThreadLocalRandom.current().nextInt(0, emojiArr.length);		
-		return emojiArr[randomNum];
-
-	}
 }
