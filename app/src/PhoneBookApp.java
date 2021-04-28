@@ -191,205 +191,205 @@ public class PhoneBookApp extends ContactsApp {
 	}
 	
 	// swap phone book method
-		public void swapPhoneBook() {
-			int j = 0; 
-			if(!isEmpty()) {
-				// for loop that swap the i contact and the j contact in the arrayList
-				// i is running from the end to the beginning
-				// j is running from the beginning to the end
-				for(int i = (ContactsApp.contacts.size() - 1) ; i >j; i--) {
-					swapContacts(ContactsApp.contacts,i,j); 
-					j++;
-				}
+	public void swapPhoneBook() {
+		int j = 0; 
+		if(!isEmpty()) {
+			// for loop that swap the i contact and the j contact in the arrayList
+			// i is running from the end to the beginning
+			// j is running from the beginning to the end
+			for(int i = (ContactsApp.contacts.size() - 1) ; i >j; i--) {
+				swapContacts(ContactsApp.contacts,i,j); 
+				j++;
 			}
 		}
-		
-		// method that swap 2 contacts in the ArrayList
-		public static void swapContacts(ArrayList<Contact> contacts,int i,int j) {
-			Contact temp = new Contact(contacts.get(j)); // create temp contact object
-			ContactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
-			ContactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
-		}
-		
-		// method sort numeric
-		public void sortNumeric() {
-			if(!isEmpty()) {
-				QuicksortBS(ContactsApp.contacts,0,(ContactsApp.contacts.size()-1)); // calling method QuicksortBS
-			}
-		}
-		
-		// implement sort method that sort from big to small
-		// the sort is based on Quicksort
-		// Average running time - O(nlogn)
-		private void QuicksortBS(ArrayList<Contact> contacts,int p,int r) {
-			if(p<r) {
-				int q = PartitionBS(contacts,p,r);
-				QuicksortBS(contacts,p,q-1); 
-				QuicksortBS(contacts,q+1,r);
-			}
-		}
-		// implement PartitionBS function - this function is part of the QuicksortBS algorithm
-		// The function is making the sort based on the pivot - r
-		// and returning the - q 
-		private int PartitionBS(ArrayList<Contact> contacts,int p,int r) {
-			int x = contacts.get(r).getNumericVal();
-			int i = p-1;
-			for(int j = p; j<=r-1;j++) {
-				if(contacts.get(j).getNumericVal() > x) {
-					i = i+1;
-					swapContacts(contacts,i,j);
-				}
-			}
-			swapContacts(contacts,i+1,r);
-			return i+1;
-		}
-			
-		//add all contacts to a file named by the user
-		public void toFile(String fileName) throws IOException {
-			//open a writer
-			FileWriter myWriter = new FileWriter(fileName + ".txt");
-			//run over all contacts in the phonebook and write them to file
-			for (Contact contact : ContactsApp.contacts) {
-			    myWriter.write(contact.getName() + ' ' + contact.getPhoneNumber() + '\n');
-			}
-		    myWriter.close();
-		}
-
-		//read all contacts from a file named by user
-		public void fromFile(String fileName) throws IOException {
-			//open the file the user told us
-	        String userDirectory = new File(fileName).getAbsolutePath();
-			File file = new File(userDirectory +".txt");
-			Scanner scan = new Scanner(file);
-			while (scan.hasNextLine()) {
-				String str = scan.nextLine();
-				String[] strArray = str.split(" ",2);
-				addContact(strArray[0],strArray[1]);
-	        }
-
-			scan.close();
-		}
-		
-		@Override
-		public void run() throws IOException {
-			String name;
-			String phoneNumber;
-			int input = 0;
-			
-			while (input != 10)
-			{
-				String s = JOptionPane.showInputDialog("              Contacts\nPress:\n1- Add contact\n"
-						+ "2- Delete contact\n3- Print phone book\n"
-						+ "4- Search contact\n5- Sort by name\n6- Sort by phone number\n7- Reverse phonebook\n"
-						+ "8- Export phone book to text file\n9- Import phone book from text file\n10- Exit");
-
-				if(s != null) {
-					try {
-						input = Integer.parseInt(s);
-					}
-					// invalid input
-					catch(Exception e){
-						input = 12;
-					}
-				}
-				// cancel
-				else {input = 10;}
-
-				switch(input)
-				{
-				// add contact
-				case 1:
-					name = JOptionPane.showInputDialog("Enter full name\n");
-					if(name == null) {break;}
-					phoneNumber = JOptionPane.showInputDialog("Enter Phone number\n");
-					if(phoneNumber == null) {break;}
-					
-					String check = phoneNumber.replaceFirst("-", "");
-					try {
-						Integer.parseInt(check);
-						this.addContact(name, phoneNumber);
-					}
-					catch(Exception e){
-						this.printError("Invalid phone number!");
-					}
-					break;
-				// remove contact
-				case 2:
-					if(!this.isEmpty()) {
-						name = JOptionPane.showInputDialog("Enter full name\n");
-						if(name == null) {break;}
-						this.remove(name);
-						break;
-					}
-					break;
-				// print phone book
-				case 3:
-					if(!this.isEmpty()) {
-						this.printPhoneBook();
-						break;
-					}
-					break;
-				// search contact by name				
-				case 4:
-					if(!this.isEmpty()) {
-					name = JOptionPane.showInputDialog("Enter full name\n");
-					if(name == null) {break;}
-					this.searchContact(name);
-					break;
-					}
-					break;
-				// sort phone book by name				
-				case 5:
-					if(!this.isEmpty()) {
-					this.sortByName();
-					JOptionPane.showMessageDialog(null,"The phone Book has been sorted by increasing name.");
-					break;
-					}
-					break;
-				// sort phone book by phone number
-				case 6:
-					if(!this.isEmpty()) {
-					this.sortNumeric();
-					JOptionPane.showMessageDialog(null,"The phone Book has been sorted by decreasing phone Number.");
-					break;
-					}
-					break;
-				// reverse phone book
-				case 7:
-					if(!this.isEmpty()) {
-					this.swapPhoneBook();
-					JOptionPane.showMessageDialog(null,"The Phone Book has been successfully reversed.");
-					break;
-					}
-					break;
-				// export phone book to text file
-				case 8:
-					name = JOptionPane.showInputDialog("Enter name of text file:");
-					if(name == null) {break;}
-					this.toFile(name);
-					JOptionPane.showMessageDialog(null,"The Phone Book has been successfully exported to the file " + name + ".");
-					break;
-				// import phone book from text file 
-				case 9:
-					name = JOptionPane.showInputDialog("Enter name of text file:");
-					if(name == null) {break;}
-					try {
-						this.fromFile(name);
-						JOptionPane.showMessageDialog(null,"The Phone Book has been successfully imported from the file " + name + ".");
-					}
-					catch (Exception e) {
-						JOptionPane.showMessageDialog(null,e);
-					}
-					break;
-				// exit
-				case 10:
-					break;
-				// wrong input
-				default:
-					this.printError("Wrong input! Please try again.");
-					break;
-				}
-			}
-		}
-		
 	}
+		
+	// method that swap 2 contacts in the ArrayList
+	public static void swapContacts(ArrayList<Contact> contacts,int i,int j) {
+		Contact temp = new Contact(contacts.get(j)); // create temp contact object
+		ContactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
+		ContactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
+	}
+	
+	// method sort numeric
+	public void sortNumeric() {
+		if(!isEmpty()) {
+			QuicksortBS(ContactsApp.contacts,0,(ContactsApp.contacts.size()-1)); // calling method QuicksortBS
+		}
+	}
+	
+	// implement sort method that sort from big to small
+	// the sort is based on Quicksort
+	// Average running time - O(nlogn)
+	private void QuicksortBS(ArrayList<Contact> contacts,int p,int r) {
+		if(p<r) {
+			int q = PartitionBS(contacts,p,r);
+			QuicksortBS(contacts,p,q-1); 
+			QuicksortBS(contacts,q+1,r);
+		}
+	}
+	// implement PartitionBS function - this function is part of the QuicksortBS algorithm
+	// The function is making the sort based on the pivot - r
+	// and returning the - q 
+	private int PartitionBS(ArrayList<Contact> contacts,int p,int r) {
+		int x = contacts.get(r).getNumericVal();
+		int i = p-1;
+		for(int j = p; j<=r-1;j++) {
+			if(contacts.get(j).getNumericVal() > x) {
+				i = i+1;
+				swapContacts(contacts,i,j);
+			}
+		}
+		swapContacts(contacts,i+1,r);
+		return i+1;
+	}
+		
+	//add all contacts to a file named by the user
+	public void toFile(String fileName) throws IOException {
+		//open a writer
+		FileWriter myWriter = new FileWriter(fileName + ".txt");
+		//run over all contacts in the phonebook and write them to file
+		for (Contact contact : ContactsApp.contacts) {
+		    myWriter.write(contact.getName() + ' ' + contact.getPhoneNumber() + '\n');
+		}
+	    myWriter.close();
+	}
+
+	//read all contacts from a file named by user
+	public void fromFile(String fileName) throws IOException {
+		//open the file the user told us
+        String userDirectory = new File(fileName).getAbsolutePath();
+		File file = new File(userDirectory +".txt");
+		Scanner scan = new Scanner(file);
+		while (scan.hasNextLine()) {
+			String str = scan.nextLine();
+			String[] strArray = str.split(" ",2);
+			addContact(strArray[0],strArray[1]);
+        }
+
+		scan.close();
+	}
+	
+	@Override
+	public void run() throws IOException {
+		String name;
+		String phoneNumber;
+		int input = 0;
+		
+		while (input != 10)
+		{
+			String s = JOptionPane.showInputDialog("              Contacts\nPress:\n1- Add contact\n"
+					+ "2- Delete contact\n3- Print phone book\n"
+					+ "4- Search contact\n5- Sort by name\n6- Sort by phone number\n7- Reverse phonebook\n"
+					+ "8- Export phone book to text file\n9- Import phone book from text file\n10- Exit");
+
+			if(s != null) {
+				try {
+					input = Integer.parseInt(s);
+				}
+				// invalid input
+				catch(Exception e){
+					input = 12;
+				}
+			}
+			// cancel
+			else {input = 10;}
+
+			switch(input)
+			{
+			// add contact
+			case 1:
+				name = JOptionPane.showInputDialog("Enter full name\n");
+				if(name == null) {break;}
+				phoneNumber = JOptionPane.showInputDialog("Enter Phone number\n");
+				if(phoneNumber == null) {break;}
+				
+				String check = phoneNumber.replaceFirst("-", "");
+				try {
+					Integer.parseInt(check);
+					this.addContact(name, phoneNumber);
+				}
+				catch(Exception e){
+					this.printError("Invalid phone number!");
+				}
+				break;
+			// remove contact
+			case 2:
+				if(!this.isEmpty()) {
+					name = JOptionPane.showInputDialog("Enter full name\n");
+					if(name == null) {break;}
+					this.remove(name);
+					break;
+				}
+				break;
+			// print phone book
+			case 3:
+				if(!this.isEmpty()) {
+					this.printPhoneBook();
+					break;
+				}
+				break;
+			// search contact by name				
+			case 4:
+				if(!this.isEmpty()) {
+				name = JOptionPane.showInputDialog("Enter full name\n");
+				if(name == null) {break;}
+				this.searchContact(name);
+				break;
+				}
+				break;
+			// sort phone book by name				
+			case 5:
+				if(!this.isEmpty()) {
+				this.sortByName();
+				JOptionPane.showMessageDialog(null,"The phone Book has been sorted by increasing name.");
+				break;
+				}
+				break;
+			// sort phone book by phone number
+			case 6:
+				if(!this.isEmpty()) {
+				this.sortNumeric();
+				JOptionPane.showMessageDialog(null,"The phone Book has been sorted by decreasing phone Number.");
+				break;
+				}
+				break;
+			// reverse phone book
+			case 7:
+				if(!this.isEmpty()) {
+				this.swapPhoneBook();
+				JOptionPane.showMessageDialog(null,"The Phone Book has been successfully reversed.");
+				break;
+				}
+				break;
+			// export phone book to text file
+			case 8:
+				name = JOptionPane.showInputDialog("Enter name of text file:");
+				if(name == null) {break;}
+				this.toFile(name);
+				JOptionPane.showMessageDialog(null,"The Phone Book has been successfully exported to the file " + name + ".");
+				break;
+			// import phone book from text file 
+			case 9:
+				name = JOptionPane.showInputDialog("Enter name of text file:");
+				if(name == null) {break;}
+				try {
+					this.fromFile(name);
+					JOptionPane.showMessageDialog(null,"The Phone Book has been successfully imported from the file " + name + ".");
+				}
+				catch (Exception e) {
+					JOptionPane.showMessageDialog(null,e);
+				}
+				break;
+			// exit
+			case 10:
+				break;
+			// wrong input
+			default:
+				this.printError("Wrong input! Please try again.");
+				break;
+			}
+		}
+	}
+		
+}

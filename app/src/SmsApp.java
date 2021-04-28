@@ -9,8 +9,8 @@ import javax.swing.JOptionPane;
 public class SmsApp extends ContactsApp {
 
 	
-	Map<Contact,String> allSMS = new HashMap<Contact,String>();
-	
+	private Map<Contact,String> allSMS = new HashMap<Contact,String>();
+
 	
 	@Override
 	public void run() throws IOException {
