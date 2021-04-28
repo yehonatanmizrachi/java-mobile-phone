@@ -45,7 +45,7 @@ public class MediaApp implements App{
 					continue;
 				}
 				float length = this.parseFloatResult(result);
-				while(length == -1) {
+				while(length <= 0) {
 					result = JOptionPane.showInputDialog(ErrorMessage);
 					if (result == null) {
 						continue;
