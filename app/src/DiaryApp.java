@@ -53,6 +53,11 @@ public class DiaryApp extends ContactsApp {
 		}
 	}
 	
+	@Override
+	public String getAppContent() {
+		return "";
+	}
+	
 	public void printEventsByContact()
 	{
 		String contact_name = JOptionPane.showInputDialog("Enter name of contact:");

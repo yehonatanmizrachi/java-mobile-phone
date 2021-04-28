@@ -98,6 +98,11 @@ public class MediaApp implements App{
 		}
 	}
 
+	@Override
+	public String getAppContent() {
+		return "";
+	}
+	
 	public void addMedia(String name, float length, int type) {
 		if (type == MEDIA_TYPE.VIDEO.ordinal()) {
 			Media temp = new MusicMedia(name, length);

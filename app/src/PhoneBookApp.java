@@ -16,6 +16,11 @@ public class PhoneBookApp extends ContactsApp {
 
 	private ContactsApp[] contactsApps;
 
+	@Override
+	public String getAppContent() {
+		return "";
+	}
+
 	public PhoneBookApp(ContactsApp[] contactsApps) {
 		this.contactsApps = contactsApps;
 	}
@@ -217,7 +222,7 @@ public class PhoneBookApp extends ContactsApp {
 			QuicksortBS(ContactsApp.contacts,0,(ContactsApp.contacts.size()-1)); // calling method QuicksortBS
 		}
 	}
-	
+
 	// implement sort method that sort from big to small
 	// the sort is based on Quicksort
 	// Average running time - O(nlogn)

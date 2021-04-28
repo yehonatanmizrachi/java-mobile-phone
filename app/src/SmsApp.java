@@ -74,8 +74,11 @@ public class SmsApp extends ContactsApp {
 			}
 		}
 	}
-		
-	
+
+	@Override
+	public String getAppContent() {
+		return "";
+	}
 
 	@Override
 	public void contactRemoved(Contact contact) {
