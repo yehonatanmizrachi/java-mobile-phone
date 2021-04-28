@@ -53,29 +53,6 @@ public class DiaryApp extends ContactsApp {
 		}
 	}
 	
-	private void removeOverlapping()
-	{
-		int length = events.size();
-		Calendar cal1, cal2;
-		for (int i = 0; i < length - 1; i++)
-		{
-			cal1 = Calendar.getInstance();
-			cal2 = Calendar.getInstance();
-			cal1.setTime(events.get(i).event_date);
-			cal2.setTime(events.get(i + 1).event_date);
-			
-			if ((events.get(i).compareTo(events.get(i + 1)) == 0) || 
-					(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
-					 cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH) && ((events.get(i + 1).time_sec - events.get(i).time_sec)) < events.get(i).event_duration * 60))
-			{
-				events.remove(i + 1);
-				length--;
-				i--;
-			}
-		}
-		JOptionPane.showMessageDialog(null,"Done.");
-	}
-	
 	public void printEventsByContact()
 	{
 		String contact_name = JOptionPane.showInputDialog("Enter name of contact:");
@@ -118,6 +95,36 @@ public class DiaryApp extends ContactsApp {
 				length--;
 			}
 		}
+	}
+	
+	public int searchEvent(Date d)
+	{
+		int length = events.size();
+		for (int i = 0; i < length; i++)
+			if (events.get(i).event_date.toString().equals(d.toString()))
+				return i;
+		return -1;
+	}
+	
+	public void printEventsOnDate()
+	{
+		String meeting_date = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
+		
+		String[] day_month_year = meeting_date.split("-");
+		String s = "";
+		for (DiaryEvent ev : events)
+		{
+			Calendar c = Calendar.getInstance();
+			c.setTime(ev.event_date);
+			if (c.get(Calendar.YEAR) == Integer.parseInt(day_month_year[2]) && 
+					c.get(Calendar.MONTH) + 1 == Integer.parseInt(day_month_year[1]) && 
+					c.get(Calendar.DAY_OF_MONTH) == Integer.parseInt(day_month_year[0]))
+			{
+				s += "Event:\n" +  ev.toString() + "\n\n";
+			}
+		}
+		if (s == "") JOptionPane.showMessageDialog(null,"You don't have a meeting on this date!");
+		else JOptionPane.showMessageDialog(null,s);
 	}
 	
 	private void addEvent()
@@ -180,6 +187,29 @@ public class DiaryApp extends ContactsApp {
 			events.insertElementAt(d, i);
 	}
 	
+	private void removeOverlapping()
+	{
+		int length = events.size();
+		Calendar cal1, cal2;
+		for (int i = 0; i < length - 1; i++)
+		{
+			cal1 = Calendar.getInstance();
+			cal2 = Calendar.getInstance();
+			cal1.setTime(events.get(i).event_date);
+			cal2.setTime(events.get(i + 1).event_date);
+			
+			if ((events.get(i).compareTo(events.get(i + 1)) == 0) || 
+					(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+					 cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH) && ((events.get(i + 1).time_sec - events.get(i).time_sec)) < events.get(i).event_duration * 60))
+			{
+				events.remove(i + 1);
+				length--;
+				i--;
+			}
+		}
+		JOptionPane.showMessageDialog(null,"Done.");
+	}
+	
 	private void removeEvent()
 	{
 		String date1 = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
@@ -189,35 +219,5 @@ public class DiaryApp extends ContactsApp {
 			events.remove(index);
 		else
 			JOptionPane.showMessageDialog(null,"The event doesn't exist!");
-	}
-	
-	public int searchEvent(Date d)
-	{
-		int length = events.size();
-		for (int i = 0; i < length; i++)
-			if (events.get(i).event_date.toString().equals(d.toString()))
-				return i;
-		return -1;
-	}
-	
-	public void printEventsOnDate()
-	{
-		String meeting_date = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
-		
-		String[] day_month_year = meeting_date.split("-");
-		String s = "";
-		for (DiaryEvent ev : events)
-		{
-			Calendar c = Calendar.getInstance();
-			c.setTime(ev.event_date);
-			if (c.get(Calendar.YEAR) == Integer.parseInt(day_month_year[2]) && 
-					c.get(Calendar.MONTH) + 1 == Integer.parseInt(day_month_year[1]) && 
-					c.get(Calendar.DAY_OF_MONTH) == Integer.parseInt(day_month_year[0]))
-			{
-				s += "Event:\n" +  ev.toString() + "\n\n";
-			}
-		}
-		if (s == "") JOptionPane.showMessageDialog(null,"You don't have a meeting on this date!");
-		else JOptionPane.showMessageDialog(null,s);
 	}
 }
