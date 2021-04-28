@@ -1,7 +1,7 @@
 package src;
 
 
-public class Contact {
+public class Contact implements Comparable<Contact>{
 	
 	private String name, phoneNumber;
 	
@@ -56,5 +56,18 @@ public class Contact {
 		result = prime2 * result + this.name.hashCode();
 
 		return result;
+	}
+	
+	@Override
+	public int compareTo(Contact cont) {
+		
+		if(this.getName().compareToIgnoreCase(cont.getName()) < 0) {
+			return -1;
+		}
+		if(this.getName().compareToIgnoreCase(cont.getName()) == 0) {
+			return 0;
+		}
+		return 1;
+		
 	}
 }
