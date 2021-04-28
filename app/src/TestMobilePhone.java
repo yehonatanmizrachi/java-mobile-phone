@@ -4,6 +4,9 @@ import java.awt.Image;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 public class TestMobilePhone {
 	
@@ -28,9 +31,9 @@ public class TestMobilePhone {
 		application[APPS.MEDIA.ordinal()] = new MediaApp();
 
 		// prepare the main screen elements
-		ImageIcon mainPicture = TestMobilePhone.getMainPicture("appPic.png",390,110);
- 		String[] buttons = { "CONTACTS", "SMS", "DIARY", "MEDIA"};
-
+		ImageIcon mainPicture = TestMobilePhone.getMainPicture("appPic2.png",450,110);
+ 		String[] buttons = { "CONTACTS", "SMS", "DIARY", "MEDIA","Print All"};
+ 		int PrintAll = 5;
  		int appChosen = 0;
  		while(appChosen != -1) {
  			// display the phone main screen
@@ -38,12 +41,27 @@ public class TestMobilePhone {
  			 		JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, mainPicture, buttons,null);
  			// run
  			if (appChosen != -1) {
+ 				if(appChosen == PrintAll) {
+ 					PrintAll(application,4);
+ 					break;
+ 				}
  				application[appChosen].run();
  			}
  		}
 
  		JOptionPane.showMessageDialog(null, "Bye Bye ☺");
 
+	}
+	
+	private static void PrintAll(App[] application,int numOfApps) {
+		String allContent = null;
+		for (App app : application) {
+			allContent = allContent + app.getAppContent() + "\n";
+		}
+		JTextArea textArea = new JTextArea(allContent, 15,  30);
+	     JScrollPane sp = new JScrollPane(textArea);
+	     sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	     JOptionPane.showMessageDialog(null, sp);
 	}
 
 	private static ImageIcon getMainPicture(String picture,int x,int y) {
