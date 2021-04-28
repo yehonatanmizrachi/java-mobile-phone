@@ -7,7 +7,7 @@ import java.util.Calendar;
 public abstract class DiaryEvent implements Comparable<DiaryEvent> {
 	protected Date event_date;
 	protected int event_duration;
-	long time_sec;
+	protected long time_sec;
 	
 	public DiaryEvent(String meeting_date, String meeting_time, int event_duration)
 	{
