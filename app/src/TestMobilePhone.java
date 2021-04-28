@@ -18,7 +18,6 @@ public class TestMobilePhone {
 
 		// initialize the applications
 		App[] application = new App[APPS.values().length];
-		
 		ContactsApp smsApp = new SmsApp();
 		ContactsApp diaryApp = new DiaryApp();
 		ContactsApp[] contactsApps = { smsApp, diaryApp };
@@ -43,7 +42,7 @@ public class TestMobilePhone {
  			}
  		}
 
- 		JOptionPane.showMessageDialog(null, "Bye Bye ✪ ω ✪");
+ 		JOptionPane.showMessageDialog(null, "Bye Bye ג�× ֿ‰ ג�×");
 
 	}
 
@@ -53,5 +52,23 @@ public class TestMobilePhone {
 		Image modifiedpic = pic2.getScaledInstance(x, y, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(modifiedpic);
 	}
-
+	
+	public static int SetStartingMenu(String message, int invalid_num, int cancel_num)
+	{
+		String s = JOptionPane.showInputDialog(message);
+		int input = 0;
+		
+		if(s != null) {
+			try {
+				input = Integer.parseInt(s);
+			}
+			// invalid input
+			catch(Exception e){
+				input = invalid_num;
+			}
+		}
+		// cancel
+		else {input = cancel_num;}
+		return input;
+	}
 }
