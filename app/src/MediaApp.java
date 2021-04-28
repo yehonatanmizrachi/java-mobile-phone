@@ -16,7 +16,7 @@ public class MediaApp implements App{
 		int input = 0;
 
 		while (input != MENU.EXIT.ordinal()) {
-
+			
 			String result = JOptionPane.showInputDialog(this.getMenu());
 
 			input = this.parseIntResult(result) - 1;
@@ -36,6 +36,10 @@ public class MediaApp implements App{
 				if (result == null) {
 					continue;
 				}
+				if (result.equals("")) {
+					JOptionPane.showMessageDialog(null, ErrorMessage);
+					continue;
+				}
 				String name = result;
 
 				// get media length
@@ -45,12 +49,9 @@ public class MediaApp implements App{
 					continue;
 				}
 				float length = this.parseFloatResult(result);
-				while(length <= 0) {
-					result = JOptionPane.showInputDialog(ErrorMessage);
-					if (result == null) {
-						continue;
-					}
-					length = this.parseFloatResult(result);
+				if(length <= 0) {
+					JOptionPane.showMessageDialog(null, ErrorMessage);
+					continue;
 				}
 
 				// add
@@ -100,10 +101,22 @@ public class MediaApp implements App{
 
 	@Override
 	public String getAppContent() {
-		return "";
+		String result = "Media app content:\n";
+		
+		if (this.mediaList.size() == 0) {
+			return result + "the media list is empty :(\n";
+		}
+		
+		int i=0;
+		for (Media media: this.mediaList) {
+			result += "\t" + (i+1) + ": " + media.toString() + "\n";
+			i++;
+		}
+
+		return result;
 	}
-	
-	public void addMedia(String name, float length, int type) {
+
+	private void addMedia(String name, float length, int type) {
 		if (type == MEDIA_TYPE.VIDEO.ordinal()) {
 			Media temp = new MusicMedia(name, length);
 			mediaList.add(temp);
@@ -114,7 +127,7 @@ public class MediaApp implements App{
 		}
 	}
 
-	public String playMediaByName(String name) {
+	private String playMediaByName(String name) {
 		for(Media temp : this.mediaList) {
 			if (temp.name.equals(name)) {
 				return temp.play();
@@ -125,7 +138,7 @@ public class MediaApp implements App{
 	}
 
 
-	public String playAll() {
+	private String playAll() {
 		if (this.mediaList.size() == 0) {
 			return null;
 		}

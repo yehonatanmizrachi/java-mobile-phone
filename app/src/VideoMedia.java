@@ -9,13 +9,12 @@ public class VideoMedia extends Media{
 	@Override
 	public String play() {
 		return "The video \"" + this.name + "\" " + 
-				"is now playing for " + this.length + " minutes... ▶ " + 
-				super.getRandomEmoji();
+				"is now playing for " + this.length + " minutes... ▶ ";
 	}
 	
 	@Override
 	public String toString() {
-		return super.toString() + "\nMedia type: Video";
+		return super.toString() + ", type: video";
 	}
 
 }
