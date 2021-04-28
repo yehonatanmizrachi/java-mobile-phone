@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -93,78 +94,8 @@ public class PhoneBookApp extends ContactsApp {
 		}
 	}
 	
-	
-	/* Function that sorts the array in lexicographically by names.
-	 * Uses merge-sort.
-	 * Average running time - O(nlogn)*/
-	public void sortByName()
-	{
-		if (ContactsApp.contacts.size() > 1)
-			mergeSort(0, ContactsApp.contacts.size() - 1);
-	}
-	
-	// Split the array to two parts from the middle, sort every part and merge them at the end.
-	private void mergeSort(int l, int r)
-	{
-		if (l < r)
-		{
-			int q = (l + r) / 2;
-			mergeSort(l, q);
-			mergeSort(q + 1, r);
-			merge(l, q, r);
-		}
-	}
-	
-	// Get two sorted arrays and combined them into one array.
-	// Using merge algorithm
-	private void merge(int l, int q, int r)
-	{
-		ArrayList<Contact> temp1 = new ArrayList<Contact>();
-		ArrayList<Contact> temp2 = new ArrayList<Contact>();
-		
-		int len1 = q - l + 1;
-		int len2 = r - (q + 1) + 1;
-		
-		for (int i = l; i < q + 1; i++)
-			temp1.add(new Contact(ContactsApp.contacts.get(i)));
-		for (int i = q + 1; i < r + 1; i++)
-			temp2.add(new Contact(ContactsApp.contacts.get(i)));
-		
-		int i = l;
-		int i1 = 0;
-		int i2 = 0;
-		while (i1 < len1 && i2 < len2)
-		{
-			// Compare names by alphabetical order
-			if (temp1.get(i1).getName().compareToIgnoreCase(temp2.get(i2).getName()) <= 0)
-			{
-				ContactsApp.contacts.add(i, temp1.get(i1));
-				i1++;
-			}
-			else
-			{
-				ContactsApp.contacts.add(i, temp2.get(i2));
-				i2++;
-			}
-			
-			ContactsApp.contacts.remove(i + 1);
-			i++;
-		}
-		
-		while (i1 < len1)
-		{
-			ContactsApp.contacts.add(i, temp1.get(i1));
-			ContactsApp.contacts.remove(i + 1);
-			i1++;
-			i++;
-		}
-		while (i2 < len2)
-		{
-			ContactsApp.contacts.add(i, temp2.get(i2));
-			ContactsApp.contacts.remove(i + 1);
-			i2++;
-			i++;
-		}
+	public void sortByName() {
+		Collections.sort(ContactsApp.contacts);
 	}
 	
 	@Override
@@ -204,18 +135,12 @@ public class PhoneBookApp extends ContactsApp {
 			// i is running from the end to the beginning
 			// j is running from the beginning to the end
 			for(int i = (ContactsApp.contacts.size() - 1) ; i >j; i--) {
-				swapContacts(ContactsApp.contacts,i,j); 
+				ToolsFuncs.swapContacts(ContactsApp.contacts,i,j); 
 				j++;
 			}
 		}
 	}
 		
-	// method that swap 2 contacts in the ArrayList
-	public static void swapContacts(ArrayList<Contact> contacts,int i,int j) {
-		Contact temp = new Contact(contacts.get(j)); // create temp contact object
-		ContactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
-		ContactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
-	}
 	
 	// method sort numeric
 	public void sortNumeric() {
@@ -227,7 +152,7 @@ public class PhoneBookApp extends ContactsApp {
 	// implement sort method that sort from big to small
 	// the sort is based on Quicksort
 	// Average running time - O(nlogn)
-	private void QuicksortBS(ArrayList<Contact> contacts,int p,int r) {
+	public void QuicksortBS(ArrayList<Contact> contacts,int p,int r) {
 		if(p<r) {
 			int q = PartitionBS(contacts,p,r);
 			QuicksortBS(contacts,p,q-1); 
@@ -243,10 +168,10 @@ public class PhoneBookApp extends ContactsApp {
 		for(int j = p; j<=r-1;j++) {
 			if(contacts.get(j).getNumericVal() > x) {
 				i = i+1;
-				swapContacts(contacts,i,j);
+				ToolsFuncs.swapContacts(contacts,i,j);
 			}
 		}
-		swapContacts(contacts,i+1,r);
+		ToolsFuncs.swapContacts(contacts,i+1,r);
 		return i+1;
 	}
 		
