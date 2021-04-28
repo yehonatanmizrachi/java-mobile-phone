@@ -15,14 +15,21 @@ import javax.swing.JOptionPane;
 public class PhoneBookApp extends ContactsApp {
 
 	private ContactsApp[] contactsApps;
+	
+	public PhoneBookApp(ContactsApp[] contactsApps) {
+		this.contactsApps = contactsApps;
+	}
 
 	@Override
 	public String getAppContent() {
-		return "";
-	}
-
-	public PhoneBookApp(ContactsApp[] contactsApps) {
-		this.contactsApps = contactsApps;
+		String allContent = "Phone Book: \n";
+		if(ContactsApp.contacts.isEmpty()) {
+			allContent = allContent + "Phone book is Empty"+ "\n";
+		}
+		else {
+			allContent = allContent + this.toString();
+		}
+		return allContent;
 	}
 
 	public void addContact(String name, String phoneNumber) {

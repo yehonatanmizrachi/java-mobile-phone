@@ -33,7 +33,7 @@ public class TestMobilePhone {
 		// prepare the main screen elements
 		ImageIcon mainPicture = TestMobilePhone.getMainPicture("appPic2.png",450,110);
  		String[] buttons = { "CONTACTS", "SMS", "DIARY", "MEDIA","Print All"};
- 		int PrintAll = 5;
+ 		int PrintAll = 4;
  		int appChosen = 0;
  		while(appChosen != -1) {
  			// display the phone main screen
@@ -42,8 +42,8 @@ public class TestMobilePhone {
  			// run
  			if (appChosen != -1) {
  				if(appChosen == PrintAll) {
- 					PrintAll(application,4);
- 					break;
+ 					PrintAll(application);
+ 					continue;
  				}
  				application[appChosen].run();
  			}
@@ -53,15 +53,16 @@ public class TestMobilePhone {
 
 	}
 	
-	private static void PrintAll(App[] application,int numOfApps) {
+	private static void PrintAll(App[] application) {
 		String allContent = null;
-		for (App app : application) {
-			allContent = allContent + app.getAppContent() + "\n";
-		}
+//		for (App app : application) {
+//			allContent = allContent + app.getAppContent() + "\n";
+//		}
+		allContent = application[0].getAppContent();
 		JTextArea textArea = new JTextArea(allContent, 15,  30);
-	     JScrollPane sp = new JScrollPane(textArea);
-	     sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	     JOptionPane.showMessageDialog(null, sp);
+	    JScrollPane sp = new JScrollPane(textArea);
+	    sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	    JOptionPane.showMessageDialog(null, sp);
 	}
 
 	private static ImageIcon getMainPicture(String picture,int x,int y) {
