@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public interface App {
 	
-	void run() throws IOException;
-	
+	public void run() throws IOException;	
+	public String getAppContent();
+
 }
