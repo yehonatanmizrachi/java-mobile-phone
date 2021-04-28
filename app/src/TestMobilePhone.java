@@ -42,7 +42,7 @@ public class TestMobilePhone {
  			}
  		}
 
- 		JOptionPane.showMessageDialog(null, "Bye Bye ג�× ֿ‰ ג�×");
+ 		JOptionPane.showMessageDialog(null, "Bye Bye 😀");
 
 	}
 
