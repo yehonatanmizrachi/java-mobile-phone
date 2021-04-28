@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -18,7 +19,7 @@ public class PhoneBookApp extends ContactsApp {
 
 	@Override
 	public String getAppContent() {
-		String allContent = "Phone Book: \n";
+		String allContent = "Contacts: \n";
 		if(ContactsApp.contacts.isEmpty()) {
 			allContent = allContent + "Phone book is Empty"+ "\n";
 		}
@@ -91,6 +92,7 @@ public class PhoneBookApp extends ContactsApp {
 			JOptionPane.showMessageDialog(null, foundcontact);
 		}
 	}
+	
 	
 	/* Function that sorts the array in lexicographically by names.
 	 * Uses merge-sort.
@@ -188,7 +190,9 @@ public class PhoneBookApp extends ContactsApp {
 	// print phone book method
 	public void printPhoneBook() {
 		if(!this.isEmpty()) {
-			JOptionPane.showMessageDialog(null,this);
+			App[] forPrint = new App[1];
+			forPrint[0] = this;
+			ToolsFuncs.PrintAll(forPrint);
 		}
 	}
 	
@@ -234,7 +238,7 @@ public class PhoneBookApp extends ContactsApp {
 	// The function is making the sort based on the pivot - r
 	// and returning the - q 
 	private int PartitionBS(ArrayList<Contact> contacts,int p,int r) {
-		int x = contacts.get(r).getNumericVal();
+		Long x = contacts.get(r).getNumericVal();
 		int i = p-1;
 		for(int j = p; j<=r-1;j++) {
 			if(contacts.get(j).getNumericVal() > x) {
@@ -308,7 +312,7 @@ public class PhoneBookApp extends ContactsApp {
 				
 				String check = phoneNumber.replaceFirst("-", "");
 				try {
-					Integer.parseInt(check);
+					Long.parseLong(check);
 					this.addContact(name, phoneNumber);
 				}
 				catch(Exception e){

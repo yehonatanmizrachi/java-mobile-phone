@@ -9,8 +9,8 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 public class ToolsFuncs {
-	static void PrintAll(App[] application) {
-		String allContent = null;
+	public static void PrintAll(App[] application) {
+		String allContent = "";
 		for (App app : application) {
 			allContent = allContent + app.getAppContent() + "\n";
 		}
@@ -21,7 +21,7 @@ public class ToolsFuncs {
 	    JOptionPane.showMessageDialog(null, sp);
 	}
 
-	static ImageIcon getMainPicture(String picture,int x,int y) {
+	public static ImageIcon getMainPicture(String picture,int x,int y) {
 		ImageIcon pic = new ImageIcon(picture);
 		Image pic2 = pic.getImage();
 		Image modifiedpic = pic2.getScaledInstance(x, y, java.awt.Image.SCALE_SMOOTH);
@@ -48,7 +48,7 @@ public class ToolsFuncs {
 	}
 	
 	// method for print error message
-	static void printError(String msg) {
+	public static void printError(String msg) {
 		JDialog dialog = new JOptionPane(msg,
 				JOptionPane.ERROR_MESSAGE,JOptionPane.DEFAULT_OPTION).createDialog("ERROR"); 
 		dialog.setVisible(true);

@@ -27,9 +27,9 @@ public class Contact {
 	
 
 	// transfer the phone number to numeric integer (removing the beginning '0' and the '-')
-	public int getNumericVal() {
+	public Long getNumericVal() {
 		String s = this.phoneNumber.replace("-", "");
-		return Integer.parseInt(s);
+		return Long.parseLong(s);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class Contact {
 		final int prime2 = 19;
 
 		int result = 1;
-		result = prime * result + this.getNumericVal();
+		result = (int) (prime * result + this.getNumericVal());
 		result = prime2 * result + this.name.hashCode();
 
 		return result;
