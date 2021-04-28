@@ -42,11 +42,7 @@ public class SmsApp extends ContactsApp {
 					if(name == null) {break;}
 					message = JOptionPane.showInputDialog("Enter message to add\n");
 					if(message == null) {break;}		
-					if(this.addSMStoContact(this.search(name), message))
-					{
-						JOptionPane.showMessageDialog(null,"SMS has added successfully");
-					}
-					else {JOptionPane.showMessageDialog(null,"Sorry, there is not contact with this name");}
+					JOptionPane.showMessageDialog(null,this.addSMStoContact(this.search(name), message));
 					break;
 				case 2:
 					name = JOptionPane.showInputDialog("Enter contact`s name\n");
@@ -82,28 +78,25 @@ public class SmsApp extends ContactsApp {
 
 	@Override
 	public void contactRemoved(Contact contact) {
-       // run over allSMS and delete if the contact asked to remove has sms`s in app.
-       for (Map.Entry<Contact,String> entry : allSMS.entrySet()) {
-		    if (entry.getKey().equals(contact)) {	
-				allSMS.remove(contact);
-		    }
-       }
+			allSMS.remove(contact);
 	}
 	
 	
-	public Boolean addSMStoContact(Contact contact,String SMS) {
+	public String addSMStoContact(Contact contact,String SMS) {
 		if (contact == null) {
-			return false;
+			return "Sorry, there is not contact with this name";
 		}
+		if (SMS.equals(""))
+			return "Sorry, SMS must have something in it"; 
 		if (!(allSMS.containsKey(contact))) {
 			allSMS.put(contact,SMS);
-			return true;
+			return "SMS has added successfully";
 		}
 		else {
 			String oldValue = allSMS.get(contact);
 			allSMS.put(contact,oldValue+"\n"+SMS);
 			}
-		return true;
+		return "You guys talking a lot I see.. SMS has added";
 		}
 	
 	
