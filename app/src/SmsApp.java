@@ -83,7 +83,7 @@ public class SmsApp extends ContactsApp {
 		if (contact == null) {
 			return "Sorry, there is not contact with this name";
 		}
-		if (SMS == null || SMS == "")
+		if (SMS.equals(""))
 			return "Sorry, SMS must have something in it"; 
 		if (!(allSMS.containsKey(contact))) {
 			allSMS.put(contact,SMS);
