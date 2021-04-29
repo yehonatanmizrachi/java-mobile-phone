@@ -19,6 +19,9 @@ public abstract class DiaryEvent implements Comparable<DiaryEvent> {
 	
 	public abstract String getMissingDetail();
 	
+	/* format string of date in form: "xx-xx-xxxx" and string of time in form "xx:xx:xx" to
+	   to Date object and return it.
+	*/
 	public static Date formatDate(String meeting_date, String meeting_time)
 	{
 		Calendar c = Calendar.getInstance();

@@ -37,7 +37,7 @@ public class DiaryApp extends ContactsApp {
 					removeOverlapping();
 					break;
 				case 6:
-					printAllEvents();
+					ToolsFuncs.PrintScroll(getAppContent());
 					break;
 				case 7:
 					break;
@@ -54,29 +54,9 @@ public class DiaryApp extends ContactsApp {
 	}
 	
 	@Override
-	public String getAppContent() {
-		return "";
-	}
-	
-	public void printEventsByContact()
+	public String getAppContent()
 	{
-		String contact_name = JOptionPane.showInputDialog("Enter name of contact:");
-		String s = "";
-		
-		for (DiaryEvent ev : events)
-		{
-			if (ev.getMissingDetail().equals(contact_name))
-				s += "Event: \n" + ev.toString() + "\n\n";
-		}
-		if (s == "")
-			JOptionPane.showMessageDialog(null,"There is no meetings with this contact!");
-		else
-			JOptionPane.showMessageDialog(null,s);
-	}
-	
-	public void printAllEvents()
-	{
-		String s = "";
+		String s = "Diary app content:\n";
 		int num = 1;
 		for (DiaryEvent d : events)
 		{
@@ -84,8 +64,8 @@ public class DiaryApp extends ContactsApp {
 			num++;
 		}
 		if (events.size() == 0)
-			s += "The diary is empty!";
-		JOptionPane.showMessageDialog(null,s);
+			s += "The diary is empty!\n";
+		return s;
 	}
 
 	@Override
@@ -102,7 +82,23 @@ public class DiaryApp extends ContactsApp {
 		}
 	}
 	
-	public int searchEvent(Date d)
+	private void printEventsByContact()
+	{
+		String contact_name = JOptionPane.showInputDialog("Enter name of contact:");
+		String s = "";
+		
+		for (DiaryEvent ev : events)
+		{
+			if (ev.getMissingDetail().equals(contact_name))
+				s += "Event: \n" + ev.toString() + "\n\n";
+		}
+		if (s == "")
+			JOptionPane.showMessageDialog(null,"There is no meetings with this contact!");
+		else
+			ToolsFuncs.PrintScroll(s);
+	}
+	
+	private int searchEvent(Date d)
 	{
 		int length = events.size();
 		for (int i = 0; i < length; i++)
@@ -111,7 +107,7 @@ public class DiaryApp extends ContactsApp {
 		return -1;
 	}
 	
-	public void printEventsOnDate()
+	private void printEventsOnDate()
 	{
 		String meeting_date = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
 		
@@ -129,7 +125,7 @@ public class DiaryApp extends ContactsApp {
 			}
 		}
 		if (s == "") JOptionPane.showMessageDialog(null,"You don't have a meeting on this date!");
-		else JOptionPane.showMessageDialog(null,s);
+		else ToolsFuncs.PrintScroll(s);
 	}
 	
 	private void addEvent()
@@ -143,6 +139,11 @@ public class DiaryApp extends ContactsApp {
 		date1 = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
 		time1 = JOptionPane.showInputDialog("Enter time (format: \"hour:minute:seconds\"):");
 		duration = JOptionPane.showInputDialog("Enter duration of event:");
+		if (date1 == null || time1 == null || duration == null)
+		{
+			JOptionPane.showMessageDialog(null,"You did something wrong! :(");
+			return;
+		}
 		
 		if (searchEvent(DiaryEvent.formatDate(date1, time1)) != -1)
 		{
