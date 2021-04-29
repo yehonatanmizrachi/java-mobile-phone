@@ -121,9 +121,7 @@ public class PhoneBookApp extends ContactsApp {
 	// print phone book method
 	public void printPhoneBook() {
 		if(!this.isEmpty()) {
-			App[] forPrint = new App[1];
-			forPrint[0] = this;
-			ToolsFuncs.PrintAll(forPrint);
+			ToolsFuncs.PrintScroll(this.toString());
 		}
 	}
 	

@@ -10,14 +10,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-public class ToolsFuncs {
-	public static void PrintAll(App[] application) {
-		String allContent = "";
-		for (App app : application) {
-			allContent = allContent + app.getAppContent() + "\n";
-		}
-//		allContent = application[0].getAppContent();
-		JTextArea textArea = new JTextArea(allContent, 15,  30);
+public abstract class ToolsFuncs {
+	// takes a string message and prints it in a scrolled window bar.
+	public static void PrintScroll(String message) {
+		JTextArea textArea = new JTextArea(message, 15,  30);
 	    JScrollPane sp = new JScrollPane(textArea);
 	    sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	    JOptionPane.showMessageDialog(null, sp);
@@ -30,6 +26,9 @@ public class ToolsFuncs {
 		return new ImageIcon(modifiedpic);
 	}
 	
+	/* set window of multiple options and wait for user's input and check if the
+	   input is invalid or cancel or valid.
+	*/
 	public static int SetStartingMenu(String message, int invalid_num, int cancel_num)
 	{
 		String s = JOptionPane.showInputDialog(message);

@@ -38,7 +38,11 @@ public class TestMobilePhone {
  			// run
  			if (appChosen != -1) {
  				if(appChosen == PrintAll) {
- 					ToolsFuncs.PrintAll(application);
+ 					String allContent = "";
+ 					for (App app : application) {
+ 						allContent = allContent + app.getAppContent() + "\n";
+ 					}
+ 					ToolsFuncs.PrintScroll(allContent);
  					continue;
  				}
  				application[appChosen].run();
