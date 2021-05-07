@@ -9,12 +9,12 @@ public class MusicMedia extends Media{
 	@Override
 	public String play() {
 		return "The song \"" + this.name + "\" " + 
-				"is now playing for " + this.length + " minutes... ♪♪♪ ";
+				"is now playing for " + this.length + " minutes...";
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + ", type: music";
+		return super.toString() + ", Type: music";
 	}
 
 }

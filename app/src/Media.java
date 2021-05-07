@@ -1,5 +1,4 @@
 package src;
-import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Media {
 
@@ -16,8 +15,8 @@ public abstract class Media {
 
 	@Override
 	public String toString() {
-		return "name: " + this.name + ", " +
-			   "lenght: " + this.length;	
+		return "Name: " + this.name + ", " +
+			   "Lenght: " + this.length;	
 	}
 
 	@Override
