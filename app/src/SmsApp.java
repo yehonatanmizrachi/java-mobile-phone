@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 public class SmsApp extends ContactsApp {
 
-	
+	//Map of all SMS with their contacts
 	private Map<Contact,String> allSMS = new HashMap<Contact,String>();
 
 	
@@ -20,21 +20,11 @@ public class SmsApp extends ContactsApp {
 		String sentence;
 		while (input != 6) {
 			
-			String s = JOptionPane.showInputDialog("This is the SMS application\nPlease press:\n1- Add message to contact\n2- Delete messages with contact\n"
+			//menu
+			input = ToolsFuncs.SetStartingMenu("This is the SMS application\nPlease press:\n1- Add message to contact\n2- Delete messages with contact\n"
 					+ "3- Print all messages with specific contact\n4- Print all contacts that has your sentense in thier messages\n5- Print all messages\n"
-					+ "6- Exit\n");
-		
-			if(s != null) {
-				try {
-					input = Integer.parseInt(s);
-				}
-				// invalid input
-				catch(Exception e){
-					input = 7;
-				}
-			}
-			else {input = 6;}
-			
+					+ "6- Exit\n",7,6);
+	
 			switch(input)
 			{
 				case 1:
@@ -60,7 +50,7 @@ public class SmsApp extends ContactsApp {
 					JOptionPane.showMessageDialog(null,this.printNames(sentence));
 					break;
 				case 5:
-					JOptionPane.showMessageDialog(null,this.printAllSMS());
+					ToolsFuncs.PrintScroll(PrintAll());
 					break;
 				case 6:
 					break;
@@ -71,11 +61,8 @@ public class SmsApp extends ContactsApp {
 		}
 	}
 
-	@Override
-	public String getAppContent() {
-		return "";
-	}
-
+	
+	//remove contact from map
 	@Override
 	public void contactRemoved(Contact contact) {
 			allSMS.remove(contact);
@@ -86,21 +73,25 @@ public class SmsApp extends ContactsApp {
 		if (contact == null) {
 			return "Sorry, there is not contact with this name";
 		}
+		//ignore empty SMS
 		if (SMS.equals(""))
 			return "Sorry, SMS must have something in it"; 
+		//if contact is not exist already add his SMS to map
 		if (!(allSMS.containsKey(contact))) {
 			allSMS.put(contact,SMS);
 			return "SMS has added successfully";
 		}
+		//contact already exist, so add new SMS to the old SMS
 		else {
 			String oldValue = allSMS.get(contact);
 			allSMS.put(contact,oldValue+"\n"+SMS);
 			}
-		return "You guys talking a lot I see.. SMS has added";
+		return "You guys talking a lot.. SMS has added";
 		}
 	
 	
 	public String printSMS(Contact contact) {
+		//if contact is not in map -> no SMS with him
 	    if (!allSMS.containsKey(contact)) {
 	    	return "There are no message with this Contact";
 	    }
@@ -111,7 +102,9 @@ public class SmsApp extends ContactsApp {
 	
 	public String printNames(String text) {
 		String names = "";
+		//iterate over map
 	    for (Map.Entry<Contact,String> entry : allSMS.entrySet()) {
+	    	//if value(SMS) contains the text we add its key(contact) to the string of names
 	    	if(entry.getValue().contains(text))
 	    		names += entry.getKey().getName() + "\n";
 	    }
@@ -121,11 +114,13 @@ public class SmsApp extends ContactsApp {
 	}
 
 
-	public String printAllSMS() {
+	public String PrintAll() {
 		String allMessages = "";
 		String name = "";
+		//if map is empty = no SMS
 		if (allSMS.isEmpty())
-			return "There are no messages";
+			return "The SMS app is empty";
+		//iterate over map and and print all keys+values (contact+SMS)
 	    for (Map.Entry<Contact,String> entry : allSMS.entrySet()) {
 	    	name = entry.getKey().getName();
 	        allMessages += name+ ":\n" + entry.getValue() + "\n";
@@ -133,6 +128,13 @@ public class SmsApp extends ContactsApp {
 		return allMessages;
 	}
 	
+	@Override
+	public String getAppContent()
+	{
+		String s = "\nSMS app content:\n";
+		s = s + PrintAll() + "\n";
+		return s;
+	}
 	
 	
 }
