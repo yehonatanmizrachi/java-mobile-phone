@@ -11,7 +11,7 @@ public class MediaApp implements App{
 
 	public void run() {
 		
-		String ErrorMessage = "Invalid input. Please try again.";
+		String errorMessage = "Invalid input. Please try again.";
 		String message;
 		int input = 0;
 
@@ -37,7 +37,7 @@ public class MediaApp implements App{
 					continue;
 				}
 				if (result.equals("")) {
-					JOptionPane.showMessageDialog(null, ErrorMessage);
+					ToolsFuncs.printError(errorMessage);
 					continue;
 				}
 				String name = result;
@@ -50,13 +50,13 @@ public class MediaApp implements App{
 				}
 				float length = this.parseFloatResult(result);
 				if(length <= 0) {
-					JOptionPane.showMessageDialog(null, ErrorMessage);
+					ToolsFuncs.printError(errorMessage);
 					continue;
 				}
 
 				// add
 				this.addMedia(name, length, chosenMedia);
-				message = "The " + type + " \"" + name + "\" has been added successfully ✔";
+				message = "The " + type + " \"" + name + "\" has been added successfully";
 				JOptionPane.showMessageDialog(null, message);
 			}
 			else if (input == MENU.PLAY_BY_NAME.ordinal()) {
@@ -69,7 +69,7 @@ public class MediaApp implements App{
 				
 				String playingMedia = this.playMediaByName(result);
 				if (playingMedia == null) {
-					message = "The file \"" + result + "\" doesn't exist ⚆_⚆";
+					message = "The file \"" + result + "\" doesn't exist!";
 				} 
 				else {
 					message = playingMedia;
@@ -82,19 +82,19 @@ public class MediaApp implements App{
 
 				String playingMedia = this.playAll();
 				if (playingMedia == null) {
-					message = "The media list is empty. There is nothing to play Y.Y";
+					message = "The media list is empty. There is nothing to play :(";
 				}
 				else {
 					message = playingMedia;
 				}
 
-				JOptionPane.showMessageDialog(null, message);
+				ToolsFuncs.PrintScroll(message);
 			}
 			else if (input == MENU.EXIT.ordinal()) {
 				return;
 			}
 			else {
-				JOptionPane.showMessageDialog(null, ErrorMessage);
+				ToolsFuncs.printError(errorMessage);
 			}
 		}
 	}
@@ -104,12 +104,12 @@ public class MediaApp implements App{
 		String result = "Media app content:\n";
 		
 		if (this.mediaList.size() == 0) {
-			return result + "the media list is empty :(\n";
+			return result + "The media list is empty :(\n";
 		}
 		
 		int i=0;
 		for (Media media: this.mediaList) {
-			result += "\t" + (i+1) + ": " + media.toString() + "\n";
+			result += (i+1) + ": " + media.toString() + "\n";
 			i++;
 		}
 
@@ -180,7 +180,7 @@ public class MediaApp implements App{
 	}
 
 	private String getMenu() {
-		return "Welcome to the media app 😎\n\nMenu:\n" + 
+		return "Welcome to the media app :)\n\nMenu:\n" + 
 			   "1: Add media\n" +	
 			   "2: Play media by name\n" +
 			   "3: Play all the media list(video and music)\n" + 
