@@ -7,11 +7,14 @@ import java.util.ArrayList;
 //import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
+
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
 public class PhoneBookApp extends ContactsApp {
 
+	//private static final int "PLAIN_MESSAGE" = 0;
 	private ContactsApp[] contactsApps;
 	
 	public PhoneBookApp(ContactsApp[] contactsApps) {
@@ -207,10 +210,13 @@ public class PhoneBookApp extends ContactsApp {
 		
 		while (input != 10)
 		{
-			String s = JOptionPane.showInputDialog("              Contacts\nPress:\n1- Add contact\n"
+			ImageIcon contactsPic = ToolsFuncs.getMainPicture("Pic/CONTACTS.png",80,80);
+			String questions = "Contacts\nPress:\n1- Add contact\n"
 					+ "2- Delete contact\n3- Print phone book\n"
 					+ "4- Search contact\n5- Sort by name\n6- Sort by phone number\n7- Reverse phonebook\n"
-					+ "8- Export phone book to text file\n9- Import phone book from text file\n10- Exit");
+					+ "8- Export phone book to text file\n9- Import phone book from text file\n10- Exit";
+			String s = (String) JOptionPane.showInputDialog(null, questions, "CONTACTS", JOptionPane.INFORMATION_MESSAGE, contactsPic, null,null );
+			
 
 			if(s != null) {
 				try {

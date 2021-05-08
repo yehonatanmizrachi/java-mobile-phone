@@ -2,6 +2,7 @@ package src;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
@@ -16,9 +17,8 @@ public class MediaApp implements App{
 		int input = 0;
 
 		while (input != MENU.EXIT.ordinal()) {
-			
-			String result = JOptionPane.showInputDialog(this.getMenu());
-
+			ImageIcon musicPic = ToolsFuncs.getMainPicture("Pic/MUSIC.png",80,80);
+			String result = (String) JOptionPane.showInputDialog(null,this.getMenu(),"MEDIA",JOptionPane.INFORMATION_MESSAGE, musicPic, null,null);
 			input = this.parseIntResult(result) - 1;
 
 			if (input == MENU.ADD.ordinal()) {
