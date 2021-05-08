@@ -27,7 +27,7 @@ public class TestMobilePhone {
 		application[APPS.MEDIA.ordinal()] = new MediaApp();
 
 		// prepare the main screen elements
-		ImageIcon mainPicture = ToolsFuncs.getMainPicture("appPic2.png",450,110);
+		ImageIcon mainPicture = ToolsFuncs.getMainPicture("Pic/mainPic.png",450,110);
  		String[] buttons = { "CONTACTS", "SMS", "DIARY", "MEDIA","Print All"};
  		int PrintAll = 4;
  		int appChosen = 0;
@@ -48,8 +48,9 @@ public class TestMobilePhone {
  				application[appChosen].run();
  			}
  		}
-
- 		JOptionPane.showMessageDialog(null, "Bye Bye!");
+ 		mainPicture = ToolsFuncs.getMainPicture("Pic/BYE.png",400,110);
+ 		JOptionPane.showMessageDialog(null, null, null, JOptionPane.INFORMATION_MESSAGE, mainPicture);
+ 		
 
 	}
 }

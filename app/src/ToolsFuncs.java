@@ -29,9 +29,11 @@ public abstract class ToolsFuncs {
 	/* set window of multiple options and wait for user's input and check if the
 	   input is invalid or cancel or valid.
 	*/
-	public static int SetStartingMenu(String message, int invalid_num, int cancel_num)
+	public static int SetStartingMenu(String message, int invalid_num, int cancel_num,String app)
 	{
-		String s = JOptionPane.showInputDialog(message);
+		String toPic = "Pic/"+app +".png";
+		ImageIcon pic = ToolsFuncs.getMainPicture(toPic,80,80);
+		String s = (String) JOptionPane.showInputDialog(null,message,app,JOptionPane.INFORMATION_MESSAGE, pic, null,null );
 		int input = 0;
 		
 		if(s != null) {
