@@ -37,7 +37,7 @@ public class SmsApp extends ContactsApp {
 				case 2:
 					name = JOptionPane.showInputDialog("Enter contact`s name\n");
 					if(name == null) {break;}
-					this.contactRemoved(this.search(name));
+					JOptionPane.showMessageDialog(null,this.removeContact(this.search(name)));
 					break;
 				case 3:
 					name = JOptionPane.showInputDialog("Enter contact`s name\n");
@@ -65,11 +65,19 @@ public class SmsApp extends ContactsApp {
 	//remove contact from map
 	@Override
 	public void contactRemoved(Contact contact) {
-			allSMS.remove(contact);
+		allSMS.remove(contact);
 	}
 	
+	private String removeContact(Contact contact) {
+		if (contact == null) {
+			return "The contact doesn't exist";
+		}
+
+		allSMS.remove(contact);
+		return "The contact" + contact.getName() + "removed successfully";
+	}
 	
-	public String addSMStoContact(Contact contact,String SMS) {
+	private String addSMStoContact(Contact contact,String SMS) {
 		if (contact == null) {
 			return "Sorry, there is not contact with this name";
 		}
@@ -90,7 +98,7 @@ public class SmsApp extends ContactsApp {
 		}
 	
 	
-	public String printSMS(Contact contact) {
+	private String printSMS(Contact contact) {
 		//if contact is not in map -> no SMS with him
 	    if (!allSMS.containsKey(contact)) {
 	    	return "There are no message with this Contact";
@@ -100,7 +108,7 @@ public class SmsApp extends ContactsApp {
 	    }
 	}
 	
-	public String printNames(String text) {
+	private String printNames(String text) {
 		String names = "";
 		//iterate over map
 	    for (Map.Entry<Contact,String> entry : allSMS.entrySet()) {
@@ -113,8 +121,8 @@ public class SmsApp extends ContactsApp {
 		return "This contacts has your text in thier sms:\n" + names;
 	}
 
-
-	public String PrintAll() {
+	
+	private String PrintAll() {
 		String allMessages = "";
 		String name = "";
 		//if map is empty = no SMS
