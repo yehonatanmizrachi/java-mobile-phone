@@ -48,7 +48,8 @@ public class DiaryApp extends ContactsApp {
 			}
 			catch (Exception error)
 			{
-				JOptionPane.showMessageDialog(null,"You did something wrong :(\nplease try again.");
+				if (!error.getMessage().equals("0"))
+					JOptionPane.showMessageDialog(null,"You did something wrong :(\nplease try again.");
 			}
 		}
 	}
@@ -107,9 +108,10 @@ public class DiaryApp extends ContactsApp {
 		return -1;
 	}
 	
-	private void printEventsOnDate()
+	private void printEventsOnDate() throws Exception
 	{
 		String meeting_date = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
+		if (meeting_date == null) throw new Exception("0");
 		
 		String[] day_month_year = meeting_date.split("-");
 		String s = "";
@@ -128,7 +130,7 @@ public class DiaryApp extends ContactsApp {
 		else ToolsFuncs.PrintScroll(s);
 	}
 	
-	private void addEvent()
+	private void addEvent() throws Exception
 	{
 		String date1;
 		String time1;
@@ -137,13 +139,13 @@ public class DiaryApp extends ContactsApp {
 		String description;
 		
 		date1 = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
+		if (date1 == null) throw new Exception("0");
+		else if (date1.equals("")) throw new Exception("1");
 		time1 = JOptionPane.showInputDialog("Enter time (format: \"hour:minute:seconds\"):");
+		if (time1 == null) throw new Exception("0");
+		else if (time1.equals("")) throw new Exception("1");
 		duration = JOptionPane.showInputDialog("Enter duration of event:");
-		if (date1 == null || time1 == null || duration == null)
-		{
-			JOptionPane.showMessageDialog(null,"You did something wrong! :(");
-			return;
-		}
+		if (duration == null) throw new Exception("0");
 		
 		if (searchEvent(DiaryEvent.formatDate(date1, time1)) != -1)
 		{
@@ -216,10 +218,13 @@ public class DiaryApp extends ContactsApp {
 		JOptionPane.showMessageDialog(null,"Done.");
 	}
 	
-	private void removeEvent()
+	private void removeEvent() throws Exception
 	{
 		String date1 = JOptionPane.showInputDialog("Enter date (format: \"day-month-year\"):");
+		if (date1 == null) throw new Exception("0");
+		else if (date1.equals("")) throw new Exception("1");
 		String time1 = JOptionPane.showInputDialog("Enter time (format: \"hour:minute:seconds\"):");
+		if (time1 == null) throw new Exception("0");
 		int index = searchEvent(DiaryEvent.formatDate(date1, time1));
 		if (index != -1)
 			events.remove(index);
