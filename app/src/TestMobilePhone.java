@@ -48,7 +48,7 @@ public class TestMobilePhone {
  				application[appChosen].run();
  			}
  		}
- 		mainPicture = ToolsFuncs.getMainPicture("Pic/BYE.jpg",400,150);
+ 		mainPicture = ToolsFuncs.getMainPicture("Pic/BYE.png",400,110);
  		JOptionPane.showMessageDialog(null, null, null, JOptionPane.INFORMATION_MESSAGE, mainPicture);
  		
 	}
