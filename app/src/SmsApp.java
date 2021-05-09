@@ -42,12 +42,12 @@ public class SmsApp extends ContactsApp {
 				case 3:
 					name = JOptionPane.showInputDialog("Enter contact`s name\n");
 					if(name == null) {break;}
-					JOptionPane.showMessageDialog(null,this.printSMS(this.search(name)));
+					ToolsFuncs.PrintScroll(this.printSMS(this.search(name)));
 					break;
 				case 4:
 					sentence = JOptionPane.showInputDialog("Enter sentence to search\n");
 					if(sentence == null) {break;}
-					JOptionPane.showMessageDialog(null,this.printNames(sentence));
+					ToolsFuncs.PrintScroll(this.printNames(sentence));
 					break;
 				case 5:
 					ToolsFuncs.PrintScroll(PrintAll());
