@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 
 public class PhoneBookApp extends ContactsApp {
 
-	//private static final int "PLAIN_MESSAGE" = 0;
 	private ContactsApp[] contactsApps;
 	
 	public PhoneBookApp(ContactsApp[] contactsApps) {
@@ -56,7 +55,7 @@ public class PhoneBookApp extends ContactsApp {
 	}
 	
 
-	public void remove(String name) {
+	private void remove(String name) {
 
 		// remove the first occurrence
 		Contact removedContact = null;
@@ -69,7 +68,7 @@ public class PhoneBookApp extends ContactsApp {
 		}
 
 		if (removedContact == null) {
-			JOptionPane.showMessageDialog(null, "The user " + name + " doesn't exist!");
+			ToolsFuncs.printError("The user " + name + " doesn't exist!");
 			return;
 		}
 		
@@ -113,7 +112,7 @@ public class PhoneBookApp extends ContactsApp {
 	}
 	
 	// method that check if the Phone Book is empty or not 
-	public boolean isEmpty() {
+	private boolean isEmpty() {
 		if(ContactsApp.contacts.isEmpty()) {
 			ToolsFuncs.printError("Your phone book is empty!");
 			return true;
@@ -153,7 +152,7 @@ public class PhoneBookApp extends ContactsApp {
 	// implement sort method that sort from big to small
 	// the sort is based on Quicksort
 	// Average running time - O(nlogn)
-	public void QuicksortBS(ArrayList<Contact> contacts,int p,int r) {
+	private void QuicksortBS(ArrayList<Contact> contacts,int p,int r) {
 		if(p<r) {
 			int q = PartitionBS(contacts,p,r);
 			QuicksortBS(contacts,p,q-1); 
@@ -313,7 +312,7 @@ public class PhoneBookApp extends ContactsApp {
 					JOptionPane.showMessageDialog(null,"The Phone Book has been successfully imported from the file " + name + ".");
 				}
 				catch (Exception e) {
-					JOptionPane.showMessageDialog(null,e);
+					ToolsFuncs.printError(e.getMessage());
 				}
 				break;
 			// exit
