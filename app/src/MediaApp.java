@@ -180,7 +180,7 @@ public class MediaApp implements App{
 	}
 
 	private String getMenu() {
-		return "Welcome to the media app :)\n\nMenu:\n" + 
+		return "Welcome to the media app!\n\nMenu:\n" + 
 			   "1: Add media\n" +	
 			   "2: Play media by name\n" +
 			   "3: Play all the media list(video and music)\n" + 

@@ -42,14 +42,14 @@ public class DiaryApp extends ContactsApp {
 				case 7:
 					break;
 				default:
-					JOptionPane.showMessageDialog(null,"Wrong input! Please try again.");
+					ToolsFuncs.printError("Wrong input! Please try again.");
 					break;
 			}
 			}
 			catch (Exception error)
 			{
 				if (!error.getMessage().equals("0"))
-					JOptionPane.showMessageDialog(null,"You did something wrong :(\nplease try again.");
+					ToolsFuncs.printError("You did something wrong :(\nplease try again.");
 			}
 		}
 	}
@@ -86,6 +86,9 @@ public class DiaryApp extends ContactsApp {
 	private void printEventsByContact()
 	{
 		String contact_name = JOptionPane.showInputDialog("Enter name of contact:");
+		if (contact_name == null) {
+			return;
+		}
 		String s = "";
 		
 		for (DiaryEvent ev : events)
@@ -93,8 +96,9 @@ public class DiaryApp extends ContactsApp {
 			if (ev.getMissingDetail().equals(contact_name))
 				s += "Event: \n" + ev.toString() + "\n\n";
 		}
-		if (s == "")
-			JOptionPane.showMessageDialog(null,"There is no meetings with this contact!");
+		if (s == "") {
+			ToolsFuncs.printError("There is no meetings with this contact!");
+		}
 		else
 			ToolsFuncs.PrintScroll(s);
 	}
@@ -126,7 +130,9 @@ public class DiaryApp extends ContactsApp {
 				s += "Event:\n" +  ev.toString() + "\n\n";
 			}
 		}
-		if (s == "") JOptionPane.showMessageDialog(null,"You don't have a meeting on this date!");
+		if (s == "") { 
+			ToolsFuncs.printError("You don't have a meeting on this date!");
+		}
 		else ToolsFuncs.PrintScroll(s);
 	}
 	
@@ -149,13 +155,13 @@ public class DiaryApp extends ContactsApp {
 		
 		if (searchEvent(DiaryEvent.formatDate(date1, time1)) != -1)
 		{
-			JOptionPane.showMessageDialog(null,"You already have an event on that time!");
+			ToolsFuncs.printError("You already have an event on that time!");
 			return;
 		}
 		
 		if (Integer.parseInt(duration) <= 0 || Integer.parseInt(duration) > 60)
 		{
-			JOptionPane.showMessageDialog(null,"The duration of the meeting must be in range [1,60]!");
+			ToolsFuncs.printError("The duration of the meeting must be in range [1,60]!");
 			return;
 		}
 		
@@ -168,8 +174,10 @@ public class DiaryApp extends ContactsApp {
 		case 1:
 			contact_name = JOptionPane.showInputDialog("Enter name of contact:");
 			Contact c = this.search(contact_name);
-			if (c == null)
-				JOptionPane.showMessageDialog(null,"No such contact!");
+			if (c == null) {
+				ToolsFuncs.printError("No such contact!");
+				return;
+			}
 			else
 				d = new EventWithMeeting(date1, time1, Integer.parseInt(duration), c);
 			break;
@@ -180,7 +188,7 @@ public class DiaryApp extends ContactsApp {
 		case 3:
 			break;
 		default:
-			JOptionPane.showMessageDialog(null,"Wrong input!");
+			ToolsFuncs.printError("Wrong input!");
 			return;
 		}
 		
@@ -190,7 +198,7 @@ public class DiaryApp extends ContactsApp {
 			i++;
 		
 		if (length >= 1 && i != length && events.get(i).compareTo(d) == 0)
-			JOptionPane.showMessageDialog(null,"The event is already exist!");
+			ToolsFuncs.printError("The event is already exist!");
 		else
 			events.insertElementAt(d, i);
 	}
@@ -229,6 +237,6 @@ public class DiaryApp extends ContactsApp {
 		if (index != -1)
 			events.remove(index);
 		else
-			JOptionPane.showMessageDialog(null,"The event doesn't exist!");
+			ToolsFuncs.printError("The event doesn't exist!");
 	}
 }
