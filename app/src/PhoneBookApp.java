@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-//import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-
 
 public class PhoneBookApp extends ContactsApp {
 
@@ -32,7 +29,7 @@ public class PhoneBookApp extends ContactsApp {
 		return allContent;
 	}
 
-	public void addContact(String name, String phoneNumber) {
+	private void addContact(String name, String phoneNumber) {
 		// Check if the contact already exist
 		Contact check = this.search(name);
 		if(check != null) {
@@ -45,7 +42,7 @@ public class PhoneBookApp extends ContactsApp {
 	}
 
 	// get the contacts[i] 
-	public Contact getContact(int i) {
+	private Contact getContact(int i) {
 		if(ContactsApp.contacts.size() > 0) {
 			return ContactsApp.contacts.get(i);
 		}
@@ -86,7 +83,7 @@ public class PhoneBookApp extends ContactsApp {
 
 	/* Search contact in phoneBook by name.
 	 * If the contact is exist, it will print all its occurrences. */
-	public void searchContact(String name)
+	private void searchContact(String name)
 	{
 		Contact foundcontact = super.search(name);
 		if (foundcontact == null)
@@ -96,7 +93,7 @@ public class PhoneBookApp extends ContactsApp {
 		}
 	}
 	
-	public void sortByName() {
+	private void sortByName() {
 		Collections.sort(ContactsApp.contacts);
 	}
 	
@@ -121,14 +118,14 @@ public class PhoneBookApp extends ContactsApp {
 	}
 	
 	// print phone book method
-	public void printPhoneBook() {
+	private void printPhoneBook() {
 		if(!this.isEmpty()) {
 			ToolsFuncs.PrintScroll(this.toString());
 		}
 	}
 	
 	// swap phone book method
-	public void swapPhoneBook() {
+	private void swapPhoneBook() {
 		int j = 0; 
 		if(!isEmpty()) {
 			// for loop that swap the i contact and the j contact in the arrayList
@@ -143,7 +140,7 @@ public class PhoneBookApp extends ContactsApp {
 		
 	
 	// method sort numeric
-	public void sortNumeric() {
+	private void sortNumeric() {
 		if(!isEmpty()) {
 			QuicksortBS(ContactsApp.contacts,0,(ContactsApp.contacts.size()-1)); // calling method QuicksortBS
 		}
@@ -176,7 +173,7 @@ public class PhoneBookApp extends ContactsApp {
 	}
 		
 	//add all contacts to a file named by the user
-	public void toFile(String fileName) throws IOException {
+	private void toFile(String fileName) throws IOException {
 		//open a writer
 		FileWriter myWriter = new FileWriter(fileName + ".txt");
 		//run over all contacts in the phonebook and write them to file
@@ -187,7 +184,7 @@ public class PhoneBookApp extends ContactsApp {
 	}
 
 	//read all contacts from a file named by user
-	public void fromFile(String fileName) throws IOException {
+	private void fromFile(String fileName) throws IOException {
 		//open the file the user told us
         String userDirectory = new File(fileName).getAbsolutePath();
 		File file = new File(userDirectory +".txt");
