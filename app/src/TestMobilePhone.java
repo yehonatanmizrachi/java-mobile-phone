@@ -3,7 +3,6 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-
 public class TestMobilePhone {
 	
 	public enum APPS{
@@ -13,8 +12,7 @@ public class TestMobilePhone {
 		MEDIA
 	}
 
-	public static void main(String[] args) throws IOException {
-
+	public static void main(String[] args) throws IOException {		
 		// initialize the applications
 		App[] application = new App[APPS.values().length];
 		ContactsApp smsApp = new SmsApp();

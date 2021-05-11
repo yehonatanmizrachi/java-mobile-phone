@@ -3,11 +3,15 @@ package src;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 public abstract class ToolsFuncs {
@@ -18,7 +22,8 @@ public abstract class ToolsFuncs {
 	    sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	    JOptionPane.showMessageDialog(null, sp);
 	}
-
+	
+	// build image icon
 	public static ImageIcon getMainPicture(String picture,int x,int y) {
 		ImageIcon pic = new ImageIcon(picture);
 		Image pic2 = pic.getImage();
@@ -62,6 +67,42 @@ public abstract class ToolsFuncs {
 		Contact temp = new Contact(contacts.get(j)); // create temp contact object
 		ContactsApp.contacts.set(j,contacts.get(i)); // set the contacts ArrayList in the j place
 		ContactsApp.contacts.set(i,temp); // set the contacts ArrayList in the i place
+	}
+	
+	// create a window with multiple inputs on one screen
+	public static String[] multipleInputsWindow(boolean twoOrThreeInputs, String[] labels, String HeaderText)
+	{
+		JTextField field1 = new JTextField();
+		JTextField field2 = new JTextField();
+		JTextField field3 = new JTextField();
+		int option;
+		
+		if (twoOrThreeInputs) // if we need three inputs
+		{
+			Object[] message = {
+			    labels[0], field1,
+			    labels[1], field2,
+			    labels[2], field3,
+			};
+			option = JOptionPane.showConfirmDialog(null, message, HeaderText, JOptionPane.OK_CANCEL_OPTION);
+		}
+		else // if we need two inputs
+		{
+			Object[] message = {
+				    labels[0], field1,
+				    labels[1], field2,
+			};
+			field3.setText(null);
+			option = JOptionPane.showConfirmDialog(null, message, HeaderText, JOptionPane.OK_CANCEL_OPTION);
+		}
+		
+		if (option == JOptionPane.OK_OPTION) // if the inputs are valid
+		{
+			String[] temp = {field1.getText(), field2.getText(), field3.getText()};
+			return temp;
+		}
+		else // if there is an error
+			return null;
 	}
 }
 
