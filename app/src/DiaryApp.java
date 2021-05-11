@@ -95,7 +95,7 @@ public class DiaryApp extends ContactsApp {
 	// print all events with contact
 	private String printEventsByContact() throws Exception
 	{
-		if (events.size() == 0) throw new Exception("0");
+		if (events.size() == 0) throw new Exception("# The diary is empty!");
 		String contact_name = JOptionPane.showInputDialog("Enter name of contact:");
 		if (contact_name == null) { // if cancel was pressed
 			throw new Exception("0");
