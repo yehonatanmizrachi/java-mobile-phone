@@ -93,6 +93,8 @@ public class PhoneBookApp extends ContactsApp {
 		}
 	}
 	
+	// Sort phone book by name.
+	// It sorts by increasing lexicographic order
 	private void sortByName() {
 		Collections.sort(ContactsApp.contacts);
 	}
@@ -108,7 +110,7 @@ public class PhoneBookApp extends ContactsApp {
 		return str;
 	}
 	
-	// method that check if the Phone Book is empty or not 
+	// method that check if the phone book is empty or not 
 	private boolean isEmpty() {
 		if(ContactsApp.contacts.isEmpty()) {
 			ToolsFuncs.printError("Your phone book is empty!");
@@ -117,7 +119,7 @@ public class PhoneBookApp extends ContactsApp {
 		return false;
 	}
 	
-	// print phone book method
+	// method that print the phone book 
 	private void printPhoneBook() {
 		if(!this.isEmpty()) {
 			ToolsFuncs.PrintScroll(this.toString());
@@ -140,6 +142,7 @@ public class PhoneBookApp extends ContactsApp {
 		
 	
 	// method sort numeric
+	// sort the phone book by high to low numeric value of the phone number.
 	private void sortNumeric() {
 		if(!isEmpty()) {
 			QuicksortBS(ContactsApp.contacts,0,(ContactsApp.contacts.size()-1)); // calling method QuicksortBS
