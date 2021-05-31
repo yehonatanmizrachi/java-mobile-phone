@@ -1,7 +1,6 @@
 package blackjack;
 
 import java.util.ArrayList;
-import org.apiguardian.*;
 import org.json.JSONObject;
 
 
@@ -17,9 +16,13 @@ public class GameManager {
 		this.turn = 1;
 	}
 	
-	public JSONObject sendCommand()
+	public JSONObject sendCommand(JSONObject cmd)
 	{
-		
+		switch ((COMMAND)cmd.get("command"))
+		{
+			case COMMAND.Start_Game:
+				break;
+		}
 	}
 	
 	public ArrayList<ArrayList<Card>> startGame()
@@ -37,7 +40,12 @@ public class GameManager {
 	
 	private int checkGameStatus()
 	{
-		return 0;
+		if (players[0].sumOfCards > 21)
+			return 1;
+		else if (players[1].sumOfCards > 21)
+			return 0;
+		else
+			return -1;
 	}
 	
 	private void saveGame()
