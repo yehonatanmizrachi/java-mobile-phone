@@ -1,6 +1,8 @@
 package blackjack;
 
 public enum COMMAND {
-	Start_Game,
-	
+	START_GAME,
+	HIT,
+	STOP,
+	EXIT;
 }

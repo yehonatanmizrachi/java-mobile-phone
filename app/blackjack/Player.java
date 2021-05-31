@@ -16,4 +16,8 @@ public abstract class Player {
 	{
 		return this.my_cards;
 	}
+
+	public void cleanCards() {
+		my_cards.clear();
+	}
 }
