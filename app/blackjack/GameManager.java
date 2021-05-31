@@ -2,7 +2,7 @@ package blackjack;
 
 import java.util.ArrayList;
 import org.apiguardian.*;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 
 public class GameManager {
