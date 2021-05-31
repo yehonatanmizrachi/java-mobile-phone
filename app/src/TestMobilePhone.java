@@ -76,6 +76,7 @@ public class TestMobilePhone {
 
 
 	private static void startPhoneMainScreen() {
+		int WIDTH = 200, HEIGHT = 200;
 		JFrame frame = new JFrame("JFrame Example");  
         JPanel panel = new JPanel();  
         panel.setLayout(new FlowLayout());  
@@ -85,7 +86,7 @@ public class TestMobilePhone {
         panel.add(label);  
         panel.add(button);  
         frame.add(panel);  
-        frame.setSize(200, 300);  
+        frame.setSize(WIDTH, HEIGHT);  
         frame.setLocationRelativeTo(null);  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
         frame.setVisible(true);
