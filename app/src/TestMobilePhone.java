@@ -3,6 +3,11 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import diary.DiaryApp;
+import media.MediaApp;
+import phoneBook.PhoneBookApp;
+import sms.SmsApp;
+
 public class TestMobilePhone {
 	
 	public enum APPS{

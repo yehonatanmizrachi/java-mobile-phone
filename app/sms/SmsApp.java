@@ -1,4 +1,4 @@
-package src;
+package sms;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import phoneBook.Contact;
+import src.ContactsApp;
+import src.ToolsFuncs;;
 public class SmsApp extends ContactsApp {
 
 	//Map of all SMS with their contacts

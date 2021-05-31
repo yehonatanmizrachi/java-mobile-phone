@@ -14,6 +14,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import phoneBook.Contact;
+
 public abstract class ToolsFuncs {
 	// takes a string message and prints it in a scrolled window bar.
 	public static void PrintScroll(String message) {

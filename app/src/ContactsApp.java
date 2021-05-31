@@ -3,6 +3,8 @@ package src;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import phoneBook.Contact;
+
 // abstract class
 public abstract class ContactsApp implements App{
 

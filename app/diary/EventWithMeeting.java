@@ -1,4 +1,6 @@
-package src;
+package diary;
+
+import phoneBook.Contact;
 
 public class EventWithMeeting extends DiaryEvent {
 	private Contact with_contact;

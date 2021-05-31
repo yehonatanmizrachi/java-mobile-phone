@@ -1,4 +1,4 @@
-package src;
+package diary;
 
 public class EventWithoutMeeting extends DiaryEvent {
 	private String description;

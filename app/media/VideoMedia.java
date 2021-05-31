@@ -1,4 +1,4 @@
-package src;
+package media;
 
 public class VideoMedia extends Media{
 

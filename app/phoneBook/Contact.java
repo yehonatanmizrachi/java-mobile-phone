@@ -1,4 +1,4 @@
-package src;
+package phoneBook;
 
 
 public class Contact implements Comparable<Contact>{

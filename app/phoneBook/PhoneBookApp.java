@@ -1,4 +1,4 @@
-package src;
+package phoneBook;
 
 import java.io.File;  
 import java.io.FileWriter;
@@ -8,6 +8,9 @@ import java.util.Collections;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+
+import src.ContactsApp;
+import src.ToolsFuncs;
 
 public class PhoneBookApp extends ContactsApp {
 

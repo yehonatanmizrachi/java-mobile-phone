@@ -1,11 +1,15 @@
-package src;
+package diary;
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
+import src.ToolsFuncs;
 
 import javax.swing.JOptionPane;
+
+import phoneBook.Contact;
+import src.ContactsApp;
 
 public class DiaryApp extends ContactsApp {
 	private Vector<DiaryEvent> events = new Vector<DiaryEvent>();

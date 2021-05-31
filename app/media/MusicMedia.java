@@ -1,4 +1,4 @@
-package src;
+package media;
 
 public class MusicMedia extends Media{
 

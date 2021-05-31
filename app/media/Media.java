@@ -1,4 +1,4 @@
-package src;
+package media;
 
 public abstract class Media {
 

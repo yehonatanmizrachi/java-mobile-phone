@@ -1,9 +1,12 @@
-package src;
+package media;
 
+import src.ToolsFuncs;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+
+import src.App;
 
 
 public class MediaApp implements App{
