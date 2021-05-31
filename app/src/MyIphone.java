@@ -114,6 +114,10 @@ public class MyIphone {
         	buttons[index] = new JButton();
         	buttons[index].addActionListener(getAppButtonEventListener(app));
         	buttons[index].setBounds(BUTTONS_LOCATIONS[index][0], BUTTONS_LOCATIONS[index][1], BUTTON_WIDTH, BUTTON_HEIGHT);
+        	buttons[index].setOpaque(false);
+        	buttons[index].setContentAreaFilled(false);
+        	buttons[index].setBorderPainted(false);
+        		        			
         	label.add(buttons[app.ordinal()]);
         }
         
