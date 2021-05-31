@@ -17,7 +17,7 @@ public class TestMobilePhone {
 		MEDIA
 	}
 
-	public static void main(String[] args) throws IOException {		
+	/*public static void main(String[] args) throws IOException {		
 		// initialize the applications
 		App[] application = new App[APPS.values().length];
 		ContactsApp smsApp = new SmsApp();
@@ -54,7 +54,7 @@ public class TestMobilePhone {
  		mainPicture = ToolsFuncs.getMainPicture("Pic/BYE.png",300,80);
  		JOptionPane.showMessageDialog(null, null, null, JOptionPane.INFORMATION_MESSAGE, mainPicture);
  		
-	}
+	}*/
 }
 	
 	
