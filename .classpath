@@ -7,6 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/Yehonatan/Desktop/atuda/study/semester-f/java-ex2/java-json.jar"/>
+	<classpathentry kind="lib" path="java-json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
