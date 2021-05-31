@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import phoneBook.Contact;
+import src.App;
 import src.ContactsApp;
 import src.ToolsFuncs;;
 public class SmsApp extends ContactsApp {
@@ -65,6 +66,7 @@ public class SmsApp extends ContactsApp {
 			catch (Exception e) {
 				ToolsFuncs.printError(e.getMessage());
 			}
+			App.phone.returnToPhone();
 		}
 	}
 
@@ -148,7 +150,7 @@ public class SmsApp extends ContactsApp {
 	@Override
 	public String getAppContent()
 	{
-		String s = "\nSMS app content:\n";
+		String s = "SMS app content:\n";
 		try {
 			s = s + PrintAll() + "\n";
 		}

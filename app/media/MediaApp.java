@@ -94,12 +94,15 @@ public class MediaApp implements App{
 				ToolsFuncs.PrintScroll(message);
 			}
 			else if (input == MENU.EXIT.ordinal()) {
+				App.phone.returnToPhone();
 				return;
 			}
 			else {
+				App.phone.returnToPhone();
 				ToolsFuncs.printError(errorMessage);
 			}
 		}
+		
 	}
 
 	@Override

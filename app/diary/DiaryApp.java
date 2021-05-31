@@ -9,6 +9,7 @@ import src.ToolsFuncs;
 import javax.swing.JOptionPane;
 
 import phoneBook.Contact;
+import src.App;
 import src.ContactsApp;
 
 public class DiaryApp extends ContactsApp {
@@ -63,6 +64,7 @@ public class DiaryApp extends ContactsApp {
 					ToolsFuncs.printError("# You did something wrong :(");
 			}
 		}
+		App.phone.returnToPhone();
 	}
 	
 	// return all events in string format
