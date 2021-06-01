@@ -2,6 +2,7 @@ package blackjack;
 
 
 import java.io.IOException;
+import java.util.Stack;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +16,7 @@ import blackjack.frontend.BlackjackWindow;
 import src.App;
 
 
-public class BlackjackApp implements App{
+public class BlackjackApp implements App {
 
 	private GameManager m_backend = new GameManager();
 	
@@ -26,6 +27,8 @@ public class BlackjackApp implements App{
 		new BlackjackStatistics("BlackJack - Statistics", this)
 	};
 	
+	private Stack<BlackjackWindow> m_windowsStack = new Stack<BlackjackWindow>();
+
 	public void run() throws IOException {
 		startWindow(APP_WINDOWS.MENU);
 	}
@@ -37,9 +40,30 @@ public class BlackjackApp implements App{
 	
 	public void startWindow(APP_WINDOWS window) {
 		try {
+			m_windowsStack.push(m_windows[window.ordinal()]);
 			m_windows[window.ordinal()].start();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void closeWindow(APP_WINDOWS window) {
+		m_windowsStack.pop();
+	}
+	
+	public void goToPreviousWindow() {
+		m_windowsStack.pop();
+		BlackjackWindow window = m_windowsStack.peek();
+		try {
+			window.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void cleanWindowStack() {
+		while(!m_windowsStack.isEmpty()) {
+			m_windowsStack.pop();
 		}
 	}
 
@@ -59,4 +83,5 @@ public class BlackjackApp implements App{
 		INFO,
 		STATISTICS
 	}
+
 }

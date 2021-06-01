@@ -25,34 +25,38 @@ public class BlackjackInfo extends BlackjackWindow{
 	
 	public void start() throws IOException {
 
-		// frame
+		// background
 		String IMAGE_PATH = "Pic/INFO.png";
 		int WIDTH = 583, HEIGHT = 525;
 	
 		JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
 		background.setBounds(0, 0, WIDTH, HEIGHT);
-        m_frame.add(background);
 
-        // return button
+		// buttons
+		int BUTTON_WIDTH = 40, BUTTON_HEIGHT = 40, BUTTON_X = 33, BUTTON_Y = 425, PADD = 18;
+        
+		// return button
         JButton returnButton = new JButton();
-        int RETURN_BUTTON_WIDTH = 40, RETURN_BUTTON_HEIGHT = 40, RETURN_BUTTON_X = 33, RETURN_BUTTON_Y = 425;
-        int INFO_PADD = 18;
-
         returnButton.addActionListener(getButtonEventListener(INFO_BUTTONS.RETURN));
-        returnButton.setBounds(RETURN_BUTTON_X, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
+        returnButton.setBounds(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
         returnButton.setOpaque(false);
         returnButton.setContentAreaFilled(false);
         returnButton.setBorderPainted(false);
-        background.add(returnButton);
         
     	// home button
         JButton infoButton = new JButton();
         infoButton.addActionListener(getButtonEventListener(INFO_BUTTONS.HOME));
-        infoButton.setBounds(RETURN_BUTTON_X + RETURN_BUTTON_WIDTH + INFO_PADD, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
+        infoButton.setBounds(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
         infoButton.setOpaque(false);
         infoButton.setContentAreaFilled(false);
         infoButton.setBorderPainted(false);
+        
+        
+        // LIFO
+        background.add(returnButton);
         background.add(infoButton);
+        m_frame.add(background);
+
 
         m_frame.setSize(WIDTH, HEIGHT);
         m_frame.setLocationRelativeTo(null);
@@ -69,23 +73,24 @@ public class BlackjackInfo extends BlackjackWindow{
         });
 	}
 
+	private enum INFO_BUTTONS {
+		RETURN,
+		HOME
+	}
+
 	private ActionListener getButtonEventListener(INFO_BUTTONS action) {
 		return new ActionListener(){
 	       	 public void actionPerformed(ActionEvent evt){
 	       		 m_frame.setVisible(false);
 	       		 if (action == INFO_BUTTONS.RETURN) {
-	       			m_app.startWindow(APP_WINDOWS.TABLE);
+	       			m_app.goToPreviousWindow();
 	       		 }
 	       		 else if (action == INFO_BUTTONS.HOME) {
+	       			m_app.cleanWindowStack();
 	       			m_app.startWindow(APP_WINDOWS.MENU);
 	       		 }
 	       	 }
        }; 
-	}
-	
-	private enum INFO_BUTTONS {
-		RETURN,
-		HOME
 	}
 	
 }
