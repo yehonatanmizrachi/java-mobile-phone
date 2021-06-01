@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import blackjack.BlackjackApp;
 import blackjack.BlackjackApp.APP_WINDOWS;
@@ -37,13 +38,13 @@ public class BlackjackTable extends BlackjackWindow{
 	
 	public void start() throws IOException {
 
-		// frame
+		// background
 		String IMAGE_PATH = "Pic/Table1.png";
 		int WIDTH = 910, HEIGHT = 757;
 	
 		m_background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
 		m_background.setBounds(0, 0, WIDTH, HEIGHT);
-        m_frame.add(m_background);
+        
 
         // return button
         JButton returnButton = new JButton();
@@ -65,6 +66,10 @@ public class BlackjackTable extends BlackjackWindow{
         infoButton.setBorderPainted(false);
     	m_background.add(infoButton);
 
+    	displayHitAndStandButtons();
+
+    	refreshBackground();
+    	
         m_frame.setSize(WIDTH, HEIGHT);
         m_frame.setLocationRelativeTo(null);
         m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -72,7 +77,6 @@ public class BlackjackTable extends BlackjackWindow{
         m_frame.setVisible(true);
         
         fillTable();
-
         
         m_frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -82,26 +86,35 @@ public class BlackjackTable extends BlackjackWindow{
             }
         });
 	}
-	
-	public void continueGame() {
-		m_frame.setVisible(true);
-	}
 
 	private void cleanTable() {
 		m_frame.remove(m_background);
 		for (JLabel label : m_labels) {
+			label.setVisible(false);
 			m_frame.remove(label);
 		}
 	}
 
-	private void fillTable() throws IOException {
-		displayCards(new Card[6], false);
-		displayCards(new Card[6], true);
-		displayHitAndStandButtons();
-		m_frame.add(m_background);
+	private void fillTable() {
+
+		try {
+			// TODO
+			displayCards(new Card[4], false);
+			displayCards(new Card[4], true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		refreshBackground();
 	}
 	
+	private void refreshBackground() {
+		m_frame.remove(m_background);
+		m_frame.add(m_background);
+	}
+
 	private void displayCards(Card[] cards, Boolean isPlayer) throws IOException {
+		
 		int PLAYER_INITIAL_X = 200, DEALER_INITIAL_X = 200;
 		int initial_x = isPlayer ? PLAYER_INITIAL_X : DEALER_INITIAL_X;
 		
@@ -129,12 +142,16 @@ public class BlackjackTable extends BlackjackWindow{
 		JLabel hit_label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(hitPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
 		hit_label.setBounds(INITIAL_X, INITIAL_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
 		
+		// HIT method
 		hit_label.addMouseListener(new MouseAdapter()  
 		{  
 		    public void mouseClicked(MouseEvent e)  
 		    {  
-		       // TODO: send json to backend
-		       System.out.print(GAME_BUTTONS.HIT);
+		    	cleanTable();
+		        // TODO: set and get the data from the backend
+				// JSONObject response = m_app.sendMessageToBackend(null);
+				fillTable();			
+			
 		    }  
 		});
 
@@ -144,6 +161,7 @@ public class BlackjackTable extends BlackjackWindow{
 		JLabel stand_label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(standPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
 		stand_label.setBounds(INITIAL_X + BUTTON_WIDTH + PADD, INITIAL_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
 		
+		// STAND method
 		stand_label.addMouseListener(new MouseAdapter()  
 		{  
 		    public void mouseClicked(MouseEvent e)  
@@ -154,8 +172,13 @@ public class BlackjackTable extends BlackjackWindow{
 		});
 
 		m_frame.add(stand_label);
-		m_labels.add(hit_label);
-		m_labels.add(stand_label);
+	}
+
+	private enum GAME_BUTTONS {
+		RETURN,
+		INFO,
+		HIT,
+		STAND
 	}
 
 	private ActionListener getButtonEventListener(GAME_BUTTONS action) {
@@ -163,7 +186,7 @@ public class BlackjackTable extends BlackjackWindow{
 	       	 public void actionPerformed(ActionEvent evt){
 	       		 m_frame.setVisible(false);
 	       		 if (action == GAME_BUTTONS.RETURN) {
-	       			m_app.startWindow(APP_WINDOWS.MENU);
+	       			m_app.goToPreviousWindow();
 	       		 }
 	       		 else if (action == GAME_BUTTONS.INFO) {
 	       			m_app.startWindow(APP_WINDOWS.INFO);
@@ -172,7 +195,6 @@ public class BlackjackTable extends BlackjackWindow{
        }; 
 	}
 
-	
 	private Image getScaledImage(Image srcImg, int w, int h){
 	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 	    Graphics2D g2 = resizedImg.createGraphics();
@@ -183,11 +205,5 @@ public class BlackjackTable extends BlackjackWindow{
 
 	    return resizedImg;
 	}
-	
-	private enum GAME_BUTTONS {
-		RETURN,
-		INFO,
-		HIT,
-		STAND
-	}
+
 }

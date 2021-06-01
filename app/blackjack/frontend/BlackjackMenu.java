@@ -25,13 +25,13 @@ public class BlackjackMenu extends BlackjackWindow{
 
 	public void start() throws IOException {
 		
-		// frame
+		// background
 		String IMAGE_PATH = "Pic/Menu.png";
 		int WIDTH = 590, HEIGHT = 530;
 	
-        JLabel label = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-        label.setBounds(0, 0, WIDTH, HEIGHT);
-        m_frame.add(label);
+        JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
+        background.setBounds(0, 0, WIDTH, HEIGHT);
+        
 
         // buttons
         int BUTTONS_COUNT = 3;
@@ -56,9 +56,11 @@ public class BlackjackMenu extends BlackjackWindow{
         	buttons[index].setContentAreaFilled(false);
         	buttons[index].setBorderPainted(false);
         		        			
-        	label.add(buttons[index]);
+        	background.add(buttons[index]);
         }
-        
+
+    	m_frame.add(background);
+
         m_frame.setSize(WIDTH, HEIGHT);
         m_frame.setLocationRelativeTo(null);
         m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -74,11 +76,13 @@ public class BlackjackMenu extends BlackjackWindow{
         });
 	}
 
-	public void returnToMenu() {
-		m_frame.setVisible(true);
+
+	private enum MENU {
+		START,
+		STATISTICS,
+		EXIT
 	}
 
-	
 	private ActionListener getButtonEventListener(MENU action) {
 		return new ActionListener(){
 	       	 public void actionPerformed(ActionEvent evt){	       		
@@ -89,17 +93,12 @@ public class BlackjackMenu extends BlackjackWindow{
 	       		 else if (action == MENU.STATISTICS) {
 	       			m_app.startWindow(APP_WINDOWS.STATISTICS);
 	       		 }
-	       		 else if (action == MENU.EXIT) {             
+	       		 else if (action == MENU.EXIT) {
+	       			m_app.closeWindow(APP_WINDOWS.MENU);
 	                App.phone.returnToPhone(); 
 	       		 }	
 	       	 }	       	 
        }; 
-	}
-
-	private enum MENU {
-		START,
-		STATISTICS,
-		EXIT
 	}
 	
 }
