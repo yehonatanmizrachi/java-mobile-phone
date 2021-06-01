@@ -44,7 +44,7 @@ public abstract class Player{
 		}
 		
 		if(sum >= 21) {
-			sum = (sum + (numOfAS)*11);
+			sum = (sum + (numOfAS)*1);
 		}
 		
 		else {
@@ -62,8 +62,7 @@ public abstract class Player{
 				
 			}
 		}
-
 		
-		
+		this.sumOfCards = sum;
 	}
 }
