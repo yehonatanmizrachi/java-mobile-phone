@@ -9,12 +9,12 @@ import org.json.JSONObject;
 import blackjack.api.COMMAND;
 import blackjack.api.GAME_STATUS;
 
-public class GameManager {
+public class GameManager{
 	
 	private final int numOfPlayers = 2;
 	private Player[] players = new Player[numOfPlayers];
-	private DeckOfCards cards_deck;
 	private GAME_STATUS status;
+	private DeckOfCards cards_deck = new DeckOfCards();
 	
 	public GameManager()
 	{
@@ -39,7 +39,7 @@ public class GameManager {
 		else if (command == COMMAND.STOP)
 		{
 			int old_sum = players[0].sumOfCards;
-			players[0].makeMove();
+			players[0].makeMove(cards_deck);
 			this.status = GAME_STATUS.DEALER_TURN;
 			if (old_sum == players[0].sumOfCards)
 				this.status = GAME_STATUS.END_GAME;
@@ -78,7 +78,6 @@ public class GameManager {
 			players[i].addCard(cards_deck.getCard());
 			players[i].addCard(cards_deck.getCard());
 		}	
-		cards_deck.shuffle();
 	}
 	
 	private void checkGameStatus()

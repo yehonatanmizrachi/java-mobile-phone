@@ -2,10 +2,10 @@ package blackjack.backend;
 
 import java.util.ArrayList;
 
-public abstract class Player {
-	private ArrayList<Card> my_cards;
+public abstract class Player{
+	private ArrayList<Card> my_cards = new ArrayList<Card>();;
 	int sumOfCards;
-	public abstract void makeMove();
+	public abstract void makeMove(DeckOfCards DC);
 	
 	public Player()
 	{
