@@ -16,7 +16,7 @@ public class TestMobilePhone {
 		DIARY,
 		MEDIA
 	}
-/*
+
 	public static void main(String[] args) throws IOException {		
 		// initialize the applications
 		App[] application = new App[APPS.values().length];
@@ -55,7 +55,7 @@ public class TestMobilePhone {
  		JOptionPane.showMessageDialog(null, null, null, JOptionPane.INFORMATION_MESSAGE, mainPicture);
  		
 	}
-	*/
+	
 }
 	
 	

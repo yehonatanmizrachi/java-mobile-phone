@@ -47,6 +47,8 @@ public class GameManager{
 		}
 		else if (command == COMMAND.EXIT)
 			saveGame();
+		
+		checkGameStatus();
 		return buildJson();
 	}
 	
