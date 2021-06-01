@@ -14,6 +14,7 @@ public class User extends Player {
 	
 	public User(int id)
 	{
+		super();
 		this.sumOfCards = 0;
 		this.id = id;
 		try {

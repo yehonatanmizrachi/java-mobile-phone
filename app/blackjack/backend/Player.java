@@ -7,6 +7,11 @@ public abstract class Player {
 	int sumOfCards;
 	public abstract void makeMove();
 	
+	public Player()
+	{
+		this.sumOfCards = 0;
+	}
+	
 	public void addCard(Card c)
 	{
 		my_cards.add(c);

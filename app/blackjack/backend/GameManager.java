@@ -70,6 +70,8 @@ public class GameManager {
 	
 	public void startGame()
 	{	
+		players[0].sumOfCards = 0;
+		players[1].sumOfCards = 0;
 		cards_deck.reset();
 		for (int i = 0; i < numOfPlayers; i++)
 		{
