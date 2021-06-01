@@ -1,6 +1,5 @@
 package blackjack.frontend;
 
-import java.awt.Button;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -21,24 +20,22 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import blackjack.backend.GameManager;
+import blackjack.BlackjackApp;
+import blackjack.BlackjackApp.APP_WINDOWS;
 import blackjack.backend.Card;
 import src.App;
 
-public class BlackjackTable {
+public class BlackjackTable extends BlackjackWindow{
 
-	public BlackjackTable(BlackjackMenu blackjackMenu, GameManager backend) {
-		m_blackjackMenu = blackjackMenu;
-		m_backend = backend; 
+	public BlackjackTable(String title, BlackjackApp app) {
+		super(title, app);
 	}
 
-	private GameManager m_backend;
-	private JFrame frame = new JFrame("BlackJack - Table");
 	private ArrayList<JLabel> m_labels = new ArrayList<JLabel>();
 	private JLabel m_background;
-	private BlackjackMenu m_blackjackMenu;
 	
-	public void startGame() throws IOException {
+	
+	public void start() throws IOException {
 
 		// frame
 		String IMAGE_PATH = "Pic/Table1.png";
@@ -46,7 +43,7 @@ public class BlackjackTable {
 	
 		m_background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
 		m_background.setBounds(0, 0, WIDTH, HEIGHT);
-        frame.add(m_background);
+        m_frame.add(m_background);
 
         // return button
         JButton returnButton = new JButton();
@@ -68,32 +65,32 @@ public class BlackjackTable {
         infoButton.setBorderPainted(false);
     	m_background.add(infoButton);
 
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setVisible(true);
+        m_frame.setSize(WIDTH, HEIGHT);
+        m_frame.setLocationRelativeTo(null);
+        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        m_frame.setResizable(false);
+        m_frame.setVisible(true);
         
         fillTable();
 
         
-        frame.addWindowListener(new WindowAdapter() {
+        m_frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
-                frame.setVisible(false);             
+                m_frame.setVisible(false);             
                 App.phone.returnToPhone();
             }
         });
 	}
 	
 	public void continueGame() {
-		frame.setVisible(true);
+		m_frame.setVisible(true);
 	}
 
 	private void cleanTable() {
-		frame.remove(m_background);
+		m_frame.remove(m_background);
 		for (JLabel label : m_labels) {
-			frame.remove(label);
+			m_frame.remove(label);
 		}
 	}
 
@@ -101,7 +98,7 @@ public class BlackjackTable {
 		displayCards(new Card[6], false);
 		displayCards(new Card[6], true);
 		displayHitAndStandButtons();
-		frame.add(m_background);
+		m_frame.add(m_background);
 	}
 	
 	private void displayCards(Card[] cards, Boolean isPlayer) throws IOException {
@@ -116,7 +113,7 @@ public class BlackjackTable {
 		for(int i=0; i < cards.length; i++) {
 			JLabel label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File("Pic/cards/2H.png")), CARD_WIDTH, CARD_HEIGHT)));
 			label.setBounds(initial_x + (CARD_WIDTH + CARD_PADDING) * i, initial_y, CARD_WIDTH, CARD_HEIGHT);
-			frame.add(label);
+			m_frame.add(label);
 			m_labels.add(label);
 		}
 	}
@@ -141,7 +138,7 @@ public class BlackjackTable {
 		    }  
 		});
 
-		frame.add(hit_label);
+		m_frame.add(hit_label);
 		
 		
 		JLabel stand_label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(standPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
@@ -156,7 +153,7 @@ public class BlackjackTable {
 		    }  
 		});
 
-		frame.add(stand_label);
+		m_frame.add(stand_label);
 		m_labels.add(hit_label);
 		m_labels.add(stand_label);
 	}
@@ -164,14 +161,12 @@ public class BlackjackTable {
 	private ActionListener getButtonEventListener(GAME_BUTTONS action) {
 		return new ActionListener(){
 	       	 public void actionPerformed(ActionEvent evt){
-	       		 System.out.print(action);
+	       		 m_frame.setVisible(false);
 	       		 if (action == GAME_BUTTONS.RETURN) {
-	       			frame.setVisible(false);
-	       			m_blackjackMenu.returnToMenu();
+	       			m_app.startWindow(APP_WINDOWS.MENU);
 	       		 }
 	       		 else if (action == GAME_BUTTONS.INFO) {
-	       			frame.setVisible(false);
-	       			m_blackjackMenu.startInfo(); 
+	       			m_app.startWindow(APP_WINDOWS.INFO);
 	       		 }
 	       	 }
        }; 

@@ -12,21 +12,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import blackjack.BlackjackApp;
+import blackjack.BlackjackApp.APP_WINDOWS;
 import src.App;
 
-public class BlackjackInfo {
+public class BlackjackInfo extends BlackjackWindow{
 
-	public BlackjackInfo(BlackjackMenu blackjackMenu, BlackjackTable blackjackTable) {
-		m_blackjackMenu = blackjackMenu;
-		m_blackjackTable = blackjackTable;
+	public BlackjackInfo(String title, BlackjackApp app) {
+		super(title, app);
 	}
 	
-	private BlackjackMenu m_blackjackMenu;
-	private BlackjackTable m_blackjackTable;
-
-	private JFrame frame = new JFrame("BlackJack - Info");	
-	
-	public void showInfo() throws IOException {
+	public void start() throws IOException {
 
 		// frame
 		String IMAGE_PATH = "Pic/INFO.png";
@@ -34,41 +31,39 @@ public class BlackjackInfo {
 	
 		JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
 		background.setBounds(0, 0, WIDTH, HEIGHT);
-        frame.add(background);
+        m_frame.add(background);
 
         // return button
         JButton returnButton = new JButton();
-        int RETURN_BUTTON_WIDTH = 70, RETURN_BUTTON_HEIGHT = 70, RETURN_BUTTON_X = 25, RETURN_BUTTON_Y = 300;
+        int RETURN_BUTTON_WIDTH = 40, RETURN_BUTTON_HEIGHT = 40, RETURN_BUTTON_X = 33, RETURN_BUTTON_Y = 425;
+        int INFO_PADD = 18;
+
         returnButton.addActionListener(getButtonEventListener(INFO_BUTTONS.RETURN));
         returnButton.setBounds(RETURN_BUTTON_X, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
-//        returnButton.setOpaque(false);
-//        returnButton.setContentAreaFilled(false);
-//        returnButton.setBorderPainted(false);
+        returnButton.setOpaque(false);
+        returnButton.setContentAreaFilled(false);
+        returnButton.setBorderPainted(false);
         background.add(returnButton);
         
     	// home button
-    	int INFO_PADD = 15;
         JButton infoButton = new JButton();
         infoButton.addActionListener(getButtonEventListener(INFO_BUTTONS.HOME));
         infoButton.setBounds(RETURN_BUTTON_X + RETURN_BUTTON_WIDTH + INFO_PADD, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
-//        infoButton.setOpaque(false);
-//        infoButton.setContentAreaFilled(false);
-//        infoButton.setBorderPainted(false);
+        infoButton.setOpaque(false);
+        infoButton.setContentAreaFilled(false);
+        infoButton.setBorderPainted(false);
         background.add(infoButton);
 
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-//        frame.setResizable(false);
-        frame.setVisible(true);
+        m_frame.setSize(WIDTH, HEIGHT);
+        m_frame.setLocationRelativeTo(null);
+        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        m_frame.setResizable(false);
+        m_frame.setVisible(true);
         
-        
-
-        
-        frame.addWindowListener(new WindowAdapter() {
+        m_frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
-                frame.setVisible(false);             
+            	m_frame.setVisible(false);             
                 App.phone.returnToPhone();
             }
         });
@@ -77,14 +72,12 @@ public class BlackjackInfo {
 	private ActionListener getButtonEventListener(INFO_BUTTONS action) {
 		return new ActionListener(){
 	       	 public void actionPerformed(ActionEvent evt){
-	       		 System.out.print(action);
+	       		 m_frame.setVisible(false);
 	       		 if (action == INFO_BUTTONS.RETURN) {
-	       			frame.setVisible(false);
-	       			m_blackjackTable.continueGame();
+	       			m_app.startWindow(APP_WINDOWS.TABLE);
 	       		 }
 	       		 else if (action == INFO_BUTTONS.HOME) {
-	       			frame.setVisible(false);    
-	                m_blackjackMenu.returnToMenu(); 
+	       			m_app.startWindow(APP_WINDOWS.MENU);
 	       		 }
 	       	 }
        }; 
