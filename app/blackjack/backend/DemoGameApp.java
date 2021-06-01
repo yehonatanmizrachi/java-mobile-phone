@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.backend;
 
 import java.io.IOException;
 

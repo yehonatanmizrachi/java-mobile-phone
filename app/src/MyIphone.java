@@ -10,7 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import blackjack.BlackjackApp;
@@ -18,48 +17,24 @@ import diary.DiaryApp;
 import media.MediaApp;
 import phoneBook.PhoneBookApp;
 import sms.SmsApp;
-import org.json.JSONObject;
 
 public class MyIphone {
 
-	private App[] applications = new App[APPS.values().length];
+	private App[] applications = new App[APPS.values().length-1];
 	private JFrame frame = new JFrame("My Iphone");
 	
 	public static void main(String[] args) throws IOException {
-		MyIphone phone = new MyIphone();
+		MyIphone phone = App.phone;
 		phone.runPhone();
-		/*
-		// prepare the main screen elements
-		ImageIcon mainPicture = ToolsFuncs.getMainPicture("Pic/mainPic.png",450,110);
- 		String[] buttons = { "CONTACTS", "SMS", "DIARY", "MEDIA","Print All"};
- 		int PrintAll = 4;
- 		int appChosen = 0;
- 		while(appChosen != -1) {
- 			// display the phone main screen
- 			appChosen = JOptionPane.showOptionDialog(null, null,"PHONE",
- 			 		JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, mainPicture, buttons,null);
- 			// run
- 			if (appChosen != -1) {
- 				if(appChosen == PrintAll) {
- 					String allContent = "";
- 					for (App app : application) {
- 						allContent = allContent + app.getAppContent() + "\n";
- 					}
- 					ToolsFuncs.PrintScroll(allContent);
- 					continue;
- 				}
- 				application[appChosen].run();
- 			}
- 		}
- 		mainPicture = ToolsFuncs.getMainPicture("Pic/BYE.png",300,80);
- 		JOptionPane.showMessageDialog(null, null, null, JOptionPane.INFORMATION_MESSAGE, mainPicture);
- 		*/
+	}
+	 
+	public void returnToPhone() {
+		frame.setVisible(true);
 	}
 	
 	private void runPhone() throws IOException {
 
 		// initialize the applications
-		
 		ContactsApp smsApp = new SmsApp();
 		ContactsApp diaryApp = new DiaryApp();
 		ContactsApp[] contactsApps = { smsApp, diaryApp };
@@ -69,8 +44,6 @@ public class MyIphone {
 		applications[APPS.DIARY.ordinal()] = diaryApp;		
 		applications[APPS.MEDIA.ordinal()] = new MediaApp();
 		applications[APPS.BLACKJACK.ordinal()] = new BlackjackApp();
-
-		applications[APPS.BLACKJACK.ordinal()].run();
 		
 		// run the screen GUI
 		startPhoneMainScreen();
@@ -122,11 +95,12 @@ public class MyIphone {
         }
         
         panel.add(label);
-          
+
         frame.add(panel); 
         frame.setSize(WIDTH, HEIGHT);  
         frame.setLocationRelativeTo(null);  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+        frame.setResizable(false);
         frame.setVisible(true);
 	}
 	
@@ -136,6 +110,7 @@ public class MyIphone {
 			allContent = allContent + app.getAppContent() + "\n";
 		}
 		ToolsFuncs.PrintScroll(allContent);
+		App.phone.returnToPhone();
 	}
 
 	private ActionListener getAppButtonEventListener(APPS app) {
@@ -144,19 +119,19 @@ public class MyIphone {
 	       		 try {
 	       			 frame.setVisible(false);
 	       			 runApp(app);
-	       			 frame.setVisible(true);
 	       		 } catch (Exception e) {
 	       			 System.out.print("Error:" + e);
 					}
 	       	 }
        }; 
 	}
+
 	private enum APPS{
-		PHONE_BOOK,
 		SMS,
-		DIARY,
+		PHONE_BOOK,
 		MEDIA,
 		BLACKJACK,
+		DIARY,
 		GET_CONTENT
 	}
 }

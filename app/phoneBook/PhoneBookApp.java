@@ -9,6 +9,7 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import src.App;
 import src.ContactsApp;
 import src.ToolsFuncs;
 
@@ -24,7 +25,7 @@ public class PhoneBookApp extends ContactsApp {
 	public String getAppContent() {
 		String allContent = "Contacts app content: \n";
 		if(ContactsApp.contacts.isEmpty()) {
-			allContent = allContent + "Phone book is empty";
+			allContent = allContent + "Phone book is empty\n";
 		}
 		else {
 			allContent = allContent + this.toString();
@@ -327,6 +328,7 @@ public class PhoneBookApp extends ContactsApp {
 				break;
 			}
 		}
+		App.phone.returnToPhone();
 	}
 		
 }

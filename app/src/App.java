@@ -12,4 +12,5 @@ public interface App {
 	// Implemented by the application classes.
 	public String getAppContent();
 
+	public static MyIphone phone = new MyIphone();
 }

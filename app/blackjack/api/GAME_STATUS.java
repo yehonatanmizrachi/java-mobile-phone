@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.api;
 
 public enum GAME_STATUS {
 	START,

@@ -1,10 +1,13 @@
-package blackjack;
+package blackjack.backend;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import blackjack.api.COMMAND;
+import blackjack.api.GAME_STATUS;
 
 public class GameManager {
 	
