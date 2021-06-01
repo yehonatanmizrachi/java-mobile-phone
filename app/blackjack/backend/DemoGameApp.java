@@ -9,20 +9,39 @@ import blackjack.api.COMMAND;
 
 public class DemoGameApp {
 
-	/*
+	
 	public static void main(String[] args) throws IOException, JSONException {	
 		JSONObject obj = new JSONObject();
 		GameManager g = new GameManager();
 		System.out.println(g.buildJson());
-		g.startGame();
+		
+		// INITIAL GAME
+		obj.put("command", COMMAND.START_GAME);
+		g.sendCommand(obj);
 		System.out.println(g.buildJson());
+		// PLAYER TURN
 		obj.put("command", COMMAND.HIT);
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
-
-		
-
-		
+		// DEALER TURN
+		obj.put("command", COMMAND.STOP);
+		g.sendCommand(obj);
+		System.out.println(g.buildJson());
+		obj.put("command", COMMAND.STOP);
+		g.sendCommand(obj);
+		System.out.println(g.buildJson());
+		obj.put("command", COMMAND.STOP);
+		g.sendCommand(obj);
+		System.out.println(g.buildJson());
+		obj.put("command", COMMAND.STOP);
+		g.sendCommand(obj);
+		System.out.println(g.buildJson());
+		obj.put("command", COMMAND.STOP);
+		g.sendCommand(obj);
+		System.out.println(g.buildJson());
+		// EXIT GAME
+		obj.put("command", COMMAND.EXIT);
+		g.sendCommand(obj);
+		System.out.println(g.buildJson());
 	}
-	*/
 }

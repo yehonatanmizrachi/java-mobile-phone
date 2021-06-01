@@ -15,7 +15,6 @@ public abstract class Player{
 	public void addCard(Card c)
 	{
 		my_cards.add(c);
-		this.sumOfCards += c.Number();
 	}
 	
 	public ArrayList<Card> getMyCards()
@@ -35,12 +34,14 @@ public abstract class Player{
 		int i;
 		for(i = 0; i < my_cards.size();i++) {
 			int number = my_cards.get(i).Number();
-			if(number != -1) {
+			if(number <= 10 && number >= 2) {
 				sum = sum + number;
 			}
-			else {
+			else if (number == 1) {
 				numOfAS++;
 			}
+			else
+				sum = sum + 10;
 		}
 		
 		if(sum >= 21) {

@@ -13,8 +13,8 @@ public class Dealer extends Player {
 		if(this.sumOfCards < 17) {
 			Card c = DC.getCard();
 			this.addCard(c);
+			this.sumCards();
 		}
-		
 	}
 
 }
