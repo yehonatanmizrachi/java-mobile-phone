@@ -44,7 +44,7 @@ public class BlackjackTable extends BlackjackWindow{
 	
 		m_background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
 		m_background.setBounds(0, 0, WIDTH, HEIGHT);
-        m_frame.add(m_background);
+        
 
         // return button
         JButton returnButton = new JButton();
@@ -86,10 +86,6 @@ public class BlackjackTable extends BlackjackWindow{
             }
         });
 	}
-	
-	public void continueGame() {
-		m_frame.setVisible(true);
-	}
 
 	private void cleanTable() {
 		m_frame.remove(m_background);
@@ -102,6 +98,7 @@ public class BlackjackTable extends BlackjackWindow{
 	private void fillTable() {
 
 		try {
+			// TODO
 			displayCards(new Card[4], false);
 			displayCards(new Card[4], true);
 		} catch (IOException e) {
@@ -153,7 +150,7 @@ public class BlackjackTable extends BlackjackWindow{
 		    	cleanTable();
 		        // TODO: set and get the data from the backend
 				// JSONObject response = m_app.sendMessageToBackend(null);
-				fillTable();				
+				fillTable();			
 			
 		    }  
 		});
@@ -175,8 +172,6 @@ public class BlackjackTable extends BlackjackWindow{
 		});
 
 		m_frame.add(stand_label);
-//		m_labels.add(hit_label);
-//		m_labels.add(stand_label);
 	}
 
 	private enum GAME_BUTTONS {
