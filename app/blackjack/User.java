@@ -14,6 +14,7 @@ public class User extends Player {
 	
 	public User(int id)
 	{
+		this.sumOfCards = 0;
 		this.id = id;
 		try {
 		      File myObj = new File("./app/blackjack/players/" + "player" + id + ".txt");
