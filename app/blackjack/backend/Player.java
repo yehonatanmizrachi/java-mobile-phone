@@ -17,6 +17,7 @@ public abstract class Player {
 		my_cards.add(c);
 		this.sumOfCards += c.getNumber();
 	}
+	
 	public ArrayList<Card> getMyCards()
 	{
 		return this.my_cards;
@@ -24,5 +25,11 @@ public abstract class Player {
 
 	public void cleanCards() {
 		my_cards.clear();
+	}
+	
+	// AS = -1;
+	public void sumCards()
+	{
+		
 	}
 }
