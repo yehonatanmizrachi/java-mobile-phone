@@ -20,7 +20,6 @@ import java.io.IOException;
 import javax.swing.JButton;  
 import javax.swing.JFrame;  
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;  
 import src.App;
 
@@ -28,7 +27,7 @@ import src.App;
 public class BlackjackApp implements App{
 
 	private JFrame frame = new JFrame("BlackJack");
-	private static Object lock = new Object();
+
 
 	public void run() throws IOException {
 		startMenu();
