@@ -2,10 +2,10 @@ package blackjack.backend;
 
 import java.util.ArrayList;
 
-public abstract class Player {
-	private ArrayList<Card> my_cards;
+public abstract class Player{
+	private ArrayList<Card> my_cards = new ArrayList<Card>();
 	int sumOfCards;
-	public abstract void makeMove();
+	public abstract void makeMove(DeckOfCards DC);
 	
 	public Player()
 	{
@@ -15,7 +15,7 @@ public abstract class Player {
 	public void addCard(Card c)
 	{
 		my_cards.add(c);
-		this.sumOfCards += c.getNumber();
+		this.sumOfCards += c.Number();
 	}
 	
 	public ArrayList<Card> getMyCards()
@@ -30,6 +30,40 @@ public abstract class Player {
 	// AS = -1;
 	public void sumCards()
 	{
+		int numOfAS = 0;
+		int sum = 0;
+		int i;
+		for(i = 0; i < my_cards.size();i++) {
+			int number = my_cards.get(i).Number();
+			if(number != -1) {
+				sum = sum + number;
+			}
+			else {
+				numOfAS++;
+			}
+		}
+		
+		if(sum >= 21) {
+			sum = (sum + (numOfAS)*11);
+		}
+		
+		else {
+			
+			for(i = 0; i < numOfAS ;i++) {
+														
+				if(sum + 11 <= 21) {
+					
+					sum = sum + 11;
+					
+				}
+				else {
+					sum = sum + 1;
+				}
+				
+			}
+		}
+
+		
 		
 	}
 }

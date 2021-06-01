@@ -68,7 +68,7 @@ public class User extends Player {
 	}
 
 	@Override
-	public void makeMove() {
+	public void makeMove(DeckOfCards DC) {
 		// TODO Auto-generated method stub
 		
 	}
