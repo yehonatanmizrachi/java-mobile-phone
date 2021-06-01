@@ -3,16 +3,16 @@ package blackjack;
 
 import java.io.IOException;
 
-import blackjack.frontend.BlackjackGUI;
+import blackjack.frontend.BlackjackMenu;
 import src.App;
 
 
 public class BlackjackApp implements App{
 
-	private BlackjackGUI game = new BlackjackGUI();
+	private BlackjackMenu game = new BlackjackMenu();
 	
 	public void run() throws IOException {
-		game.startGame();
+		game.run();
 	}
 
 	@Override
