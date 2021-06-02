@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -20,6 +23,7 @@ import org.json.JSONObject;
 import blackjack.BlackjackApp;
 import blackjack.BlackjackApp.APP_WINDOWS;
 import blackjack.api.COMMAND;
+import blackjack.api.GAME_STATUS;
 
 public class BlackjackTable extends BlackjackWindow{
 
@@ -142,8 +146,7 @@ public class BlackjackTable extends BlackjackWindow{
 		});
 
 		m_frame.add(hit_label);
-		
-		
+
 		JLabel stand_label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(standPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
 		stand_label.setBounds(INITIAL_X + BUTTON_WIDTH + PADD, INITIAL_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
 		
@@ -152,6 +155,7 @@ public class BlackjackTable extends BlackjackWindow{
 		{  
 		    public void mouseClicked(MouseEvent e)  
 		    {  
+		    	
 		    	cleanTable();
 		    	JSONObject request = new JSONObject();
 		    	try {
@@ -163,6 +167,21 @@ public class BlackjackTable extends BlackjackWindow{
 		    	JSONObject response = m_app.sendMessageToBackend(request);
 		    	
 		    	fillTable(response);
+
+		    	Timer timer = new Timer();
+		    	timer.schedule(new TimerTask() {
+		    		  @Override
+		    		  public void run() {
+		    			  try {
+							GAME_STATUS status = (GAME_STATUS)response.get("status");
+							
+							System.out.print(status);
+							mouseClicked(e);
+						} catch (JSONException e1) {
+							e1.printStackTrace();
+						}
+		    		  }
+		    		}, 2*1000);
 		    }  
 		});
 
