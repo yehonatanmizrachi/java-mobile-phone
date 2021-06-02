@@ -8,5 +8,6 @@ public enum GAME_STATUS {
 	PLAYER_WINS,
 	TIE_GAME,
 	STOP,
+	STAND,
 	END_GAME;
 }

@@ -19,23 +19,14 @@ import src.App;
 
 public class BlackjackMenu extends BlackjackWindow{
 
-	public BlackjackMenu(String title, BlackjackApp app) {
-		super(title, app);
+	public BlackjackMenu(String title, int width, int height, String backgroundImage, BlackjackApp app) {
+		super(title, width, height, backgroundImage, app);
 	}
 
 	public void start() throws IOException {
 		
-		// background
-		String IMAGE_PATH = "Pic/Menu.png";
-		int WIDTH = 590, HEIGHT = 530;
-	
-        JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-        background.setBounds(0, 0, WIDTH, HEIGHT);
-        
-
         // buttons
         int BUTTONS_COUNT = 3;
-        JButton[] buttons = new JButton[BUTTONS_COUNT];
 
         // buttons layout
         int BUTTON_WIDTH = 345, BUTTON_HEIGHT = 60, BUTTON_PADDING = 35; 
@@ -49,31 +40,10 @@ public class BlackjackMenu extends BlackjackWindow{
     	}
         
     	for (int index = 0; index < BUTTONS_COUNT; index++) {
-    		buttons[index] = new JButton();
-        	buttons[index].addActionListener(getButtonEventListener(MENU.values()[index]));
-        	buttons[index].setBounds(BUTTONS_LOCATIONS[index][0], BUTTONS_LOCATIONS[index][1], BUTTON_WIDTH, BUTTON_HEIGHT);
-        	buttons[index].setOpaque(false);
-        	buttons[index].setContentAreaFilled(false);
-        	buttons[index].setBorderPainted(false);
-        		        			
-        	background.add(buttons[index]);
+    		super.addButton(BUTTONS_LOCATIONS[index][0], BUTTONS_LOCATIONS[index][1], BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(MENU.values()[index]));
         }
-
-    	m_frame.add(background);
-
-        m_frame.setSize(WIDTH, HEIGHT);
-        m_frame.setLocationRelativeTo(null);
-        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        m_frame.setResizable(false);
-        m_frame.setVisible(true);
-        
-        m_frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent arg0) {
-                m_frame.setVisible(false);             
-                App.phone.returnToPhone();
-            }
-        });
+    	
+    	super.startFrame();
 	}
 
 

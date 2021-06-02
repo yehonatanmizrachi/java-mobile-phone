@@ -15,6 +15,7 @@ public class GameManager{
 	private Player[] players = new Player[numOfPlayers];
 	private GAME_STATUS status;
 	private DeckOfCards cards_deck = new DeckOfCards();
+	private final int betVal = 10;
 	
 	public GameManager()
 	{
@@ -67,7 +68,7 @@ public class GameManager{
 		JSONObject d = new JSONObject();
 
 		d.put("cards", this.players[0].getMyCards());
-		obj.put("Dealer", d);
+		obj.put("dealer", d);
 		
 		p.put("cards", this.players[1].getMyCards());
 		p.put("money", ((User)players[1]).getMoney());
@@ -81,6 +82,12 @@ public class GameManager{
 	
 	public void startGame()
 	{	
+		if (((User)players[1]).getMoney() - betVal < 0)
+		{
+			this.status = GAME_STATUS.END_GAME;
+			return;
+		}
+		((User)players[1]).setMoney(((User)players[1]).getMoney() - betVal);
 		players[0].sumOfCards = 0;
 		players[1].sumOfCards = 0;
 		cards_deck.reset();
@@ -91,6 +98,7 @@ public class GameManager{
 		}	
 	}
 	
+
 	private void checkGameStatus(int i){
 		
 		if(i == 0){ // during game

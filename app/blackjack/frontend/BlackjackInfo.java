@@ -19,73 +19,34 @@ import src.App;
 
 public class BlackjackInfo extends BlackjackWindow{
 
-	public BlackjackInfo(String title, BlackjackApp app) {
-		super(title, app);
+	public BlackjackInfo(String title, int width, int height, String backgroundImage, BlackjackApp app) {
+		super(title, width, height, backgroundImage, app);
 	}
 	
-	public void start() throws IOException {
+	public void start() throws IOException {	
 
-		// background
-		String IMAGE_PATH = "Pic/INFO.png";
-		int WIDTH = 583, HEIGHT = 525;
-	
-		JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-		background.setBounds(0, 0, WIDTH, HEIGHT);
-
-		// buttons
 		int BUTTON_WIDTH = 40, BUTTON_HEIGHT = 40, BUTTON_X = 33, BUTTON_Y = 425, PADD = 18;
-        
-		// return button
-        JButton returnButton = new JButton();
-        returnButton.addActionListener(getButtonEventListener(INFO_BUTTONS.RETURN));
-        returnButton.setBounds(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        returnButton.setOpaque(false);
-        returnButton.setContentAreaFilled(false);
-        returnButton.setBorderPainted(false);
-        
-    	// home button
-        JButton infoButton = new JButton();
-        infoButton.addActionListener(getButtonEventListener(INFO_BUTTONS.HOME));
-        infoButton.setBounds(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        infoButton.setOpaque(false);
-        infoButton.setContentAreaFilled(false);
-        infoButton.setBorderPainted(false);
-        
-        
-        // LIFO
-        background.add(returnButton);
-        background.add(infoButton);
-        m_frame.add(background);
 
+        super.addButton(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS_ACTIONS.RETURN));
+        super.addButton(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS_ACTIONS.HOME));
 
-        m_frame.setSize(WIDTH, HEIGHT);
-        m_frame.setLocationRelativeTo(null);
-        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        m_frame.setResizable(false);
-        m_frame.setVisible(true);
-        
-        m_frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent arg0) {
-            	m_frame.setVisible(false);             
-                App.phone.returnToPhone();
-            }
-        });
+        super.startFrame();
 	}
 
-	private enum INFO_BUTTONS {
+
+	private enum BUTTONS_ACTIONS {
 		RETURN,
 		HOME
 	}
 
-	private ActionListener getButtonEventListener(INFO_BUTTONS action) {
+	private ActionListener getButtonEventListener(BUTTONS_ACTIONS action) {
 		return new ActionListener(){
 	       	 public void actionPerformed(ActionEvent evt){
 	       		 m_frame.setVisible(false);
-	       		 if (action == INFO_BUTTONS.RETURN) {
+	       		 if (action == BUTTONS_ACTIONS.RETURN) {
 	       			m_app.goToPreviousWindow();
 	       		 }
-	       		 else if (action == INFO_BUTTONS.HOME) {
+	       		 else if (action == BUTTONS_ACTIONS.HOME) {
 	       			m_app.cleanWindowStack();
 	       			m_app.startWindow(APP_WINDOWS.MENU);
 	       		 }

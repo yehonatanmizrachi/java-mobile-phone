@@ -7,7 +7,9 @@ import java.util.Stack;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import blackjack.api.GAME_STATUS;
 import blackjack.backend.GameManager;
+import blackjack.frontend.BlackjackEndGame;
 import blackjack.frontend.BlackjackInfo;
 import blackjack.frontend.BlackjackMenu;
 import blackjack.frontend.BlackjackStatistics;
@@ -18,17 +20,6 @@ import src.App;
 
 public class BlackjackApp implements App {
 
-	private GameManager m_backend = new GameManager();
-	
-	private BlackjackWindow[] m_windows = {
-		new BlackjackMenu("BlackJack - Menu", this),
-		new BlackjackTable("BlackJack - Table",this),
-		new BlackjackInfo("BlackJack - Info", this),
-		new BlackjackStatistics("BlackJack - Statistics", this)
-	};
-	
-	private Stack<BlackjackWindow> m_windowsStack = new Stack<BlackjackWindow>();
-
 	public void run() throws IOException {
 		startWindow(APP_WINDOWS.MENU);
 	}
@@ -37,7 +28,32 @@ public class BlackjackApp implements App {
 	public String getAppContent() {
 		return "BlackJack app is empty\n";
 	}
+
+	private GameManager m_backend;
+	private GAME_STATUS gameStatus;
 	
+	private BlackjackWindow[] m_windows;
+	private Stack<BlackjackWindow> m_windowsStack;
+
+	public BlackjackApp() {
+		
+		m_backend = new GameManager();
+		
+		m_windows = new BlackjackWindow[]{
+				new BlackjackMenu("BlackJack - Menu", APPS_SIZES[APP_WINDOWS.MENU.ordinal()][0], APPS_SIZES[APP_WINDOWS.MENU.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.MENU.ordinal()], this),
+				new BlackjackTable("BlackJack - Table", APPS_SIZES[APP_WINDOWS.TABLE.ordinal()][0], APPS_SIZES[APP_WINDOWS.TABLE.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.TABLE.ordinal()], this),
+				new BlackjackInfo("BlackJack - Info", APPS_SIZES[APP_WINDOWS.INFO.ordinal()][0], APPS_SIZES[APP_WINDOWS.INFO.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.INFO.ordinal()], this),
+				new BlackjackStatistics("BlackJack - Statistics", APPS_SIZES[APP_WINDOWS.STATISTICS.ordinal()][0], APPS_SIZES[APP_WINDOWS.STATISTICS.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.STATISTICS.ordinal()], this),
+				new BlackjackEndGame("BlackJack - End Game", APPS_SIZES[APP_WINDOWS.END_GAME.ordinal()][0], APPS_SIZES[APP_WINDOWS.END_GAME.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.END_GAME.ordinal()], this),
+		};
+		
+		m_windowsStack = new Stack<BlackjackWindow>();
+	}
+	
+	public GAME_STATUS getGameStatus() {
+		return gameStatus;
+	}
+
 	public void startWindow(APP_WINDOWS window) {
 		try {
 			m_windowsStack.push(m_windows[window.ordinal()]);
@@ -81,7 +97,25 @@ public class BlackjackApp implements App {
 		MENU,
 		TABLE,
 		INFO,
-		STATISTICS
+		STATISTICS,
+		END_GAME
 	}
+
+	// [width, height]
+	private int[][] APPS_SIZES = {
+			{590, 530},
+			{910, 757},
+			{583, 525},
+			{583, 525},
+			{583, 275}
+	};
+	
+	private String[] APPS_BACKGROUDS = {
+			"Pic/Menu.png",
+			"Pic/Table1.png",
+			"Pic/INFO.png",
+			"Pic/STATISTICS.png",
+			null
+	};
 
 }
