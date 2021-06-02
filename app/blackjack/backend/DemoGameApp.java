@@ -24,19 +24,19 @@ public class DemoGameApp {
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
 		// DEALER TURN
-		obj.put("command", COMMAND.STOP);
+		obj.put("command", COMMAND.STAND);
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
-		obj.put("command", COMMAND.STOP);
+		obj.put("command", COMMAND.STAND);
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
-		obj.put("command", COMMAND.STOP);
+		obj.put("command", COMMAND.STAND);
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
-		obj.put("command", COMMAND.STOP);
+		obj.put("command", COMMAND.STAND);
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
-		obj.put("command", COMMAND.STOP);
+		obj.put("command", COMMAND.STAND);
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
 		// EXIT GAME

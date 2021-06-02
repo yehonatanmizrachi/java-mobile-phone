@@ -2,7 +2,6 @@ package blackjack.backend;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import blackjack.api.CARD_COLOR;
 import blackjack.api.CARD_SHAPE;
 
 public class Card {
@@ -23,7 +22,7 @@ public class Card {
 	}
 	
 	// get the value of the card. 
-	// AS = -1;
+	// AS = 1;
 	public int Number() {
 		
 		return num;
