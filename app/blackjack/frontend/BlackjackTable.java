@@ -1,41 +1,48 @@
 package blackjack.frontend;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import blackjack.BlackjackApp;
 import blackjack.BlackjackApp.APP_WINDOWS;
-import blackjack.backend.Card;
-import src.App;
+import blackjack.api.COMMAND;
 
 public class BlackjackTable extends BlackjackWindow{
 
 	public BlackjackTable(String title, int width, int height, String backgroundImage, BlackjackApp app) {
 		super(title, width, height, backgroundImage, app);
+		m_labels = new ArrayList<JLabel>();
 	}
 
-	private ArrayList<JLabel> m_labels = new ArrayList<JLabel>();
+	private ArrayList<JLabel> m_labels;
 	
 	public void start() throws IOException {
-
+		
+		// send message to backend
+		JSONObject response = null;
+		try {
+			JSONObject request = new JSONObject();
+			request.put("command", COMMAND.START_GAME);
+			response = m_app.sendMessageToBackend(request);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		
         // buttons
         int BUTTON_WIDTH = 70, BUTTON_HEIGHT = 70, BUTTON_X = 15, BUTTON_Y = 630;
         int INFO_PADD = 25;
@@ -45,11 +52,9 @@ public class BlackjackTable extends BlackjackWindow{
 
     	displayHitAndStandButtons();
 
-    	refreshBackground();
-    	
-        fillTable();
-        
         super.startFrame();
+
+        fillTable(response);
 	}
 
 	private void cleanTable() {
@@ -58,15 +63,17 @@ public class BlackjackTable extends BlackjackWindow{
 			label.setVisible(false);
 			m_frame.remove(label);
 		}
+		
+		m_labels.clear();
 	}
 
-	private void fillTable() {
+	private void fillTable(JSONObject response) {
 
 		try {
 			// TODO
-			displayCards(new Card[4], false);
-			displayCards(new Card[4], true);
-		} catch (IOException e) {
+			displayCards(response, true);
+			displayCards(response, false);
+		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		}
 
@@ -78,21 +85,28 @@ public class BlackjackTable extends BlackjackWindow{
 		m_frame.add(m_background);
 	}
 
-	private void displayCards(Card[] cards, Boolean isPlayer) throws IOException {
+	private void displayCards(JSONObject response, Boolean isPlayer) throws IOException, JSONException {
 		
 		int PLAYER_INITIAL_X = 200, DEALER_INITIAL_X = 200;
 		int initial_x = isPlayer ? PLAYER_INITIAL_X : DEALER_INITIAL_X;
-		
+			
 		int PLAYER_INITIAL_Y = 550, DEALER_INITIAL_Y = 330;
 		int initial_y = isPlayer ? PLAYER_INITIAL_Y : DEALER_INITIAL_Y;
 		
 		int CARD_PADDING = 10;
 		int CARD_WIDTH = 70, CARD_HEIGHT = 99;
-		for(int i=0; i < cards.length; i++) {
-			JLabel label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File("Pic/cards/2H.png")), CARD_WIDTH, CARD_HEIGHT)));
+		
+		String JSONKey = isPlayer ? "player" : "dealer";
+		JSONObject playerObj = (JSONObject)response.get(JSONKey);
+		JSONArray cards = (JSONArray)(playerObj.get("cards")); 
+
+		for(int i = 0; i < cards.length(); i++) {
+			JSONObject card = (JSONObject)((JSONObject)cards.get(i)).get("cardInfo");
+			JLabel label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File((String)card.get("pic"))), CARD_WIDTH, CARD_HEIGHT)));
 			label.setBounds(initial_x + (CARD_WIDTH + CARD_PADDING) * i, initial_y, CARD_WIDTH, CARD_HEIGHT);
 			m_frame.add(label);
 			m_labels.add(label);
+			
 		}
 	}
 
@@ -113,10 +127,16 @@ public class BlackjackTable extends BlackjackWindow{
 		    public void mouseClicked(MouseEvent e)  
 		    {  
 		    	cleanTable();
-		        // TODO: set and get the data from the backend
-				// JSONObject response = m_app.sendMessageToBackend(null);
-				fillTable();			
-			
+		    	JSONObject request = new JSONObject();
+		    	try {
+					request.put("command", COMMAND.HIT);
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+
+		    	JSONObject response = m_app.sendMessageToBackend(request);
+		    	
+		    	fillTable(response);
 		    }  
 		});
 
@@ -132,7 +152,6 @@ public class BlackjackTable extends BlackjackWindow{
 		    public void mouseClicked(MouseEvent e)  
 		    {  
 		       // TODO: send json to backend
-		    	m_app.startWindow(APP_WINDOWS.END_GAME);
 		    	System.out.print(GAME_BUTTONS.STAND);
 		    }  
 		});

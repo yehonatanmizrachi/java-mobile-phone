@@ -2,20 +2,16 @@ package blackjack.frontend;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import blackjack.BlackjackApp;
 import blackjack.BlackjackApp.APP_WINDOWS;
-import src.App;
+import blackjack.api.GAME_STATUS;
 
 public class BlackjackEndGame extends BlackjackWindow{
 
@@ -26,10 +22,19 @@ public class BlackjackEndGame extends BlackjackWindow{
 	public void start() throws IOException {
 
 		// background
-		m_app.getGameStatus();
-		Boolean playerWon = true;
-		String IMAGE_PATH = playerWon ? "Pic/YOUWON.png" : "Pic/GAMEOVER.png";
-	
+		GAME_STATUS status = m_app.getGameStatus();		
+		String IMAGE_PATH;
+
+		if (status == GAME_STATUS.PLAYER_WINS) {
+			IMAGE_PATH = "Pic/YOUWON.png";
+		} 
+		else if  (status == GAME_STATUS.DEALER_WINS) {
+			IMAGE_PATH = "Pic/GAMEOVER.png";
+		}
+		else {
+			IMAGE_PATH = "Pic/TIE.png";
+		}
+
 		m_background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
 		m_background.setBounds(0, 0, m_width, m_height);
 
