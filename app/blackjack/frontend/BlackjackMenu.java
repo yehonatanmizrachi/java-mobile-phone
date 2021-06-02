@@ -19,18 +19,17 @@ import src.App;
 
 public class BlackjackMenu extends BlackjackWindow{
 
-	public BlackjackMenu(String title, BlackjackApp app) {
-		super(title, app);
+	public BlackjackMenu(String title, int width, int height, BlackjackApp app) {
+		super(title, width, height, app);
 	}
 
 	public void start() throws IOException {
 		
 		// background
 		String IMAGE_PATH = "Pic/Menu.png";
-		int WIDTH = 590, HEIGHT = 530;
 	
         JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-        background.setBounds(0, 0, WIDTH, HEIGHT);
+        background.setBounds(0, 0, m_width, m_height);
         
 
         // buttons
@@ -61,7 +60,7 @@ public class BlackjackMenu extends BlackjackWindow{
 
     	m_frame.add(background);
 
-        m_frame.setSize(WIDTH, HEIGHT);
+        m_frame.setSize(m_width, m_height);
         m_frame.setLocationRelativeTo(null);
         m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         m_frame.setResizable(false);

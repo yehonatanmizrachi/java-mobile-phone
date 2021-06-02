@@ -23,8 +23,8 @@ import src.App;
 
 public class BlackjackStatistics extends BlackjackWindow{
 
-	public BlackjackStatistics(String title, BlackjackApp app) {
-		super(title, app);
+	public BlackjackStatistics(String title, int width, int height, BlackjackApp app) {
+		super(title, width, height, app);
 	}
 
 	public void start() throws IOException {
@@ -39,10 +39,9 @@ public class BlackjackStatistics extends BlackjackWindow{
 
 		// background
 		String IMAGE_PATH = "Pic/STATISTICS.png";
-		int WIDTH = 583, HEIGHT = 525;
 	
 		JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-		background.setBounds(0, 0, WIDTH, HEIGHT);
+		background.setBounds(0, 0, m_width, m_height);
         
         
         /// labels
@@ -89,7 +88,7 @@ public class BlackjackStatistics extends BlackjackWindow{
         m_frame.add(background);
         
         
-        m_frame.setSize(WIDTH, HEIGHT);
+        m_frame.setSize(m_width, m_height);
         m_frame.setLocationRelativeTo(null);
         m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         m_frame.setResizable(false);

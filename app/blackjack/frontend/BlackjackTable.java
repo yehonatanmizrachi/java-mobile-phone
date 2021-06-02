@@ -28,8 +28,8 @@ import src.App;
 
 public class BlackjackTable extends BlackjackWindow{
 
-	public BlackjackTable(String title, BlackjackApp app) {
-		super(title, app);
+	public BlackjackTable(String title, int width, int height, BlackjackApp app) {
+		super(title, width, height, app);
 	}
 
 	private ArrayList<JLabel> m_labels = new ArrayList<JLabel>();
@@ -40,10 +40,9 @@ public class BlackjackTable extends BlackjackWindow{
 
 		// background
 		String IMAGE_PATH = "Pic/Table1.png";
-		int WIDTH = 910, HEIGHT = 757;
 	
 		m_background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-		m_background.setBounds(0, 0, WIDTH, HEIGHT);
+		m_background.setBounds(0, 0, m_width, m_height);
         
 
         // return button
@@ -70,7 +69,7 @@ public class BlackjackTable extends BlackjackWindow{
 
     	refreshBackground();
     	
-        m_frame.setSize(WIDTH, HEIGHT);
+        m_frame.setSize(m_width, m_height);
         m_frame.setLocationRelativeTo(null);
         m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         m_frame.setResizable(false);

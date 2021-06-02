@@ -17,16 +17,17 @@ import blackjack.BlackjackApp;
 import blackjack.BlackjackApp.APP_WINDOWS;
 import src.App;
 
-public class BlackjackInfo extends BlackjackWindow{
+public class BlackjackEndGame extends BlackjackWindow{
 
-	public BlackjackInfo(String title, int width, int height, BlackjackApp app) {
+	public BlackjackEndGame(String title, int width, int height, BlackjackApp app) {
 		super(title, width, height, app);
 	}
 	
 	public void start() throws IOException {
 
 		// background
-		String IMAGE_PATH = "Pic/INFO.png";
+		Boolean playerWon = true;
+		String IMAGE_PATH = playerWon ? "Pic/WIN.png" : "Pic/LOOSE.png";
 	
 		JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
 		background.setBounds(0, 0, m_width, m_height);
@@ -34,26 +35,26 @@ public class BlackjackInfo extends BlackjackWindow{
 		// buttons
 		int BUTTON_WIDTH = 40, BUTTON_HEIGHT = 40, BUTTON_X = 33, BUTTON_Y = 425, PADD = 18;
         
-		// return button
-        JButton returnButton = new JButton();
-        returnButton.addActionListener(getButtonEventListener(INFO_BUTTONS.RETURN));
-        returnButton.setBounds(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        returnButton.setOpaque(false);
-        returnButton.setContentAreaFilled(false);
-        returnButton.setBorderPainted(false);
+		// play again button
+        JButton playAgain = new JButton();
+        playAgain.addActionListener(getButtonEventListener(BUTTONS.PLAY_AGAIN));
+        playAgain.setBounds(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+        playAgain.setOpaque(false);
+        playAgain.setContentAreaFilled(false);
+        playAgain.setBorderPainted(false);
         
     	// home button
-        JButton infoButton = new JButton();
-        infoButton.addActionListener(getButtonEventListener(INFO_BUTTONS.HOME));
-        infoButton.setBounds(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        infoButton.setOpaque(false);
-        infoButton.setContentAreaFilled(false);
-        infoButton.setBorderPainted(false);
+        JButton homeButton = new JButton();
+        homeButton.addActionListener(getButtonEventListener(BUTTONS.HOME));
+        homeButton.setBounds(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+        homeButton.setOpaque(false);
+        homeButton.setContentAreaFilled(false);
+        homeButton.setBorderPainted(false);
         
         
         // LIFO
-        background.add(returnButton);
-        background.add(infoButton);
+        background.add(playAgain);
+        background.add(homeButton);
         m_frame.add(background);
 
 
@@ -72,19 +73,20 @@ public class BlackjackInfo extends BlackjackWindow{
         });
 	}
 
-	private enum INFO_BUTTONS {
-		RETURN,
+	private enum BUTTONS {
+		PLAY_AGAIN,
 		HOME
 	}
 
-	private ActionListener getButtonEventListener(INFO_BUTTONS action) {
+	private ActionListener getButtonEventListener(BUTTONS action) {
 		return new ActionListener(){
 	       	 public void actionPerformed(ActionEvent evt){
 	       		 m_frame.setVisible(false);
-	       		 if (action == INFO_BUTTONS.RETURN) {
+	       		 if (action == BUTTONS.PLAY_AGAIN) {
+	       			// TODO: send start game to backend
 	       			m_app.goToPreviousWindow();
 	       		 }
-	       		 else if (action == INFO_BUTTONS.HOME) {
+	       		 else if (action == BUTTONS.HOME) {
 	       			m_app.cleanWindowStack();
 	       			m_app.startWindow(APP_WINDOWS.MENU);
 	       		 }
