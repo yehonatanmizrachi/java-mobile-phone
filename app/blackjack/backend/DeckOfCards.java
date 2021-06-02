@@ -38,8 +38,9 @@ public class DeckOfCards {
 		this.amount = 52;
 		
 		// 13 sets * 4 = 52 cards
-		// color 0 = red, color 1 = black
-		// shape 0 = Diamonds, shape 1 = Clubs, shape 2 = Hearts, shape 3 = Spades	
+		// shape 0 = Diamonds, shape 1 = Clubs, shape 2 = Hearts, shape 3 = Spades
+		// Jack = 11, Queen = 12, King = 13
+		
 		
 		if(DC.isEmpty() != true) {
 			DC = new ArrayList<Card>();
@@ -47,12 +48,11 @@ public class DeckOfCards {
 		
 		for(j = 0; j<4;j++) {
 			
-			int color = j%2;
 			int shape = j;
 			
 			for(i=0;i<13;i++) {
 				num = i+1;
-				Card c = new Card(num,color,shape);
+				Card c = new Card(num,shape);
 				DC.add(c);
 			}
 		}

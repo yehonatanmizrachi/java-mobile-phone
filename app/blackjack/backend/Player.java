@@ -27,13 +27,16 @@ public abstract class Player{
 	}
 	
 	// AS = -1;
-	public void sumCards()
+	public int sumCards()
 	{
 		int numOfAS = 0;
 		int sum = 0;
 		int i;
+		
 		for(i = 0; i < my_cards.size();i++) {
+			
 			int number = my_cards.get(i).Number();
+
 			if(number <= 10 && number >= 2) {
 				sum = sum + number;
 			}
@@ -62,8 +65,7 @@ public abstract class Player{
 				}
 				
 			}
-		}
-		
+		}		
 		this.sumOfCards = sum;
 	}
 }

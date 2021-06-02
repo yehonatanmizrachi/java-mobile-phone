@@ -37,7 +37,7 @@ public class GameManager{
 		}
 		else if (command == COMMAND.HIT)
 			players[1].makeMove(cards_deck);
-		else if (command == COMMAND.STOP)
+		else if (command == COMMAND.STAND)
 		{
 			int old_sum = players[0].sumOfCards;
 			players[0].makeMove(cards_deck);
