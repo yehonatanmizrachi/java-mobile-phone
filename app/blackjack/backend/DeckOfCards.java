@@ -48,7 +48,7 @@ public class DeckOfCards {
 		if(num == 13) {
 			id = id + "K";
 		}
-		if(num == 0) {
+		if(j == 0) {
 			id = id + "D";
 		}
 		if(j == 1) {
