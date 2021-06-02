@@ -7,10 +7,11 @@ import blackjack.api.CARD_SHAPE;
 public class Card {
 	private int num;
 	private CARD_SHAPE shape;
-	
-	public Card(int num,int shape) {
+	private String pic;
+	public Card(int num,int shape,String pic) {
 		this.num = num;
 		this.shape = CARD_SHAPE.values()[shape];
+		this.pic = pic;
 	}
 	
 	public JSONObject getCardInfo() throws JSONException{
@@ -18,6 +19,7 @@ public class Card {
 		JSONObject obj = new JSONObject();
 		obj.put("number", this.num);
 		obj.put("shape", this.shape);
+		obj.put("pic",this.pic);
 		return obj;
 	}
 	
