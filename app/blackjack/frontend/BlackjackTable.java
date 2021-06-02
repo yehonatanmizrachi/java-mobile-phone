@@ -71,8 +71,8 @@ public class BlackjackTable extends BlackjackWindow{
 
 		try {
 			// TODO
-			displayCards(response, true);
 			displayCards(response, false);
+			displayCards(response, true);
 		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		}
@@ -83,6 +83,8 @@ public class BlackjackTable extends BlackjackWindow{
 	private void refreshBackground() {
 		m_frame.remove(m_background);
 		m_frame.add(m_background);
+		m_background.setVisible(false);
+		m_background.setVisible(true);
 	}
 
 	private void displayCards(JSONObject response, Boolean isPlayer) throws IOException, JSONException {
@@ -104,9 +106,8 @@ public class BlackjackTable extends BlackjackWindow{
 			JSONObject card = (JSONObject)((JSONObject)cards.get(i)).get("cardInfo");
 			JLabel label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File((String)card.get("pic"))), CARD_WIDTH, CARD_HEIGHT)));
 			label.setBounds(initial_x + (CARD_WIDTH + CARD_PADDING) * i, initial_y, CARD_WIDTH, CARD_HEIGHT);
-			m_frame.add(label);
 			m_labels.add(label);
-			
+			m_frame.add(label);
 		}
 	}
 
@@ -151,8 +152,17 @@ public class BlackjackTable extends BlackjackWindow{
 		{  
 		    public void mouseClicked(MouseEvent e)  
 		    {  
-		       // TODO: send json to backend
-		    	System.out.print(GAME_BUTTONS.STAND);
+		    	cleanTable();
+		    	JSONObject request = new JSONObject();
+		    	try {
+					request.put("command", COMMAND.STAND);
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+
+		    	JSONObject response = m_app.sendMessageToBackend(request);
+		    	
+		    	fillTable(response);
 		    }  
 		});
 
