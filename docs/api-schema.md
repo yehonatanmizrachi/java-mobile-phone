@@ -1,11 +1,13 @@
 # Front2Back:
 
+`
 {
 	"command": COMMAND
 }
-
-
+`
+	
 # Back2Front:
+`
 {
 	"player": {
 		"cards": [{"cardInfo": {"number": Int, "shape": CARD_SHAPE, "imagePath": String }}];
@@ -19,4 +21,4 @@
 	"status": GAME_STATUS
 	
 }
- 
+`
