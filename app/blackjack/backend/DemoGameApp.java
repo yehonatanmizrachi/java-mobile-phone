@@ -24,6 +24,7 @@ public class DemoGameApp {
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
 		// DEALER TURN
+		/*
 		obj.put("command", COMMAND.STAND);
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
@@ -43,5 +44,6 @@ public class DemoGameApp {
 		obj.put("command", COMMAND.EXIT);
 		g.sendCommand(obj);
 		System.out.println(g.buildJson());
+		*/
 	}
 }
