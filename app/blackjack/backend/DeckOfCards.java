@@ -39,7 +39,9 @@ public class DeckOfCards {
 		
 		// 13 sets * 4 = 52 cards
 		// color 0 = red, color 1 = black
-		// shape 0 = Diamonds, shape 1 = Clubs, shape 2 = Hearts, shape 3 = Spades	
+		// shape 0 = Diamonds, shape 1 = Clubs, shape 2 = Hearts, shape 3 = Spades
+		// Jack = 11, Queen = 12, King = 13
+		
 		
 		if(DC.isEmpty() != true) {
 			DC = new ArrayList<Card>();
@@ -47,7 +49,7 @@ public class DeckOfCards {
 		
 		for(j = 0; j<4;j++) {
 			
-			int color = j%2;
+			//int color = j%2;
 			int shape = j;
 			
 			for(i=0;i<13;i++) {
@@ -55,20 +57,12 @@ public class DeckOfCards {
 				
 				// 1 is the AS, then we define -1 as the AS (he can be 1 of 11)
 				if(num == 1) {
-					Card c = new Card(-1,color,shape);
+					Card c = new Card(-1,shape);
 					DC.add(c);
 				}
 				else {
-					if(num <= 10) {
-						// number is between 2 to 10
-						Card c = new Card(num,color,shape);
-						DC.add(c);
-					}
-					else {
-						// number is J/Q/K so it will be 10
-						Card c = new Card(10,color,shape);
-						DC.add(c);
-					}
+					Card c = new Card(num,shape);
+					DC.add(c);
 				}
 			}
 		}
