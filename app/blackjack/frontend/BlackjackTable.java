@@ -38,7 +38,7 @@ public class BlackjackTable extends BlackjackWindow{
 	
 	public void start() throws IOException {
 		
-		// send message to backend
+		// send message to Backend
 		JSONObject response = null;
 		try {
 			JSONObject request = new JSONObject();
@@ -168,6 +168,8 @@ public class BlackjackTable extends BlackjackWindow{
 		    {  
 		    	
 		    	cleanTable();
+		    	hideHitAndStandButtons();
+
 		    	JSONObject request = new JSONObject();
 		    	try {
 					request.put("command", COMMAND.STAND);
@@ -215,6 +217,12 @@ public class BlackjackTable extends BlackjackWindow{
 		
 		m_frame.add(m_hitLabel);
 		m_frame.add(m_standLabel);
+		refreshFrame();
+	}
+
+	private void hideHitAndStandButtons() {
+		m_frame.remove(m_hitLabel);
+		m_frame.remove(m_standLabel);
 		refreshFrame();
 	}
 
