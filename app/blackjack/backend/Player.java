@@ -27,7 +27,7 @@ public abstract class Player{
 	}
 	
 	// AS = -1;
-	public int sumCards()
+	public void sumCards()
 	{
 		int numOfAS = 0;
 		int sum = 0;
