@@ -13,10 +13,15 @@ public class BlackjackMenu extends BlackjackWindow{
 
 	public BlackjackMenu(String title, int width, int height, String backgroundImage, BlackjackApp app) {
 		super(title, width, height, backgroundImage, app);
+		init();
 	}
 
-	public void start() throws IOException {
-		
+	public void start() throws IOException {    	
+    	m_frame.setVisible(true);
+	}
+
+	private void init() {
+
         // buttons
         int BUTTONS_COUNT = 3;
 
@@ -34,10 +39,7 @@ public class BlackjackMenu extends BlackjackWindow{
     	for (int index = 0; index < BUTTONS_COUNT; index++) {
     		super.addButton(BUTTONS_LOCATIONS[index][0], BUTTONS_LOCATIONS[index][1], BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(MENU.values()[index]));
         }
-    	
-    	super.startFrame();
 	}
-
 
 	private enum MENU {
 		START,

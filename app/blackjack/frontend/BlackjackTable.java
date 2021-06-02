@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -29,10 +28,13 @@ public class BlackjackTable extends BlackjackWindow{
 
 	public BlackjackTable(String title, int width, int height, String backgroundImage, BlackjackApp app) {
 		super(title, width, height, backgroundImage, app);
-		m_labels = new ArrayList<JLabel>();
+		m_cardsLabels = new ArrayList<JLabel>();
+		init();
 	}
 
-	private ArrayList<JLabel> m_labels;
+	private ArrayList<JLabel> m_cardsLabels;
+	private JLabel m_hitLabel = null;
+	private JLabel m_standLabel = null;
 	
 	public void start() throws IOException {
 		
@@ -45,30 +47,40 @@ public class BlackjackTable extends BlackjackWindow{
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
-		
+
+    	m_frame.setVisible(true);
+
+    	displayHitAndStandButtons();
+    	
+        fillTable(response);
+	}
+
+
+	private void init() {
+
         // buttons
         int BUTTON_WIDTH = 70, BUTTON_HEIGHT = 70, BUTTON_X = 15, BUTTON_Y = 630;
         int INFO_PADD = 25;
 
         super.addButton(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(GAME_BUTTONS.RETURN));
         super.addButton(BUTTON_X + BUTTON_WIDTH + INFO_PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(GAME_BUTTONS.INFO));
-
-    	displayHitAndStandButtons();
-
-        super.startFrame();
-
-        fillTable(response);
+        
+        try {
+			initHitAndStandButtons();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void cleanTable() {
 		m_frame.remove(m_background);
-		for (JLabel label : m_labels) {
+		for (JLabel label : m_cardsLabels) {
 			label.setVisible(false);
 			m_frame.remove(label);
 		}
 		
-		m_labels.clear();
+		m_cardsLabels.clear();
 	}
 
 	private void fillTable(JSONObject response) {
@@ -81,10 +93,10 @@ public class BlackjackTable extends BlackjackWindow{
 			e.printStackTrace();
 		}
 
-		refreshBackground();
+		refreshFrame();
 	}
 	
-	private void refreshBackground() {
+	private void refreshFrame() {
 		m_frame.remove(m_background);
 		m_frame.add(m_background);
 		m_background.setVisible(false);
@@ -110,12 +122,12 @@ public class BlackjackTable extends BlackjackWindow{
 			JSONObject card = (JSONObject)((JSONObject)cards.get(i)).get("cardInfo");
 			JLabel label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File((String)card.get("pic"))), CARD_WIDTH, CARD_HEIGHT)));
 			label.setBounds(initial_x + (CARD_WIDTH + CARD_PADDING) * i, initial_y, CARD_WIDTH, CARD_HEIGHT);
-			m_labels.add(label);
+			m_cardsLabels.add(label);
 			m_frame.add(label);
 		}
 	}
 
-	private void displayHitAndStandButtons() throws IOException {
+	private void initHitAndStandButtons() throws IOException {
 		
 		String hitPath = "Pic/HIT.png";
 		String standPath = "Pic/STAND.png";
@@ -123,11 +135,11 @@ public class BlackjackTable extends BlackjackWindow{
 		int BUTTON_WIDTH = 100, BUTTON_HEIGHT = 100;
 		int INITIAL_X = 280, INITIAL_Y = 440, PADD = 80;
 		
-		JLabel hit_label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(hitPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
-		hit_label.setBounds(INITIAL_X, INITIAL_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+		m_hitLabel = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(hitPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
+		m_hitLabel.setBounds(INITIAL_X, INITIAL_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
 		
 		// HIT method
-		hit_label.addMouseListener(new MouseAdapter()  
+		m_hitLabel.addMouseListener(new MouseAdapter()  
 		{  
 		    public void mouseClicked(MouseEvent e)  
 		    {  
@@ -145,13 +157,12 @@ public class BlackjackTable extends BlackjackWindow{
 		    }  
 		});
 
-		m_frame.add(hit_label);
 
-		JLabel stand_label = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(standPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
-		stand_label.setBounds(INITIAL_X + BUTTON_WIDTH + PADD, INITIAL_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+		m_standLabel = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(standPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
+		m_standLabel.setBounds(INITIAL_X + BUTTON_WIDTH + PADD, INITIAL_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
 		
 		// STAND method
-		stand_label.addMouseListener(new MouseAdapter()  
+		m_standLabel.addMouseListener(new MouseAdapter()  
 		{  
 		    public void mouseClicked(MouseEvent e)  
 		    {  
@@ -174,9 +185,13 @@ public class BlackjackTable extends BlackjackWindow{
 		    		  public void run() {
 		    			  try {
 							GAME_STATUS status = (GAME_STATUS)response.get("status");
-							
-							System.out.print(status);
-							mouseClicked(e);
+							if (status == GAME_STATUS.DEALER_TURN) {
+								mouseClicked(e);
+							}
+							else {
+								m_frame.setVisible(false);
+								m_app.startWindow(APP_WINDOWS.END_GAME);
+							}
 						} catch (JSONException e1) {
 							e1.printStackTrace();
 						}
@@ -185,7 +200,22 @@ public class BlackjackTable extends BlackjackWindow{
 		    }  
 		});
 
-		m_frame.add(stand_label);
+	}
+	
+	private void displayHitAndStandButtons() throws IOException {
+
+		if (m_hitLabel != null) {
+			m_frame.remove(m_hitLabel);
+		}
+		
+		if (m_standLabel != null) {
+			m_frame.remove(m_standLabel);
+		}
+		
+		
+		m_frame.add(m_hitLabel);
+		m_frame.add(m_standLabel);
+		refreshFrame();
 	}
 
 	private enum GAME_BUTTONS {

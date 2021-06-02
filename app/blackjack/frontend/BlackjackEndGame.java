@@ -35,8 +35,13 @@ public class BlackjackEndGame extends BlackjackWindow{
 			IMAGE_PATH = "Pic/TIE.png";
 		}
 
+		if (m_background != null) {
+			m_frame.remove(m_background);
+		}
+
 		m_background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
 		m_background.setBounds(0, 0, m_width, m_height);
+		m_frame.add(m_background);
 
 		// buttons
 		int BUTTON_WIDTH = 100, BUTTON_HEIGHT = 100, BUTTON_X = 130, BUTTON_Y = 110, PADD = 127;
@@ -44,7 +49,7 @@ public class BlackjackEndGame extends BlackjackWindow{
 		super.addButton(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS.PLAY_AGAIN));
         super.addButton(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS.HOME));
 
-        super.startFrame();
+        m_frame.setVisible(true);
 	}
 
 	private enum BUTTONS {

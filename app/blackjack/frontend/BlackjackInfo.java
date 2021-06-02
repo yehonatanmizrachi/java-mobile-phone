@@ -12,18 +12,21 @@ public class BlackjackInfo extends BlackjackWindow{
 
 	public BlackjackInfo(String title, int width, int height, String backgroundImage, BlackjackApp app) {
 		super(title, width, height, backgroundImage, app);
+		init();
 	}
 	
 	public void start() throws IOException {	
+        m_frame.setVisible(true);
+	}
+
+
+	private void init() {
 
 		int BUTTON_WIDTH = 40, BUTTON_HEIGHT = 40, BUTTON_X = 33, BUTTON_Y = 425, PADD = 18;
 
         super.addButton(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS_ACTIONS.RETURN));
         super.addButton(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS_ACTIONS.HOME));
-
-        super.startFrame();
 	}
-
 
 	private enum BUTTONS_ACTIONS {
 		RETURN,

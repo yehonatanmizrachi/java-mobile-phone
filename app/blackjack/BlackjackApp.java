@@ -30,7 +30,7 @@ public class BlackjackApp implements App {
 	}
 
 	private GameManager m_backend;
-	private GAME_STATUS gameStatus;
+	private GAME_STATUS m_gameStatus;
 	
 	private BlackjackWindow[] m_windows;
 	private Stack<BlackjackWindow> m_windowsStack;
@@ -51,7 +51,7 @@ public class BlackjackApp implements App {
 	}
 	
 	public GAME_STATUS getGameStatus() {
-		return gameStatus;
+		return m_gameStatus;
 	}
 
 	public void startWindow(APP_WINDOWS window) {
@@ -87,6 +87,7 @@ public class BlackjackApp implements App {
 		JSONObject response = null;
 		try {
 			response = m_backend.sendCommand(json);
+			m_gameStatus = (GAME_STATUS)response.get("status");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

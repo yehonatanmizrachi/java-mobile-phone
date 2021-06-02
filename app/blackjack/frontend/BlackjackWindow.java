@@ -29,6 +29,9 @@ public abstract class BlackjackWindow {
 
 	public BlackjackWindow(String title, int width, int height, String backgroundImage, BlackjackApp app) {
 		
+		m_width = width;
+		m_height = height;
+
 		// frame
 		m_frame = new JFrame(title);
         m_frame.addWindowListener(new WindowAdapter() {
@@ -39,15 +42,18 @@ public abstract class BlackjackWindow {
             }
         });
 		
-		m_width = width;
-		m_height = height;
-		
+		m_frame.setSize(m_width, m_height);
+        m_frame.setLocationRelativeTo(null);
+        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        m_frame.setResizable(false);
+
 		// background
 		if (backgroundImage != null) {
 			try {
 //				Image image = getScaledImage(ImageIO.read(new File(backgroundImage)), m_width, m_height);
 				m_background = new JLabel(new ImageIcon(ImageIO.read(new File(backgroundImage))));
 				m_background.setBounds(0, 0, m_width, m_height);
+				m_frame.add(m_background);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -57,16 +63,6 @@ public abstract class BlackjackWindow {
 	}
 
 	public abstract void start() throws IOException;
-	
-	protected void startFrame() {
-		
-		m_frame.add(m_background);
-		m_frame.setSize(m_width, m_height);
-        m_frame.setLocationRelativeTo(null);
-        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        m_frame.setResizable(false);
-        m_frame.setVisible(true);
-	}
 
 	protected JButton addButton(int x, int y, int width, int height, ActionListener action) {
 
