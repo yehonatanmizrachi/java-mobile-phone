@@ -26,7 +26,7 @@ public abstract class Player{
 		my_cards.clear();
 	}
 	
-	// AS = -1;
+	// AS = 1;
 	public void sumCards()
 	{
 		int numOfAS = 0;
