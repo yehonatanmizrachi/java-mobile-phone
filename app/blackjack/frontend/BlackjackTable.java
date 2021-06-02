@@ -28,62 +28,28 @@ import src.App;
 
 public class BlackjackTable extends BlackjackWindow{
 
-	public BlackjackTable(String title, int width, int height, BlackjackApp app) {
-		super(title, width, height, app);
+	public BlackjackTable(String title, int width, int height, String backgroundImage, BlackjackApp app) {
+		super(title, width, height, backgroundImage, app);
 	}
 
 	private ArrayList<JLabel> m_labels = new ArrayList<JLabel>();
-	private JLabel m_background;
-	
 	
 	public void start() throws IOException {
 
-		// background
-		String IMAGE_PATH = "Pic/Table1.png";
-	
-		m_background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-		m_background.setBounds(0, 0, m_width, m_height);
-        
+        // buttons
+        int BUTTON_WIDTH = 70, BUTTON_HEIGHT = 70, BUTTON_X = 15, BUTTON_Y = 630;
+        int INFO_PADD = 25;
 
-        // return button
-        JButton returnButton = new JButton();
-        int RETURN_BUTTON_WIDTH = 70, RETURN_BUTTON_HEIGHT = 70, RETURN_BUTTON_X = 25, RETURN_BUTTON_Y = 630;
-        returnButton.addActionListener(getButtonEventListener(GAME_BUTTONS.RETURN));
-        returnButton.setBounds(RETURN_BUTTON_X, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
-        returnButton.setOpaque(false);
-        returnButton.setContentAreaFilled(false);
-        returnButton.setBorderPainted(false);
-    	m_background.add(returnButton);
-        
-    	// info button
-    	int INFO_PADD = 15;
-        JButton infoButton = new JButton();
-        infoButton.addActionListener(getButtonEventListener(GAME_BUTTONS.INFO));
-        infoButton.setBounds(RETURN_BUTTON_X + RETURN_BUTTON_WIDTH + INFO_PADD, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
-        infoButton.setOpaque(false);
-        infoButton.setContentAreaFilled(false);
-        infoButton.setBorderPainted(false);
-    	m_background.add(infoButton);
+        super.addButton(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(GAME_BUTTONS.RETURN));
+        super.addButton(BUTTON_X + BUTTON_WIDTH + INFO_PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(GAME_BUTTONS.INFO));
 
     	displayHitAndStandButtons();
 
     	refreshBackground();
     	
-        m_frame.setSize(m_width, m_height);
-        m_frame.setLocationRelativeTo(null);
-        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        m_frame.setResizable(false);
-        m_frame.setVisible(true);
-        
         fillTable();
         
-        m_frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent arg0) {
-                m_frame.setVisible(false);             
-                App.phone.returnToPhone();
-            }
-        });
+        super.startFrame();
 	}
 
 	private void cleanTable() {
@@ -166,6 +132,7 @@ public class BlackjackTable extends BlackjackWindow{
 		    public void mouseClicked(MouseEvent e)  
 		    {  
 		       // TODO: send json to backend
+		    	m_app.startWindow(APP_WINDOWS.END_GAME);
 		    	System.out.print(GAME_BUTTONS.STAND);
 		    }  
 		});
@@ -192,17 +159,6 @@ public class BlackjackTable extends BlackjackWindow{
 	       		 }
 	       	 }
        }; 
-	}
-
-	private Image getScaledImage(Image srcImg, int w, int h){
-	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-	    Graphics2D g2 = resizedImg.createGraphics();
-
-	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g2.drawImage(srcImg, 0, 0, w, h, null);
-	    g2.dispose();
-
-	    return resizedImg;
 	}
 
 }

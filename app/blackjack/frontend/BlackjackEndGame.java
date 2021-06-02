@@ -19,58 +19,27 @@ import src.App;
 
 public class BlackjackEndGame extends BlackjackWindow{
 
-	public BlackjackEndGame(String title, int width, int height, BlackjackApp app) {
-		super(title, width, height, app);
+	public BlackjackEndGame(String title, int width, int height, String backgroundImage, BlackjackApp app) {
+		super(title, width, height, backgroundImage, app);
 	}
 	
 	public void start() throws IOException {
 
 		// background
+		m_app.getGameStatus();
 		Boolean playerWon = true;
-		String IMAGE_PATH = playerWon ? "Pic/WIN.png" : "Pic/LOOSE.png";
+		String IMAGE_PATH = playerWon ? "Pic/YOUWON.png" : "Pic/GAMEOVER.png";
 	
-		JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-		background.setBounds(0, 0, m_width, m_height);
+		m_background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
+		m_background.setBounds(0, 0, m_width, m_height);
 
 		// buttons
-		int BUTTON_WIDTH = 40, BUTTON_HEIGHT = 40, BUTTON_X = 33, BUTTON_Y = 425, PADD = 18;
-        
-		// play again button
-        JButton playAgain = new JButton();
-        playAgain.addActionListener(getButtonEventListener(BUTTONS.PLAY_AGAIN));
-        playAgain.setBounds(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        playAgain.setOpaque(false);
-        playAgain.setContentAreaFilled(false);
-        playAgain.setBorderPainted(false);
-        
-    	// home button
-        JButton homeButton = new JButton();
-        homeButton.addActionListener(getButtonEventListener(BUTTONS.HOME));
-        homeButton.setBounds(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        homeButton.setOpaque(false);
-        homeButton.setContentAreaFilled(false);
-        homeButton.setBorderPainted(false);
-        
-        
-        // LIFO
-        background.add(playAgain);
-        background.add(homeButton);
-        m_frame.add(background);
+		int BUTTON_WIDTH = 100, BUTTON_HEIGHT = 100, BUTTON_X = 130, BUTTON_Y = 110, PADD = 127;
 
+		super.addButton(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS.PLAY_AGAIN));
+        super.addButton(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS.HOME));
 
-        m_frame.setSize(m_width, m_height);
-        m_frame.setLocationRelativeTo(null);
-        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        m_frame.setResizable(false);
-        m_frame.setVisible(true);
-        
-        m_frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent arg0) {
-            	m_frame.setVisible(false);             
-                App.phone.returnToPhone();
-            }
-        });
+        super.startFrame();
 	}
 
 	private enum BUTTONS {

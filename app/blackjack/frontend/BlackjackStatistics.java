@@ -23,8 +23,8 @@ import src.App;
 
 public class BlackjackStatistics extends BlackjackWindow{
 
-	public BlackjackStatistics(String title, int width, int height, BlackjackApp app) {
-		super(title, width, height, app);
+	public BlackjackStatistics(String title, int width, int height, String backgroundImage, BlackjackApp app) {
+		super(title, width, height, backgroundImage, app);
 	}
 
 	public void start() throws IOException {
@@ -36,13 +36,6 @@ public class BlackjackStatistics extends BlackjackWindow{
 		float winnings = wins / (float)totalGames * 100;
 
 		int money = 20000;
-
-		// background
-		String IMAGE_PATH = "Pic/STATISTICS.png";
-	
-		JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-		background.setBounds(0, 0, m_width, m_height);
-        
         
         /// labels
         int LABEL_WIDTH = 300, LABEL_HEIGHT = 50, LABEL_X = 270, LABEL_Y = 213, PADD = 93, MONEY_OFFSET = -25;
@@ -53,54 +46,22 @@ public class BlackjackStatistics extends BlackjackWindow{
         JLabel winningsLabel = new JLabel(winnings + "%");
         winningsLabel.setBounds(LABEL_X, LABEL_Y, LABEL_WIDTH, LABEL_HEIGHT);
         winningsLabel.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        m_background.add(winningsLabel);
 
         // money label
         JLabel moneyLabel = new JLabel("$" + money);
         moneyLabel.setBounds(LABEL_X + MONEY_OFFSET, LABEL_Y + PADD, LABEL_WIDTH, LABEL_HEIGHT);
         moneyLabel.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        m_background.add(moneyLabel);
         
         
         // buttons
         int RETURN_BUTTON_WIDTH = 40, RETURN_BUTTON_HEIGHT = 40, RETURN_BUTTON_X = 33, RETURN_BUTTON_Y = 425;
         int INFO_PADD = 18;
-
-        // return button
-        JButton infoButton = new JButton();
-        infoButton.addActionListener(getButtonEventListener(STATISTICS_BUTTONS.INFO));
-        infoButton.setBounds(RETURN_BUTTON_X, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
-        infoButton.setOpaque(false);
-        infoButton.setContentAreaFilled(false);
-        infoButton.setBorderPainted(false);
-        background.add(infoButton);
-
-        // info button
-        JButton returnButton = new JButton();
-        returnButton.addActionListener(getButtonEventListener(STATISTICS_BUTTONS.RETURN));
-        returnButton.setBounds(RETURN_BUTTON_X + RETURN_BUTTON_WIDTH + INFO_PADD, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
-        returnButton.setOpaque(false);
-        returnButton.setContentAreaFilled(false);
-        returnButton.setBorderPainted(false);
-        background.add(returnButton);
         
-        // LIFO
-        m_frame.add(moneyLabel);
-        m_frame.add(winningsLabel);
-        m_frame.add(background);
-        
-        
-        m_frame.setSize(m_width, m_height);
-        m_frame.setLocationRelativeTo(null);
-        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        m_frame.setResizable(false);
-        m_frame.setVisible(true);
-        
-        m_frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent arg0) {
-            	m_frame.setVisible(false);             
-                App.phone.returnToPhone();
-            }
-        });
+        super.addButton(RETURN_BUTTON_X, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT, getButtonEventListener(STATISTICS_BUTTONS.INFO));
+        super.addButton(RETURN_BUTTON_X + RETURN_BUTTON_WIDTH + INFO_PADD, RETURN_BUTTON_Y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT, getButtonEventListener(STATISTICS_BUTTONS.RETURN));
+        super.startFrame();
 	}
 	
 	private enum STATISTICS_BUTTONS {
