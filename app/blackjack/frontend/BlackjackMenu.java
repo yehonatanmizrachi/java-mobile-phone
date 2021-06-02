@@ -1,9 +1,5 @@
 package blackjack.frontend;
 
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -11,31 +7,32 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JButton;  
-import javax.swing.JFrame;  
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;  
+
+import blackjack.BlackjackApp;
+import blackjack.BlackjackApp.APP_WINDOWS;
 import src.App;
 
+public class BlackjackMenu extends BlackjackWindow{
 
-public class BlackjackMenu {
+	public BlackjackMenu(String title, BlackjackApp app) {
+		super(title, app);
+	}
 
-	private JFrame frame = new JFrame("BlackJack");
-	
-	public void startMenu() throws IOException {
+	public void start() throws IOException {
 		
-		// frame
+		// background
 		String IMAGE_PATH = "Pic/Menu.png";
 		int WIDTH = 590, HEIGHT = 530;
-		JPanel panel = new JPanel();
 	
-        JLabel label = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
-        label.setBounds(0, 0, WIDTH, HEIGHT);
-//        JLabel label_test = new JLabel(new ImageIcon(ImageIO.read(new File("Pic/BYE.png"))));
-//        label_test.setBounds(0, 0, 1000, 1000);
+        JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
+        background.setBounds(0, 0, WIDTH, HEIGHT);
         
-        panel.add(label);
-    
+
         // buttons
         int BUTTONS_COUNT = 3;
         JButton[] buttons = new JButton[BUTTONS_COUNT];
@@ -53,44 +50,32 @@ public class BlackjackMenu {
         
     	for (int index = 0; index < BUTTONS_COUNT; index++) {
     		buttons[index] = new JButton();
-        	buttons[index].addActionListener(getAppButtonEventListener(MENU.values()[index]));
+        	buttons[index].addActionListener(getButtonEventListener(MENU.values()[index]));
         	buttons[index].setBounds(BUTTONS_LOCATIONS[index][0], BUTTONS_LOCATIONS[index][1], BUTTON_WIDTH, BUTTON_HEIGHT);
         	buttons[index].setOpaque(false);
         	buttons[index].setContentAreaFilled(false);
         	buttons[index].setBorderPainted(false);
         		        			
-        	label.add(buttons[index]);
+        	background.add(buttons[index]);
         }
+
+    	m_frame.add(background);
+
+        m_frame.setSize(WIDTH, HEIGHT);
+        m_frame.setLocationRelativeTo(null);
+        m_frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        m_frame.setResizable(false);
+        m_frame.setVisible(true);
         
-        frame.add(panel);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frame.setResizable(false);
-        	
-        frame.add(panel);
-        frame.setVisible(true);
-        
-        frame.addWindowListener(new WindowAdapter() {
+        m_frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
-                frame.setVisible(false);             
+                m_frame.setVisible(false);             
                 App.phone.returnToPhone();
             }
         });
 	}
 
-
-	private ActionListener getAppButtonEventListener(MENU action) {
-		return new ActionListener(){
-	       	 public void actionPerformed(ActionEvent evt){
-	       		 if (action == MENU.EXIT) {
-	       			frame.setVisible(false);             
-	                App.phone.returnToPhone(); 
-	       		 }
-	       	 }
-       }; 
-	}
 
 	private enum MENU {
 		START,
@@ -98,4 +83,22 @@ public class BlackjackMenu {
 		EXIT
 	}
 
+	private ActionListener getButtonEventListener(MENU action) {
+		return new ActionListener(){
+	       	 public void actionPerformed(ActionEvent evt){	       		
+       			m_frame.setVisible(false);
+	       		 if (action == MENU.START) {
+					m_app.startWindow(APP_WINDOWS.TABLE);
+	       		 }
+	       		 else if (action == MENU.STATISTICS) {
+	       			m_app.startWindow(APP_WINDOWS.STATISTICS);
+	       		 }
+	       		 else if (action == MENU.EXIT) {
+	       			m_app.closeWindow(APP_WINDOWS.MENU);
+	                App.phone.returnToPhone(); 
+	       		 }	
+	       	 }	       	 
+       }; 
+	}
+	
 }

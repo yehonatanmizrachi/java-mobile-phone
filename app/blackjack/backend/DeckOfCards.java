@@ -38,7 +38,6 @@ public class DeckOfCards {
 		this.amount = 52;
 		
 		// 13 sets * 4 = 52 cards
-		// color 0 = red, color 1 = black
 		// shape 0 = Diamonds, shape 1 = Clubs, shape 2 = Hearts, shape 3 = Spades
 		// Jack = 11, Queen = 12, King = 13
 		
@@ -49,21 +48,12 @@ public class DeckOfCards {
 		
 		for(j = 0; j<4;j++) {
 			
-			//int color = j%2;
 			int shape = j;
 			
 			for(i=0;i<13;i++) {
 				num = i+1;
-				
-				// 1 is the AS, then we define -1 as the AS (he can be 1 of 11)
-				if(num == 1) {
-					Card c = new Card(-1,shape);
-					DC.add(c);
-				}
-				else {
-					Card c = new Card(num,shape);
-					DC.add(c);
-				}
+				Card c = new Card(num,shape);
+				DC.add(c);
 			}
 		}
 		
@@ -72,8 +62,6 @@ public class DeckOfCards {
 	
 	// shuffle the deck
 	public void shuffle() {
-		
-		
 		// we make 3 times - swap 52 times random places in the deck
 		Random rand = new Random();
 		int i,j,k,times;
@@ -87,10 +75,5 @@ public class DeckOfCards {
 			}
 			
 		}
-		
-		
-		
 	}
-	
-
 }

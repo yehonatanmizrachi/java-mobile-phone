@@ -31,25 +31,36 @@ public class GameManager{
 		{
 			players[0].cleanCards();
 			players[1].cleanCards();
+			((User)players[1]).incTotalGames();
 			startGame();
 			this.status = GAME_STATUS.RUNNING;
 		}
 		else if (command == COMMAND.HIT)
-			players[1].addCard(this.cards_deck.getCard());
+			players[1].makeMove(cards_deck);
 		else if (command == COMMAND.STAND)
 		{
 			int old_sum = players[0].sumOfCards;
 			players[0].makeMove(cards_deck);
 			this.status = GAME_STATUS.DEALER_TURN;
 			if (old_sum == players[0].sumOfCards)
+			{
 				this.status = GAME_STATUS.END_GAME;
-
+				checkWhoWon();
+			}
 		}
 		else if (command == COMMAND.EXIT)
 			saveGame();
 		
 		checkGameStatus();
 		return buildJson();
+	}
+	
+	private void checkWhoWon()
+	{
+		if (21 - players[0].sumOfCards < 21 - players[1].sumOfCards)
+			this.status = GAME_STATUS.DEALER_WINS;
+		else
+			this.status = GAME_STATUS.PLAYER_WINS;
 	}
 	
 	public JSONObject buildJson() throws JSONException
@@ -64,6 +75,7 @@ public class GameManager{
 		p.put("cards", this.players[1].getMyCards());
 		p.put("money", ((User)players[1]).getMoney());
 		p.put("wins", ((User)players[1]).getWins());
+		p.put("totalGames", ((User)players[1]).getTotalGames());
 		obj.put("player", p);
 		
 		obj.put("status", this.status);
@@ -84,7 +96,7 @@ public class GameManager{
 	
 	private void checkGameStatus()
 	{
-		if (players[0].sumOfCards > 21)
+		if (players[0].sumOfCards > 21 || players[1].sumOfCards == 21)
 			this.status = GAME_STATUS.PLAYER_WINS;
 		else if (players[1].sumOfCards > 21)
 			this.status = GAME_STATUS.DEALER_WINS;
@@ -94,7 +106,7 @@ public class GameManager{
 	{
 		try {
 		      FileWriter myWriter = new FileWriter("./app/blackjack/players/" + "player" + 1 + ".txt");
-		      myWriter.write(((User)players[1]).getMoney() + "\n" + ((User)players[1]).getWins());
+		      myWriter.write(((User)players[1]).getMoney() + "\n" + ((User)players[1]).getWins() + "\n" + ((User)players[1]).getTotalGames());
 		      myWriter.close();
 		    } catch (IOException e) {
 		      System.out.println("An error occurred.");

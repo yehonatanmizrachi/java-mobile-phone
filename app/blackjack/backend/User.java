@@ -10,6 +10,7 @@ public class User extends Player {
 	private int id;
 	private double money;
 	private int wins; // the amount of wins in game
+	private int totalGames;
 	final double initial_money = 1000;
 	
 	public User(int id)
@@ -28,8 +29,13 @@ public class User extends Player {
 		        	this.money = Double.parseDouble(data);
 		        	k++;
 		        }
-		        else
+		        else if (k == 1)
+		        {
 		        	this.wins = Integer.parseInt(data);
+		        	k++;
+		        }
+		        else
+		        	this.totalGames = Integer.parseInt(data);
 		      }
 		      myReader.close();
 		    } catch (FileNotFoundException e) {
@@ -48,8 +54,8 @@ public class User extends Player {
 				}
 		    	this.wins = 0;
 		    	this.money = initial_money;
+		    	this.totalGames = 0;
 		    }
-		
 	}
 	
 	public double getMoney()
@@ -69,8 +75,17 @@ public class User extends Player {
 
 	@Override
 	public void makeMove(DeckOfCards DC) {
-		// TODO Auto-generated method stub
-		
+		this.addCard(DC.getCard());
+		this.sumCards();
+	}
+
+	public int getTotalGames() {
+		return this.totalGames;
+	}
+	
+	public void incTotalGames()
+	{
+		this.totalGames++;
 	}
 	
 }
