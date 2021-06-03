@@ -34,8 +34,8 @@ public class GameManager{
 			players[0].cleanCards();
 			players[1].cleanCards();
 			((User)players[1]).incTotalGames();
-			startGame();
 			this.status = GAME_STATUS.RUNNING;
+			startGame();
 		}
 		else if (command == COMMAND.HIT)
 			players[1].makeMove(cards_deck);
@@ -142,15 +142,12 @@ public class GameManager{
 	}
 	
 	
-	public JSONObject getStatistics() throws JSONException{
+	public static JSONObject getStatistics() throws JSONException{
 		JSONObject obj = new JSONObject();
-		if(players[1] instanceof User) { 
-			User u = (User)players[1];
-			obj.put("money", u.getMoney());
-			obj.put("wins", u.getWins());
-			obj.put("totalGames", u.getTotalGames());
-				
-		}
+		User u = new User(1);
+		obj.put("money", u.getMoney());
+		obj.put("wins", u.getWins());
+		obj.put("totalGames", u.getTotalGames());
 		return obj;
 	}
 }

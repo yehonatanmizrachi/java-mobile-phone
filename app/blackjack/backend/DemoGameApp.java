@@ -24,7 +24,11 @@ public class DemoGameApp {
 	//	g.sendCommand(obj);
 	//	System.out.println(g.buildJson());
 		
+
 	//	System.out.println(g.getStatistics());
+
+		
+
 		// DEALER TURN
 		/*
 		obj.put("command", COMMAND.STAND);
