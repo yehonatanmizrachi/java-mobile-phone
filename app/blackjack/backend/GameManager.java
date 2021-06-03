@@ -34,8 +34,8 @@ public class GameManager{
 			players[0].cleanCards();
 			players[1].cleanCards();
 			((User)players[1]).incTotalGames();
-			startGame();
 			this.status = GAME_STATUS.RUNNING;
+			startGame();
 		}
 		else if (command == COMMAND.HIT)
 			players[1].makeMove(cards_deck);
