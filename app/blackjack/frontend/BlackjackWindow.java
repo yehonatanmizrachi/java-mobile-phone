@@ -24,11 +24,13 @@ public abstract class BlackjackWindow {
 	protected JFrame m_frame;
 	protected int m_width, m_height;
 	protected JLabel m_background;
-
+	protected String m_titel;
 	protected BlackjackApp m_app;
 
 	public BlackjackWindow(String title, int width, int height, String backgroundImage, BlackjackApp app) {
 		
+		m_titel = title;
+
 		m_width = width;
 		m_height = height;
 

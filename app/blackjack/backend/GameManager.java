@@ -1,8 +1,8 @@
 package blackjack.backend;
 
+
 import java.io.FileWriter;
 import java.io.IOException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,15 +26,16 @@ public class GameManager{
 	
 	public JSONObject sendCommand(JSONObject cmd) throws JSONException
 	{
-		checkGameStatus();
+		int i = 0;
+		checkGameStatus(i);
 		COMMAND command = (COMMAND)cmd.get("command");
 		if (command == COMMAND.START_GAME)
 		{
 			players[0].cleanCards();
 			players[1].cleanCards();
 			((User)players[1]).incTotalGames();
-			startGame();
 			this.status = GAME_STATUS.RUNNING;
+			startGame();
 		}
 		else if (command == COMMAND.HIT)
 			players[1].makeMove(cards_deck);
@@ -46,23 +47,19 @@ public class GameManager{
 			if (old_sum == players[0].sumOfCards)
 			{
 				this.status = GAME_STATUS.END_GAME;
-				checkWhoWon();
+				i = 1;
+				checkGameStatus(i);
 			}
 		}
 		else if (command == COMMAND.EXIT)
 			saveGame();
 		
-		checkGameStatus();
+		if(i == 0) {
+			checkGameStatus(i);
+		}
 		return buildJson();
 	}
 	
-	private void checkWhoWon()
-	{
-		if (21 - players[0].sumOfCards < 21 - players[1].sumOfCards)
-			this.status = GAME_STATUS.DEALER_WINS;
-		else
-			this.status = GAME_STATUS.PLAYER_WINS;
-	}
 	
 	public JSONObject buildJson() throws JSONException
 	{
@@ -85,11 +82,13 @@ public class GameManager{
 	
 	public void startGame()
 	{	
+		
 		if (((User)players[1]).getMoney() - betVal < 0)
 		{
 			this.status = GAME_STATUS.END_GAME;
 			return;
 		}
+		
 		((User)players[1]).setMoney(((User)players[1]).getMoney() - betVal);
 		players[0].sumOfCards = 0;
 		players[1].sumOfCards = 0;
@@ -101,15 +100,33 @@ public class GameManager{
 		}	
 	}
 	
-	private void checkGameStatus()
-	{
-		if (players[0].sumOfCards > 21 || players[1].sumOfCards == 21)
-		{
-			this.status = GAME_STATUS.PLAYER_WINS;
-			((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal * 2);
+
+	private void checkGameStatus(int i){
+		
+		if(i == 0){ // during game
+			if(players[1].sumOfCards == 21){
+				this.status = GAME_STATUS.PLAYER_WINS;
+			}
+			else{
+				if(players[1].sumOfCards > 21){
+					this.status = GAME_STATUS.DEALER_WINS;
+				}
+			}
 		}
-		else if (players[1].sumOfCards > 21)
-			this.status = GAME_STATUS.DEALER_WINS;
+		
+		else{ // if GAME_STATUS == STANDS
+			
+			if (21 - players[0].sumOfCards < 21 - players[1].sumOfCards)
+				this.status = GAME_STATUS.DEALER_WINS;
+			else{
+				if(players[0].sumOfCards == players[1].sumOfCards){
+					this.status = GAME_STATUS.TIE_GAME;
+				}
+				else{
+					this.status = GAME_STATUS.PLAYER_WINS;
+				}
+			}
+		}
 	}
 	
 	private void saveGame()
@@ -122,5 +139,15 @@ public class GameManager{
 		      System.out.println("An error occurred.");
 		      e.printStackTrace();
 		    }
+	}
+	
+	
+	public static JSONObject getStatistics() throws JSONException{
+		JSONObject obj = new JSONObject();
+		User u = new User(1);
+		obj.put("money", u.getMoney());
+		obj.put("wins", u.getWins());
+		obj.put("totalGames", u.getTotalGames());
+		return obj;
 	}
 }
