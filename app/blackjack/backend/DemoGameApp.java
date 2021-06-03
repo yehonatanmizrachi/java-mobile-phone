@@ -16,15 +16,15 @@ public class DemoGameApp {
 	//	System.out.println(g.buildJson());
 		
 		// INITIAL GAME
-	//	obj.put("command", COMMAND.START_GAME);
-	//	g.sendCommand(obj);
-	//	System.out.println(g.buildJson());
+		obj.put("command", COMMAND.START_GAME);
+		g.sendCommand(obj);
+		System.out.println(g.buildJson());
 		// PLAYER TURN
 	//	obj.put("command", COMMAND.HIT);
 	//	g.sendCommand(obj);
 	//	System.out.println(g.buildJson());
 		
-		System.out.println(g.getStatistics());
+	//	System.out.println(g.getStatistics());
 		// DEALER TURN
 		/*
 		obj.put("command", COMMAND.STAND);
