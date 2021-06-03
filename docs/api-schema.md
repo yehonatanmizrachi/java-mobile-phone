@@ -20,3 +20,12 @@
 	
 }
 ```
+
+```
+{ 
+	"wins": Int;
+	"money": Double;
+	"totalGames": Int;
+}
+~~~
+
