@@ -27,5 +27,4 @@
 	"money": Double;
 	"totalGames": Int;
 }
-
-
+```
