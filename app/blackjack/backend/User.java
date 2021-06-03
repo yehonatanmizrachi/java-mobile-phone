@@ -72,6 +72,9 @@ public class User extends Player {
 	{
 		this.money = money;
 	}
+	public int getID() {
+		return this.id;
+	}
 
 	@Override
 	public void makeMove(DeckOfCards DC) {

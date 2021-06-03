@@ -1,8 +1,8 @@
 package blackjack.backend;
 
+
 import java.io.FileWriter;
 import java.io.IOException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,11 +82,13 @@ public class GameManager{
 	
 	public void startGame()
 	{	
+		
 		if (((User)players[1]).getMoney() - betVal < 0)
 		{
 			this.status = GAME_STATUS.END_GAME;
 			return;
 		}
+		
 		((User)players[1]).setMoney(((User)players[1]).getMoney() - betVal);
 		players[0].sumOfCards = 0;
 		players[1].sumOfCards = 0;
@@ -137,5 +139,18 @@ public class GameManager{
 		      System.out.println("An error occurred.");
 		      e.printStackTrace();
 		    }
+	}
+	
+	
+	public JSONObject getStatistics() throws JSONException{
+		JSONObject obj = new JSONObject();
+		if(players[1] instanceof User) { 
+			User u = (User)players[1];
+			obj.put("money", u.getMoney());
+			obj.put("wins", u.getWins());
+			obj.put("totalGames", u.getTotalGames());
+				
+		}
+		return obj;
 	}
 }
