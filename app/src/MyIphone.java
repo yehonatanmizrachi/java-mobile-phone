@@ -62,7 +62,7 @@ public class MyIphone {
 	private void startPhoneMainScreen() throws IOException {
 
 		// frame
-		String IMAGE_PATH = "Pic/IPHONE.png";
+		String IMAGE_PATH = "pics/IPHONE.png";
 		int WIDTH = 340, HEIGHT = 740;  
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());

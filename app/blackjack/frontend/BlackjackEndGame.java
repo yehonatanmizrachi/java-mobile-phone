@@ -26,13 +26,13 @@ public class BlackjackEndGame extends BlackjackWindow{
 		String IMAGE_PATH;
 
 		if (status == GAME_STATUS.PLAYER_WINS) {
-			IMAGE_PATH = "Pic/YOUWON.png";
+			IMAGE_PATH = "pics/YOUWON.png";
 		} 
 		else if  (status == GAME_STATUS.DEALER_WINS) {
-			IMAGE_PATH = "Pic/GAMEOVER.png";
+			IMAGE_PATH = "pics/GAMEOVER.png";
 		}
 		else {
-			IMAGE_PATH = "Pic/TIE.png";
+			IMAGE_PATH = "pics/TIE.png";
 		}
 
 		if (m_background != null) {
@@ -50,6 +50,7 @@ public class BlackjackEndGame extends BlackjackWindow{
         super.addButton(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS.HOME));
 
         m_frame.setVisible(true);
+
 	}
 
 	private enum BUTTONS {

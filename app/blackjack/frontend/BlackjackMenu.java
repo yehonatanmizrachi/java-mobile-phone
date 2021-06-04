@@ -6,6 +6,7 @@ import java.io.IOException;
 
 
 import blackjack.BlackjackApp;
+import blackjack.BlackjackApp.APP_SOUNDS;
 import blackjack.BlackjackApp.APP_WINDOWS;
 import src.App;
 
@@ -17,7 +18,10 @@ public class BlackjackMenu extends BlackjackWindow{
 	}
 
 	public void start() throws IOException {    	
-    	m_frame.setVisible(true);
+    	
+		m_frame.setVisible(true);
+		// play music 🎧
+        m_app.playAudio(APP_SOUNDS.MENU);
 	}
 
 	private void init() {
@@ -51,6 +55,7 @@ public class BlackjackMenu extends BlackjackWindow{
 		return new ActionListener(){
 	       	 public void actionPerformed(ActionEvent evt){	       		
        			m_frame.setVisible(false);
+       			m_app.clearAudio();
 	       		 if (action == MENU.START) {
 					m_app.startWindow(APP_WINDOWS.TABLE);
 	       		 }
