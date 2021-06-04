@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import blackjack.BlackjackApp;
+import blackjack.BlackjackApp.APP_SOUNDS;
 import blackjack.BlackjackApp.APP_WINDOWS;
 import blackjack.api.COMMAND;
 import blackjack.api.GAME_STATUS;
@@ -35,10 +36,10 @@ public class BlackjackTable extends BlackjackWindow{
 	private ArrayList<JLabel> m_cardsLabels;
 	private JLabel m_hitLabel = null;
 	private JLabel m_standLabel = null;
-	
+
 	public void start() throws IOException {
 		
-		// send message to Backend
+		// send message to backend
 		JSONObject response = null;
 		try {
 			JSONObject request = new JSONObject();
@@ -50,6 +51,9 @@ public class BlackjackTable extends BlackjackWindow{
 
     	m_frame.setVisible(true);
 
+		// play shuffling sound 🎧
+        m_app.playAudio(APP_SOUNDS.SHUFFLE);
+        
     	displayHitAndStandButtons();
     	
         fillTable(response);
@@ -153,6 +157,10 @@ public class BlackjackTable extends BlackjackWindow{
 
 		    	JSONObject response = m_app.sendMessageToBackend(request);
 		    	
+		    	// TODO
+	    		m_app.playAudio(APP_SOUNDS.CARD);
+		    	
+
 		    	fillTable(response);
 		    }  
 		});
@@ -185,18 +193,16 @@ public class BlackjackTable extends BlackjackWindow{
 		    	timer.schedule(new TimerTask() {
 		    		  @Override
 		    		  public void run() {
-		    			  try {
-							GAME_STATUS status = (GAME_STATUS)response.get("status");
-							if (status == GAME_STATUS.DEALER_TURN) {
-								mouseClicked(e);
-							}
-							else {
-								m_frame.setVisible(false);
-								m_app.startWindow(APP_WINDOWS.END_GAME);
-							}
-						} catch (JSONException e1) {
-							e1.printStackTrace();
+		    			  
+						if (m_app.getGameStatus() == GAME_STATUS.DEALER_TURN) {
+							m_app.playAudio(APP_SOUNDS.CARD);
+							mouseClicked(e);
 						}
+						else {
+							m_frame.setVisible(false);
+							m_app.startWindow(APP_WINDOWS.END_GAME);
+						}
+						
 		    		  }
 		    		}, 2*1000);
 		    }  

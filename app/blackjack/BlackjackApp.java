@@ -1,6 +1,7 @@
 package blackjack;
 
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Stack;
 
@@ -15,6 +16,7 @@ import blackjack.frontend.BlackjackMenu;
 import blackjack.frontend.BlackjackStatistics;
 import blackjack.frontend.BlackjackTable;
 import blackjack.frontend.BlackjackWindow;
+import javazoom.jl.player.Player;
 import src.App;
 
 
@@ -34,6 +36,8 @@ public class BlackjackApp implements App {
 	
 	private BlackjackWindow[] m_windows;
 	private Stack<BlackjackWindow> m_windowsStack;
+	
+	private Thread m_sound = null;
 
 	public BlackjackApp() {
 		
@@ -48,6 +52,8 @@ public class BlackjackApp implements App {
 		};
 		
 		m_windowsStack = new Stack<BlackjackWindow>();
+		
+		
 	}
 	
 	public GAME_STATUS getGameStatus() {
@@ -101,7 +107,53 @@ public class BlackjackApp implements App {
 		STATISTICS,
 		END_GAME
 	}
+	
+	public enum APP_SOUNDS {
+		MENU("sounds/menu.mp3"),
+		SHUFFLE("sounds/shuffling.mp3"),
+		CARD("sounds/card.mp3");
 
+		private String path;
+
+		APP_SOUNDS(String path) {
+			this.path = path;
+		}
+		
+		public String getPath() {
+			return path;
+		}
+	}
+
+	public void playAudio(APP_SOUNDS sound) {
+		
+		m_sound = new Thread() {
+			public void run() {
+		        try{
+		
+		            FileInputStream fs = new FileInputStream(sound.getPath());
+		            Player playMP3 = new Player(fs);
+		
+	            	playMP3.play();
+
+			    }  
+			    catch(Exception e){
+			        System.out.println(e);
+			    }
+			}
+		};
+		
+		m_sound.start();
+
+	}
+	
+	public void clearAudio() {
+		if (m_sound != null) {
+			System.out.print("ss");
+			m_sound.stop();
+			m_sound = null;
+		}
+
+	}
 	// [width, height]
 	private int[][] APPS_SIZES = {
 			{590, 530},

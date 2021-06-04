@@ -50,6 +50,7 @@ public class BlackjackEndGame extends BlackjackWindow{
         super.addButton(BUTTON_X + BUTTON_WIDTH + PADD, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, getButtonEventListener(BUTTONS.HOME));
 
         m_frame.setVisible(true);
+
 	}
 
 	private enum BUTTONS {
