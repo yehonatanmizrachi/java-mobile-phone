@@ -83,7 +83,7 @@ local.properties
 
 # Package Files #
 *.jar
-!java-json.jar
+!libs/*
 *.war
 *.nar
 *.ear
