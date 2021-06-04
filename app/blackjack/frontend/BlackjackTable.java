@@ -133,8 +133,8 @@ public class BlackjackTable extends BlackjackWindow{
 
 	private void initHitAndStandButtons() throws IOException {
 		
-		String hitPath = "Pic/HIT.png";
-		String standPath = "Pic/STAND.png";
+		String hitPath = "pics/HIT.png";
+		String standPath = "pics/STAND.png";
 		
 		int BUTTON_WIDTH = 100, BUTTON_HEIGHT = 100;
 		int INITIAL_X = 280, INITIAL_Y = 440, PADD = 80;

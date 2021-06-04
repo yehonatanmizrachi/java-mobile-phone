@@ -85,7 +85,7 @@ public class DeckOfCards {
 			for(i=0;i<13;i++) {
 				num = i+1;
 				
-				pic = "./Pic/cards/" + this.get_pic(j, num) + ".png";
+				pic = "./pics/cards/" + this.get_pic(j, num) + ".png";
 				
 				Card c = new Card(num,shape,pic);
 				DC.add(c);

@@ -164,10 +164,10 @@ public class BlackjackApp implements App {
 	};
 	
 	private String[] APPS_BACKGROUDS = {
-			"Pic/Menu.png",
-			"Pic/Table1.png",
-			"Pic/INFO.png",
-			"Pic/STATISTICS.png",
+			"pics/Menu.png",
+			"pics/Table1.png",
+			"pics/INFO.png",
+			"pics/STATISTICS.png",
 			null
 	};
 
