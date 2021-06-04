@@ -39,6 +39,7 @@ public abstract class BlackjackWindow {
         m_frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
+            	m_app.clearAudio();
             	m_frame.setVisible(false);             
                 App.phone.returnToPhone();
             }

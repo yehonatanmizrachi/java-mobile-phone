@@ -43,12 +43,19 @@ public class BlackjackApp implements App {
 		
 		m_backend = new GameManager();
 		
+		// GUI windows
+		final int MENU = APP_WINDOWS.MENU.ordinal();
+		final int TABLE = APP_WINDOWS.TABLE.ordinal();
+		final int INFO = APP_WINDOWS.INFO.ordinal();
+		final int STATS = APP_WINDOWS.STATISTICS.ordinal();
+		final int END_GAME = APP_WINDOWS.END_GAME.ordinal();
+
 		m_windows = new BlackjackWindow[]{
-				new BlackjackMenu(APPS_TITLES[APP_WINDOWS.MENU.ordinal()], APPS_SIZES[APP_WINDOWS.MENU.ordinal()][0], APPS_SIZES[APP_WINDOWS.MENU.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.MENU.ordinal()], this),
-				new BlackjackTable(APPS_TITLES[APP_WINDOWS.TABLE.ordinal()], APPS_SIZES[APP_WINDOWS.TABLE.ordinal()][0], APPS_SIZES[APP_WINDOWS.TABLE.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.TABLE.ordinal()], this),
-				new BlackjackInfo(APPS_TITLES[APP_WINDOWS.INFO.ordinal()], APPS_SIZES[APP_WINDOWS.INFO.ordinal()][0], APPS_SIZES[APP_WINDOWS.INFO.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.INFO.ordinal()], this),
-				new BlackjackStatistics(APPS_TITLES[APP_WINDOWS.STATISTICS.ordinal()], APPS_SIZES[APP_WINDOWS.STATISTICS.ordinal()][0], APPS_SIZES[APP_WINDOWS.STATISTICS.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.STATISTICS.ordinal()], this),
-				new BlackjackEndGame(APPS_TITLES[APP_WINDOWS.END_GAME.ordinal()], APPS_SIZES[APP_WINDOWS.END_GAME.ordinal()][0], APPS_SIZES[APP_WINDOWS.END_GAME.ordinal()][1], APPS_BACKGROUDS[APP_WINDOWS.END_GAME.ordinal()], this),
+				new BlackjackMenu(APPS_TITLES[MENU], APPS_SIZES[MENU][0], APPS_SIZES[MENU][1], APPS_BACKGROUDS[MENU], this),
+				new BlackjackTable(APPS_TITLES[TABLE], APPS_SIZES[TABLE][0], APPS_SIZES[TABLE][1], APPS_BACKGROUDS[TABLE], this),
+				new BlackjackInfo(APPS_TITLES[INFO], APPS_SIZES[INFO][0], APPS_SIZES[INFO][1], APPS_BACKGROUDS[INFO], this),
+				new BlackjackStatistics(APPS_TITLES[STATS], APPS_SIZES[STATS][0], APPS_SIZES[STATS][1], APPS_BACKGROUDS[STATS], this),
+				new BlackjackEndGame(APPS_TITLES[END_GAME], APPS_SIZES[END_GAME][0], APPS_SIZES[END_GAME][1], APPS_BACKGROUDS[END_GAME], this),
 		};
 		
 		m_windowsStack = new Stack<BlackjackWindow>();
@@ -125,6 +132,8 @@ public class BlackjackApp implements App {
 	}
 
 	public void playAudio(APP_SOUNDS sound) {
+		
+		clearAudio();
 		
 		m_sound = new Thread() {
 			public void run() {
