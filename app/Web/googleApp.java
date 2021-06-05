@@ -10,10 +10,9 @@ import src.ToolsFuncs;
 public class googleApp implements App {
 	
 	private static ArrayList<String> last_search = new ArrayList<String>();
-	private int num_search;
+	private static int num_search = 0;
 	
 	public googleApp(){
-		this.num_search = 0;
 	}
 	
 	public void run() {
@@ -33,14 +32,14 @@ public class googleApp implements App {
 				   
 				   java.awt.Desktop.getDesktop().browse(uri);
 				   
-				   if(this.num_search < 5) {
+				   if(googleApp.num_search < 5) {
 					   googleApp.last_search.add(s);
-					   this.num_search++;
+					   googleApp.num_search++;
 				   }
 				   else {
 					   googleApp.last_search = new ArrayList<String>();
 					   googleApp.last_search.add(s);
-					   this.num_search = 1;
+					   googleApp.num_search = 1;
 					   
 				   }
 				 
@@ -54,11 +53,11 @@ public class googleApp implements App {
 	
 	public String getAppContent() {
 		String content = "Last search on google:\n";
-		if(this.num_search == 0) {
+		if(googleApp.num_search == 0) {
 			content = content + "No search has been performed yet";
 		}
 		else {
-			for(int i = 0; i<this.num_search;i++) {
+			for(int i = 0; i<googleApp.num_search;i++) {
 				content = content + googleApp.last_search.get(i) +"\n";
 			}
 		}
