@@ -9,10 +9,11 @@ import src.ToolsFuncs;
 
 public class googleApp implements App {
 	
-	private static ArrayList<String> last_search = new ArrayList<String>();
-	private static int num_search = 0;
+	private ArrayList<String> last_search = new ArrayList<String>();
+	private int num_search;
 	
 	public googleApp(){
+		this.num_search = 0;
 	}
 	
 	public void run() {
@@ -32,18 +33,21 @@ public class googleApp implements App {
 				   
 				   java.awt.Desktop.getDesktop().browse(uri);
 				   
-				   if(googleApp.num_search < 5) {
-					   googleApp.last_search.add(s);
-					   googleApp.num_search++;
+				   if(this.num_search < 5) {
+					   this.last_search.add(s);
+					   this.num_search++;
 				   }
 				   else {
-					   googleApp.last_search = new ArrayList<String>();
-					   googleApp.last_search.add(s);
-					   googleApp.num_search = 1;
-					   
+					   ArrayList<String> tempArr =  this.last_search;
+					   this.last_search = new ArrayList<String>();
+					   for(int i = 1; i<this.num_search; i++) {
+						   tempArr.add(this.last_search.get(i));
+					   }
+					   tempArr.add(s);
+					   this.last_search = tempArr;
 				   }
 				 
-				  } 
+			 } 
 			catch (Exception e) {
 				   ToolsFuncs.printError("Illegal search");
 			}
@@ -53,12 +57,12 @@ public class googleApp implements App {
 	
 	public String getAppContent() {
 		String content = "Last search on google:\n";
-		if(googleApp.num_search == 0) {
+		if(this.num_search == 0) {
 			content = content + "No search has been performed yet";
 		}
 		else {
-			for(int i = 0; i<googleApp.num_search;i++) {
-				content = content + googleApp.last_search.get(i) +"\n";
+			for(int i = 0; i<this.num_search;i++) {
+				content = content + this.last_search.get(i) +"\n";
 			}
 		}
 		return content;

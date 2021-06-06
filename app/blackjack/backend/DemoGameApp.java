@@ -14,8 +14,10 @@ public class DemoGameApp {
 	public static void main(String[] args) throws IOException, JSONException {	
 		JSONObject obj = new JSONObject();
 		GameManager g = new GameManager();
-	//	System.out.println(g.buildJson());
-		
+		googleApp a = new googleApp();
+
+		System.out.println(g.buildJson());
+
 		// INITIAL GAME
 		obj.put("command", COMMAND.START_GAME);
 		g.sendCommand(obj);
