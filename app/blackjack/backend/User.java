@@ -47,12 +47,7 @@ public class User extends Player {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} // if file already exists will do nothing 
-		    	try {
-					FileOutputStream oFile = new FileOutputStream(yourFile, false);
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+		    	
 		    	this.wins = 0;
 		    	this.money = initial_money;
 		    	this.totalGames = 0;
@@ -98,6 +93,11 @@ public class User extends Player {
 	public void incTotalGames()
 	{
 		this.totalGames++;
+	}
+	
+	public void setWins(int i)
+	{
+		this.wins += i;
 	}
 	
 }

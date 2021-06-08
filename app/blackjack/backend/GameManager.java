@@ -75,9 +75,6 @@ public class GameManager{
 		obj.put("dealer", d);
 		
 		p.put("cards", this.players[1].getMyCards());
-		// p.put("money", ((User)players[1]).getMoney());
-		// p.put("wins", ((User)players[1]).getWins());
-		// p.put("totalGames", ((User)players[1]).getTotalGames());
 		obj.put("player", p);
 		
 		obj.put("status", this.status);
@@ -117,6 +114,8 @@ public class GameManager{
 		if(i == 0){ // during game
 			if(players[1].sumOfCards == 21 || players[0].sumOfCards > 21){
 				this.status = GAME_STATUS.PLAYER_WINS;
+				((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal * 2);
+				((User)players[1]).setWins(1);
 			}
 			else{
 				if(players[1].sumOfCards > 21){
@@ -132,9 +131,12 @@ public class GameManager{
 			else{
 				if(players[0].sumOfCards == players[1].sumOfCards){
 					this.status = GAME_STATUS.TIE_GAME;
+					((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal);
 				}
 				else{
 					this.status = GAME_STATUS.PLAYER_WINS;
+					((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal * 2);
+					((User)players[1]).setWins(1);
 				}
 			}
 		}
