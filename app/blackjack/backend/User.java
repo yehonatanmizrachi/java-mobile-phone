@@ -86,7 +86,7 @@ public class User extends Player {
 	}
 
 	@Override
-	public void makeMove(DeckOfCards DC) {
+	public void makeMove(DeckOfCards DC, int evSum) {
 		this.addCard(DC.getCard());
 		this.sumCards();
 	}

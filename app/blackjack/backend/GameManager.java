@@ -27,7 +27,6 @@ public class GameManager{
 	public JSONObject sendCommand(JSONObject cmd) throws JSONException
 	{
 		int i = 0;
-		checkGameStatus(i);
 		COMMAND command = (COMMAND)cmd.get("command");
 		if (command == COMMAND.START_GAME)
 		{
@@ -38,14 +37,14 @@ public class GameManager{
 			startGame();
 		}
 		else if (command == COMMAND.HIT)
-			players[1].makeMove(cards_deck);
+			players[1].makeMove(cards_deck, players[0].sumOfCards);
 		else if (command == COMMAND.STAND)
 		{
 			if (players[0].getMyCards().get(0).Number() == -1)
 				players[0].removeFirstCard();
 			
 			int old_sum = players[0].sumOfCards;
-			players[0].makeMove(cards_deck);
+			players[0].makeMove(cards_deck, players[1].sumOfCards);
 			this.status = GAME_STATUS.DEALER_TURN;
 			if (old_sum == players[0].sumOfCards)
 			{

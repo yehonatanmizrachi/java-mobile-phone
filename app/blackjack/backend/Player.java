@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Player{
 	private ArrayList<Card> my_cards = new ArrayList<Card>();
 	int sumOfCards;
-	public abstract void makeMove(DeckOfCards DC);
+	public abstract void makeMove(DeckOfCards DC, int evSum);
 	
 	public Player()
 	{
