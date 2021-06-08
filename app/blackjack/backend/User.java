@@ -3,6 +3,7 @@ package blackjack.backend;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.Scanner;
@@ -55,6 +56,14 @@ public class User extends Player {
 		    	this.wins = 0;
 		    	this.money = initial_money;
 		    	this.totalGames = 0;
+		    	try {
+				      FileWriter myWriter = new FileWriter("./app/blackjack/players/" + "player" + 1 + ".txt");
+				      myWriter.write(this.money + "\n" + this.wins + "\n" + this.totalGames);
+				      myWriter.close();
+		    	} catch (IOException e1) {
+				      System.out.println("An error occurred.");
+				      e.printStackTrace();
+				}
 		    }
 	}
 	
