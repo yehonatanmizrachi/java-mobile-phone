@@ -1,4 +1,5 @@
 package src;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -34,6 +35,11 @@ public class MyIphone {
 	private App[] applications = new App[APPS.values().length-1];
 	private JFrame frame = new JFrame("My Iphone");
 	private JLabel clock;
+	private JLabel clock1;
+	private JLabel clock2;
+	private JLabel clock3;
+	private JLabel clock4;
+	private JLabel clock5;
 
 	public static void main(String[] args) throws IOException {
 		MyIphone phone = App.phone;
@@ -104,9 +110,9 @@ public class MyIphone {
 	        	buttons[index] = new JButton();
 	        	buttons[index].addActionListener(getAppButtonEventListener(app));
 	        	buttons[index].setBounds(BUTTONS_LOCATIONS[locationIndex][0], BUTTONS_LOCATIONS[locationIndex][1], BUTTON_WIDTH, BUTTON_HEIGHT);
-//	        	buttons[index].setOpaque(false);
-//	        	buttons[index].setContentAreaFilled(false);
-//	        	buttons[index].setBorderPainted(false);
+	        	buttons[index].setOpaque(false);
+	        	buttons[index].setContentAreaFilled(false);
+	        	buttons[index].setBorderPainted(false);
 	        	buttons[index].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	        	buttons[index].setToolTipText("Enti ten 100");
         		label.add(buttons[app.ordinal()]);
@@ -121,9 +127,9 @@ public class MyIphone {
         JButton google_button = new JButton();
         google_button.addActionListener(getAppButtonEventListener(APPS.GOOGLE));
         google_button.setBounds(27,275,235,25);
-//        google_button.setOpaque(false);
-//        google_button.setContentAreaFilled(false);
-//        google_button.setBorderPainted(false);
+        google_button.setOpaque(false);
+        google_button.setContentAreaFilled(false);
+        google_button.setBorderPainted(false);
         google_button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         google_button.setToolTipText("Click on me!");
         
@@ -134,7 +140,26 @@ public class MyIphone {
         clock = new JLabel();
         clock.setBounds(30,237,200,50);
         clock.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        clock.setForeground(Color.WHITE);
+        clock3 = new JLabel();
+        clock3.setBounds(30,80,200,50);
+        clock3.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE-15));
+        clock3.setForeground(Color.WHITE);
         
+        //timeOutLine
+        clock1 = new JLabel();
+        clock1.setBounds(29,238,200,50);
+        clock1.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        clock2 = new JLabel();
+        clock2.setBounds(31,236,200,50);
+        clock2.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        clock4 = new JLabel();
+        clock4.setBounds(29,81,200,50);
+        clock4.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE-15));
+        clock5 = new JLabel();
+        clock5.setBounds(31,79,200,50);
+        clock5.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE-15));
+
         
         // clock thread
         Thread clockThread = new Thread() {
@@ -145,6 +170,13 @@ public class MyIphone {
 		        		String timeStamp = new SimpleDateFormat("yyMMdd_HH:mm:ss").format(Calendar.getInstance().getTime());
 		        		timeStamp = timeStamp.split("_",2)[1];
 			            clock.setText(timeStamp);
+			            clock1.setText(timeStamp);
+			            clock2.setText(timeStamp);
+		        		String timeStamp1 = new SimpleDateFormat("yyMMdd_HH:mm:ss").format(Calendar.getInstance().getTime());
+			            timeStamp1 = timeStamp1.split("_",3)[1].substring(0, 5);
+			            clock3.setText(timeStamp1);
+			            clock4.setText(timeStamp1);
+			            clock5.setText(timeStamp1);
 			            
 			            int timeInterval = 1000;
 			            Thread.sleep(timeInterval);
@@ -161,7 +193,11 @@ public class MyIphone {
         label.add(google_button);
         panel.add(label);
         frame.add(clock);
-
+        frame.add(clock1);
+        frame.add(clock2);
+        frame.add(clock3);
+        frame.add(clock4);
+        frame.add(clock5);
         frame.add(panel); 
         
         frame.setSize(WIDTH, HEIGHT);  
