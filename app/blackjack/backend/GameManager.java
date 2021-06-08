@@ -41,8 +41,8 @@ public class GameManager{
 			players[1].makeMove(cards_deck);
 		else if (command == COMMAND.STAND)
 		{
-			players[0].removeFirstCard();
-			players[0].addCard(cards_deck.getCard());
+			if (players[0].getMyCards().get(0).Number() == -1)
+				players[0].removeFirstCard();
 			
 			int old_sum = players[0].sumOfCards;
 			players[0].makeMove(cards_deck);
