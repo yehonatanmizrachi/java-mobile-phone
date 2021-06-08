@@ -54,8 +54,8 @@ public abstract class BlackjackWindow {
 		// background
 		if (backgroundImage != null) {
 			try {
-//				Image image = getScaledImage(ImageIO.read(new File(backgroundImage)), m_width, m_height);
-				m_background = new JLabel(new ImageIcon(ImageIO.read(new File(backgroundImage))));
+				Image image = getScaledImage(ImageIO.read(new File(backgroundImage)), m_width - 10, m_height - 30);
+				m_background = new JLabel(new ImageIcon(image));
 				m_background.setBounds(0, 0, m_width, m_height);
 				m_frame.add(m_background);
 			} catch (IOException e) {

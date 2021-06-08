@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Player{
 	private ArrayList<Card> my_cards = new ArrayList<Card>();
 	int sumOfCards;
-	public abstract void makeMove(DeckOfCards DC);
+	public abstract void makeMove(DeckOfCards DC, int evSum);
 	
 	public Player()
 	{
@@ -45,7 +45,7 @@ public abstract class Player{
 			else if (number == 1) {
 				numOfAS++;
 			}
-			else
+			else if (number != 0)
 				sum = sum + 10;
 		}
 		
@@ -57,15 +57,13 @@ public abstract class Player{
 			
 			for(i = 0; i < numOfAS ;i++) {
 														
-				if(sum + 11 <= 21) {
-					
-					sum = sum + 11;
-					
-				}
-				else {
-					sum = sum + 1;
-				}
-				
+				if (numOfAS - i != 1)
+					sum += 1;
+				else if (sum + 11 <= 21)
+					sum += 11;
+				else
+					sum += 1;
+
 			}
 		}		
 		this.sumOfCards = sum;

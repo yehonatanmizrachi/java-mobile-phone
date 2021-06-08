@@ -36,6 +36,7 @@ public class BlackjackTable extends BlackjackWindow{
 	private ArrayList<JLabel> m_cardsLabels;
 	private JLabel m_hitLabel = null;
 	private JLabel m_standLabel = null;
+	private int[] m_sumOfCards = new int[2];
 
 	public void start() throws IOException {
 		
@@ -45,6 +46,7 @@ public class BlackjackTable extends BlackjackWindow{
 			JSONObject request = new JSONObject();
 			request.put("command", COMMAND.START_GAME);
 			response = m_app.sendMessageToBackend(request);
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -59,6 +61,8 @@ public class BlackjackTable extends BlackjackWindow{
     	displayHitAndStandButtons();
     	
         fillTable(response);
+        
+        checkGameStatus();
 	}
 
 
@@ -162,9 +166,7 @@ public class BlackjackTable extends BlackjackWindow{
 	    		m_app.playAudio(APP_SOUNDS.CARD);
 		    	fillTable(response);
 
-		    	if (m_app.getGameStatus() == GAME_STATUS.DEALER_WINS || m_app.getGameStatus() == GAME_STATUS.PLAYER_WINS) {
-		    		endGame();
-		    	}
+		    	checkGameStatus();
 		    }  
 		});
 
@@ -178,7 +180,7 @@ public class BlackjackTable extends BlackjackWindow{
 		    public void mouseClicked(MouseEvent e)  
 		    {  
 		    	
-		    	cleanTable();
+		    	
 		    	hideHitAndStandButtons();
 
 		    	JSONObject request = new JSONObject();
@@ -190,22 +192,33 @@ public class BlackjackTable extends BlackjackWindow{
 
 		    	JSONObject response = m_app.sendMessageToBackend(request);
 		    	
-
+		    	
 		    	Timer timer = new Timer();
 		    	timer.schedule(new TimerTask() {
 		    		  @Override
 		    		  public void run() {
-		    			fillTable(response);
+		    			  
+		    			try {
+		    				int dealerSumOfCards = (int)((JSONObject)response.get("dealer")).get("sumOfCards");
+		    				if (dealerSumOfCards != m_sumOfCards[0]) {
+		    					m_sumOfCards[0] = (int)((JSONObject)response.get("dealer")).get("sumOfCards");
+		    					cleanTable();
+				    			fillTable(response);
+		    				}
+						} catch (JSONException e1) {
+							e1.printStackTrace();
+						}
 
-						if (m_app.getGameStatus() == GAME_STATUS.DEALER_TURN) {
-							m_app.playAudio(APP_SOUNDS.CARD);
-							mouseClicked(e);
-						}
-						else {
-							m_frame.setVisible(false);
-							m_app.startWindow(APP_WINDOWS.END_GAME);
-						}
-						
+		    			GAME_STATUS status = m_app.getGameStatus();
+
+		    			if (status == GAME_STATUS.DEALER_WINS || status == GAME_STATUS.PLAYER_WINS || status == GAME_STATUS.TIE_GAME) {
+		    				endGame();
+		    				return;
+		    			}
+
+						m_app.playAudio(APP_SOUNDS.CARD);
+						mouseClicked(e);
+
 		    		  }
 		    		}, 2*1000);
 		    }  
@@ -232,7 +245,7 @@ public class BlackjackTable extends BlackjackWindow{
 	private void endGame() {
 		hideHitAndStandButtons();
 
-		int timeout = 2;
+		float timeout = 2f;
 		Timer timer = new Timer();
     	timer.schedule(new TimerTask() {
     		  @Override
@@ -240,7 +253,14 @@ public class BlackjackTable extends BlackjackWindow{
     			  m_frame.setVisible(false);
     			  m_app.startWindow(APP_WINDOWS.END_GAME);
     		  }
-		}, timeout*1000);
+		}, (int)timeout*1000);
+	}
+
+	private void checkGameStatus() {
+		GAME_STATUS status = m_app.getGameStatus();
+		if (status == GAME_STATUS.DEALER_WINS || status == GAME_STATUS.PLAYER_WINS || status == GAME_STATUS.TIE_GAME) {
+			endGame();
+		}
 	}
 
 	private void hideHitAndStandButtons() {
@@ -267,7 +287,7 @@ public class BlackjackTable extends BlackjackWindow{
 	       			m_app.startWindow(APP_WINDOWS.INFO);
 	       		 }
 	       	 }
-       }; 
+       };
 	}
 
 }

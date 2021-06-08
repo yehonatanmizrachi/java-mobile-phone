@@ -38,7 +38,7 @@ public abstract class ToolsFuncs {
 	*/
 	public static int SetStartingMenu(String message, int invalid_num, int cancel_num,String app)
 	{
-		String toPic = "Pic/"+app +".png";
+		String toPic = "pics/"+app +".png";
 		ImageIcon pic = ToolsFuncs.getMainPicture(toPic,80,80);
 		String s = (String) JOptionPane.showInputDialog(null,message,app,JOptionPane.INFORMATION_MESSAGE, pic, null,null );
 		int input = 0;

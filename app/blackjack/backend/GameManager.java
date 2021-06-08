@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import blackjack.api.CARD_SHAPE;
 import blackjack.api.COMMAND;
 import blackjack.api.GAME_STATUS;
 
@@ -27,7 +28,6 @@ public class GameManager{
 	public JSONObject sendCommand(JSONObject cmd) throws JSONException
 	{
 		int i = 0;
-		checkGameStatus(i);
 		COMMAND command = (COMMAND)cmd.get("command");
 		if (command == COMMAND.START_GAME)
 		{
@@ -38,14 +38,14 @@ public class GameManager{
 			startGame();
 		}
 		else if (command == COMMAND.HIT)
-			players[1].makeMove(cards_deck);
+			players[1].makeMove(cards_deck, players[0].sumOfCards);
 		else if (command == COMMAND.STAND)
 		{
-			players[0].removeFirstCard();
-			players[0].addCard(cards_deck.getCard());
+			if (players[0].getMyCards().get(0).Number() == 0)
+				players[0].removeFirstCard();
 			
 			int old_sum = players[0].sumOfCards;
-			players[0].makeMove(cards_deck);
+			players[0].makeMove(cards_deck, players[1].sumOfCards);
 			this.status = GAME_STATUS.DEALER_TURN;
 			if (old_sum == players[0].sumOfCards)
 			{
@@ -56,7 +56,9 @@ public class GameManager{
 		}
 		else if (command == COMMAND.EXIT)
 			saveGame();
-		
+		else if (command == COMMAND.STATS) {
+			return getStatistics();
+		}
 		if(i == 0) {
 			checkGameStatus(i);
 		}
@@ -71,12 +73,11 @@ public class GameManager{
 		JSONObject d = new JSONObject();
 
 		d.put("cards", this.players[0].getMyCards());
+		d.put("sumOfCards", this.players[0].sumOfCards);
 		obj.put("dealer", d);
 		
 		p.put("cards", this.players[1].getMyCards());
-		// p.put("money", ((User)players[1]).getMoney());
-		// p.put("wins", ((User)players[1]).getWins());
-		// p.put("totalGames", ((User)players[1]).getTotalGames());
+		p.put("sumOfCards", this.players[1].sumOfCards);
 		obj.put("player", p);
 		
 		obj.put("status", this.status);
@@ -99,21 +100,25 @@ public class GameManager{
 		{
 			if(i == 0) {
 				players[i].addCard(cards_deck.getBOC());
-				players[i].addCard(cards_deck.getCard());
+				players[i].makeMove(cards_deck, 0);
 			}
 			else {
-				players[i].addCard(cards_deck.getCard());
-				players[i].addCard(cards_deck.getCard());
+				players[i].makeMove(cards_deck, 0);
+				players[i].makeMove(cards_deck, 0);
 			}
 		}	
+		
+		
 	}
 	
 
 	private void checkGameStatus(int i){
 		
 		if(i == 0){ // during game
-			if(players[1].sumOfCards == 21){
+			if(players[1].sumOfCards == 21 || players[0].sumOfCards > 21){
 				this.status = GAME_STATUS.PLAYER_WINS;
+				((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal * 2);
+				((User)players[1]).setWins(1);
 			}
 			else{
 				if(players[1].sumOfCards > 21){
@@ -129,9 +134,12 @@ public class GameManager{
 			else{
 				if(players[0].sumOfCards == players[1].sumOfCards){
 					this.status = GAME_STATUS.TIE_GAME;
+					((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal);
 				}
 				else{
 					this.status = GAME_STATUS.PLAYER_WINS;
+					((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal * 2);
+					((User)players[1]).setWins(1);
 				}
 			}
 		}
@@ -156,6 +164,7 @@ public class GameManager{
 		obj.put("money", u.getMoney());
 		obj.put("wins", u.getWins());
 		obj.put("totalGames", u.getTotalGames());
+		obj.put("status", GAME_STATUS.STATS);
 		return obj;
 	}
 }

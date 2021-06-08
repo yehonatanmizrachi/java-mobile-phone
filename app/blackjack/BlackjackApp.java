@@ -8,6 +8,7 @@ import java.util.Stack;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import blackjack.api.COMMAND;
 import blackjack.api.GAME_STATUS;
 import blackjack.backend.GameManager;
 import blackjack.frontend.BlackjackEndGame;
@@ -22,13 +23,34 @@ import src.App;
 
 public class BlackjackApp implements App {
 
+	@Override
 	public void run() throws IOException {
 		startWindow(APP_WINDOWS.MENU);
 	}
 
 	@Override
 	public String getAppContent() {
-		return "BlackJack app is empty\n";
+		String content = "BlackJack app content:\n";
+		try {
+			JSONObject request = new JSONObject();
+			request.put("command", COMMAND.STATS);
+			
+			// get statistics from the backend
+			JSONObject response = sendMessageToBackend(request);
+			int wins, totalGames;
+			double money;
+			wins = (int)response.get("wins");
+			totalGames = (int)response.get("totalGames");
+			money = (double)response.get("money");
+			
+			content += "winnings: " + wins + "/" + totalGames + "\n";
+			content += "money: " + money + "\n";
+		} catch (JSONException e) {
+			content += "BlackJack app is empty\n";
+			e.printStackTrace();
+		}
+	
+		return content;
 	}
 
 	private GameManager m_backend;
@@ -41,9 +63,10 @@ public class BlackjackApp implements App {
 
 	public BlackjackApp() {
 		
+		// backend
 		m_backend = new GameManager();
 		
-		// GUI windows
+		// frontend
 		final int MENU = APP_WINDOWS.MENU.ordinal();
 		final int TABLE = APP_WINDOWS.TABLE.ordinal();
 		final int INFO = APP_WINDOWS.INFO.ordinal();
@@ -143,7 +166,6 @@ public class BlackjackApp implements App {
 		            Player playMP3 = new Player(fs);
 		
 	            	playMP3.play();
-
 			    }  
 			    catch(Exception e){
 			        System.out.println(e);
@@ -152,17 +174,16 @@ public class BlackjackApp implements App {
 		};
 		
 		m_sound.start();
-
 	}
 	
 	public void clearAudio() {
 		if (m_sound != null) {
-			System.out.print("ss");
 			m_sound.stop();
 			m_sound = null;
 		}
 
 	}
+
 	// [width, height]
 	private int[][] APPS_SIZES = {
 			{590, 530},
@@ -187,4 +208,5 @@ public class BlackjackApp implements App {
 			"BlackJack - Statistics",
 			"BlackJack - End Game"
 	};
+
 }
