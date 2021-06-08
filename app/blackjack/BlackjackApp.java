@@ -101,6 +101,7 @@ public class BlackjackApp implements App {
 		try {
 			response = m_backend.sendCommand(json);
 			m_gameStatus = (GAME_STATUS)response.get("status");
+			System.out.print(m_gameStatus);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

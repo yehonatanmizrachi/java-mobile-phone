@@ -198,13 +198,17 @@ public class BlackjackTable extends BlackjackWindow{
 		    			cleanTable();
 		    			fillTable(response);
 
+		    			GAME_STATUS status = m_app.getGameStatus();
+
+		    			if (status == GAME_STATUS.DEALER_WINS || status == GAME_STATUS.PLAYER_WINS) {
+		    				endGame();
+		    			}
+
 						if (m_app.getGameStatus() == GAME_STATUS.DEALER_TURN) {
 							m_app.playAudio(APP_SOUNDS.CARD);
 							mouseClicked(e);
 						}
-						
-						checkGameStatus();
-						
+
 		    		  }
 		    		}, 2*1000);
 		    }  
