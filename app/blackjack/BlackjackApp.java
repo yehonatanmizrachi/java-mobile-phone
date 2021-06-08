@@ -132,7 +132,7 @@ public class BlackjackApp implements App {
 	}
 
 	public void playAudio(APP_SOUNDS sound) {
-		
+
 		clearAudio();
 		
 		m_sound = new Thread() {
