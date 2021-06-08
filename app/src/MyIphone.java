@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,7 +24,6 @@ import javax.swing.JPanel;
 import Web.googleApp;
 import blackjack.BlackjackApp;
 import diary.DiaryApp;
-import javazoom.jl.player.Player;
 import media.MediaApp;
 import phoneBook.PhoneBookApp;
 import sms.SmsApp;
@@ -138,6 +136,7 @@ public class MyIphone {
 
         //time label
         clock = new JLabel();
+        clock.setForeground(Color.white);
         clock.setBounds(30,237,200,50);
         clock.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
         clock.setForeground(Color.WHITE);
