@@ -2,10 +2,17 @@ package src;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -17,6 +24,7 @@ import javax.swing.JPanel;
 import Web.googleApp;
 import blackjack.BlackjackApp;
 import diary.DiaryApp;
+import javazoom.jl.player.Player;
 import media.MediaApp;
 import phoneBook.PhoneBookApp;
 import sms.SmsApp;
@@ -25,7 +33,8 @@ public class MyIphone {
 
 	private App[] applications = new App[APPS.values().length-1];
 	private JFrame frame = new JFrame("My Iphone");
-	
+	private JLabel clock;
+
 	public static void main(String[] args) throws IOException {
 		MyIphone phone = App.phone;
 		phone.runPhone();
@@ -67,17 +76,18 @@ public class MyIphone {
 
 		// frame
 		String IMAGE_PATH = "pics/IPHONE2.png";
-		int WIDTH = 340, HEIGHT = 740;  
+		int WIDTH = 310, HEIGHT = 640;  
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        JLabel label = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
+        Image a = getScaledImage(ImageIO.read(new File(IMAGE_PATH)), WIDTH - 20, HEIGHT - 40);
+        JLabel label = new JLabel(new ImageIcon(a));
         
         // buttons
         JButton[] buttons = new JButton[APPS.values().length];
         
         // buttons layout
-        int BUTTON_WIDTH = 80, BUTTON_HEIGHT = 80, BUTTON_PADDING = 15; 
-        int INITIAL_X = 35, INITIAL_Y = 400, COLS=3;
+        int BUTTON_WIDTH = 53, BUTTON_HEIGHT = 53, BUTTON_PADDING = 23; 
+        int INITIAL_X = 43, INITIAL_Y = 360, COLS=3;
         int[][] BUTTONS_LOCATIONS = new int[APPS.values().length][2];
     	for (int i = 0; i < APPS.values().length; i++) {
     		// set x
@@ -94,9 +104,9 @@ public class MyIphone {
 	        	buttons[index] = new JButton();
 	        	buttons[index].addActionListener(getAppButtonEventListener(app));
 	        	buttons[index].setBounds(BUTTONS_LOCATIONS[locationIndex][0], BUTTONS_LOCATIONS[locationIndex][1], BUTTON_WIDTH, BUTTON_HEIGHT);
-	        	buttons[index].setOpaque(false);
-	        	buttons[index].setContentAreaFilled(false);
-	        	buttons[index].setBorderPainted(false);
+//	        	buttons[index].setOpaque(false);
+//	        	buttons[index].setContentAreaFilled(false);
+//	        	buttons[index].setBorderPainted(false);
 	        	buttons[index].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	        	buttons[index].setToolTipText("Enti ten 100");
         		label.add(buttons[app.ordinal()]);
@@ -110,26 +120,47 @@ public class MyIphone {
         //google button
         JButton google_button = new JButton();
         google_button.addActionListener(getAppButtonEventListener(APPS.GOOGLE));
-        google_button.setBounds(0,322,340,30);
-        google_button.setOpaque(false);
-        google_button.setContentAreaFilled(false);
-        google_button.setBorderPainted(false);
+        google_button.setBounds(27,275,235,25);
+//        google_button.setOpaque(false);
+//        google_button.setContentAreaFilled(false);
+//        google_button.setBorderPainted(false);
         google_button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         google_button.setToolTipText("Click on me!");
         
-        int FONT_SIZE = 45;
+        int FONT_SIZE = 30;
         String FONT_NAME = "Sans Serif";
+
         //time label
-        JLabel time_label = new JLabel();
-        time_label.setBounds(30,280,200,50);
-        time_label.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
-        String time = java.time.LocalTime.now().toString();
-        time = time.substring(0, time.length() - 13);
-        time_label.setText(time);
+        clock = new JLabel();
+        clock.setBounds(30,237,200,50);
+        clock.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        
+        
+        // clock thread
+        Thread clockThread = new Thread() {
+        	@Override
+			public void run() {
+		        try{
+		        	while(true) {
+		        		String timeStamp = new SimpleDateFormat("yyMMdd_HH:mm:ss").format(Calendar.getInstance().getTime());
+		        		timeStamp = timeStamp.split("_",2)[1];
+			            clock.setText(timeStamp);
+			            
+			            int timeInterval = 1000;
+			            Thread.sleep(timeInterval);
+		        	}
+			    }  
+			    catch(Exception e){
+			        System.out.println(e);
+			    }
+			}
+		};
+
+		clockThread.start();
 
         label.add(google_button);
         panel.add(label);
-        frame.add(time_label);
+        frame.add(clock);
 
         frame.add(panel); 
         
@@ -170,6 +201,17 @@ public class MyIphone {
 		DIARY,
 		GOOGLE,
 		GET_CONTENT
+	}
+	
+	protected Image getScaledImage(Image srcImg, int w, int h){
+	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g2 = resizedImg.createGraphics();
+
+	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	    g2.drawImage(srcImg, 0, 0, w, h, null);
+	    g2.dispose();
+
+	    return resizedImg;
 	}
 }
 	

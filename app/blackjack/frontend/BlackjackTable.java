@@ -190,7 +190,6 @@ public class BlackjackTable extends BlackjackWindow{
 
 		    	JSONObject response = m_app.sendMessageToBackend(request);
 		    	
-
 		    	Timer timer = new Timer();
 		    	timer.schedule(new TimerTask() {
 		    		  @Override
@@ -204,7 +203,7 @@ public class BlackjackTable extends BlackjackWindow{
 		    				endGame();
 		    			}
 
-						if (m_app.getGameStatus() == GAME_STATUS.DEALER_TURN) {
+		    			else if (status == GAME_STATUS.DEALER_TURN) {
 							m_app.playAudio(APP_SOUNDS.CARD);
 							mouseClicked(e);
 						}
