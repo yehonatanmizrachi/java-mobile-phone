@@ -1,5 +1,6 @@
 package blackjack.frontend;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -147,7 +148,8 @@ public class BlackjackTable extends BlackjackWindow{
 		
 		m_hitLabel = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(hitPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
 		m_hitLabel.setBounds(INITIAL_X, INITIAL_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-		
+		m_hitLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
 		// HIT method
 		m_hitLabel.addMouseListener(new MouseAdapter()  
 		{  
@@ -173,6 +175,7 @@ public class BlackjackTable extends BlackjackWindow{
 
 		m_standLabel = new JLabel(new ImageIcon(getScaledImage(ImageIO.read(new File(standPath)), BUTTON_WIDTH, BUTTON_HEIGHT)));
 		m_standLabel.setBounds(INITIAL_X + BUTTON_WIDTH + PADD, INITIAL_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+		m_standLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		// STAND method
 		m_standLabel.addMouseListener(new MouseAdapter()  
