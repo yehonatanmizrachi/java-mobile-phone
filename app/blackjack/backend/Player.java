@@ -45,7 +45,7 @@ public abstract class Player{
 			else if (number == 1) {
 				numOfAS++;
 			}
-			else
+			else if (number != 0)
 				sum = sum + 10;
 		}
 		

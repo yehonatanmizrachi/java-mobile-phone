@@ -134,25 +134,25 @@ public class BlackjackApp implements App {
 
 	public void playAudio(APP_SOUNDS sound) {
 
-		clearAudio();
-		
-		m_sound = new Thread() {
-			public void run() {
-		        try{
-		
-		            FileInputStream fs = new FileInputStream(sound.getPath());
-		            Player playMP3 = new Player(fs);
-		
-	            	playMP3.play();
-
-			    }  
-			    catch(Exception e){
-			        System.out.println(e);
-			    }
-			}
-		};
-		
-		m_sound.start();
+//		clearAudio();
+//		
+//		m_sound = new Thread() {
+//			public void run() {
+//		        try{
+//		
+//		            FileInputStream fs = new FileInputStream(sound.getPath());
+//		            Player playMP3 = new Player(fs);
+//		
+//	            	playMP3.play();
+//
+//			    }  
+//			    catch(Exception e){
+//			        System.out.println(e);
+//			    }
+//			}
+//		};
+//		
+//		m_sound.start();
 
 	}
 	

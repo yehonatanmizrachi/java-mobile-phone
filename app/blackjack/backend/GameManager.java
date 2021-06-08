@@ -100,13 +100,15 @@ public class GameManager{
 		{
 			if(i == 0) {
 				players[i].addCard(cards_deck.getBOC());
-				players[i].addCard(cards_deck.getCard());
+				players[i].makeMove(cards_deck, 0);
 			}
 			else {
-				players[i].addCard(cards_deck.getCard());
-				players[i].addCard(cards_deck.getCard());
+				players[i].makeMove(cards_deck, 0);
+				players[i].makeMove(cards_deck, 0);
 			}
 		}	
+		
+		
 	}
 	
 
