@@ -1,5 +1,6 @@
 package blackjack.frontend;
 
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -75,6 +76,7 @@ public abstract class BlackjackWindow {
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
+		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		m_background.add(button);
 

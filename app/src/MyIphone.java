@@ -1,9 +1,12 @@
 package src;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextLayout;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.w3c.dom.Text;
 
 import Web.googleApp;
 import blackjack.BlackjackApp;
@@ -119,20 +124,27 @@ public class MyIphone {
         
         int FONT_SIZE = 45;
         String FONT_NAME = "Sans Serif";
-        //time label
-        JLabel time_label = new JLabel();
-        time_label.setBounds(30,280,200,50);
-        time_label.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
         String time = java.time.LocalTime.now().toString();
         time = time.substring(0, time.length() - 13);
+        //time label
+        JLabel time_label = new JLabel();
+        JLabel time_label1 = new JLabel();
+        time_label1.setBounds(25, 94, 100, 50);
+        time_label1.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE-30));
+        time_label1.setText(time);
+        time_label1.setForeground(Color.WHITE);
+        time_label.setBounds(30,280,200,50);
+        time_label.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
         time_label.setText(time);
+        time_label.setForeground(Color.WHITE);
 
+        
         label.add(google_button);
         panel.add(label);
-        frame.add(time_label);
-
-        frame.add(panel); 
         
+        frame.add(time_label);
+        frame.add(time_label1);
+        frame.add(panel); 
         frame.setSize(WIDTH, HEIGHT);  
         frame.setLocationRelativeTo(null);  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
