@@ -20,7 +20,7 @@ public class MediaApp implements App{
 		int input = 0;
 
 		while (input != MENU.EXIT.ordinal()) {
-			ImageIcon musicPic = ToolsFuncs.getMainPicture("Pic/MUSIC.png",80,80);
+			ImageIcon musicPic = ToolsFuncs.getMainPicture("pics/MUSIC.png",80,80);
 			String result = (String) JOptionPane.showInputDialog(null,this.getMenu(),"MEDIA",JOptionPane.INFORMATION_MESSAGE, musicPic, null,null);
 			input = this.parseIntResult(result) - 1;
 

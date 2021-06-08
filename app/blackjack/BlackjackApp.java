@@ -8,6 +8,7 @@ import java.util.Stack;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import blackjack.api.COMMAND;
 import blackjack.api.GAME_STATUS;
 import blackjack.backend.GameManager;
 import blackjack.frontend.BlackjackEndGame;
@@ -28,7 +29,25 @@ public class BlackjackApp implements App {
 
 	@Override
 	public String getAppContent() {
-		return "BlackJack app is empty\n";
+		String content = "BlackJack app content:\n";
+		try {
+			JSONObject request = new JSONObject();
+			request.put("command", COMMAND.STATS);
+			
+			JSONObject response = sendMessageToBackend(request);
+			int wins, totalGames;
+			double money;
+			wins = (int)response.get("wins");
+			totalGames = (int)response.get("totalGames");
+			money = (double)response.get("money");
+			
+			content += "winnings: " + wins + "/" + totalGames + "\n";
+			content += "money: " + money + "\n";
+		} catch (JSONException e) {
+			content += "BlackJack app is empty\n";
+			e.printStackTrace();
+		}
+		return content;
 	}
 
 	private GameManager m_backend;
