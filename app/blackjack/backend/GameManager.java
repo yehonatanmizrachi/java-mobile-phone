@@ -147,6 +147,7 @@ public class GameManager{
 	
 	private void saveGame()
 	{
+		User u = new User(1);
 		try {
 		      FileWriter myWriter = new FileWriter("./app/blackjack/players/" + "player" + 1 + ".txt");
 		      myWriter.write(((User)players[1]).getMoney() + "\n" + ((User)players[1]).getWins() + "\n" + ((User)players[1]).getTotalGames());

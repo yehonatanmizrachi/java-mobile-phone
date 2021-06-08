@@ -17,7 +17,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import blackjack.BlackjackApp;
+import blackjack.api.COMMAND;
 import src.App;
 
 public abstract class BlackjackWindow {
@@ -40,6 +44,17 @@ public abstract class BlackjackWindow {
         m_frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
+       			// save game data
+       			try {
+
+       				JSONObject request = new JSONObject();
+       				request.put("command", COMMAND.EXIT);
+       				
+       				m_app.sendMessageToBackend(request);
+       			} catch (JSONException e) {
+       				e.printStackTrace();
+       			}
+
             	m_app.clearAudio();
             	m_frame.setVisible(false);             
                 App.phone.returnToPhone();

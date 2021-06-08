@@ -281,6 +281,16 @@ public class BlackjackTable extends BlackjackWindow{
 	       	 public void actionPerformed(ActionEvent evt){
 	       		 m_frame.setVisible(false);
 	       		 if (action == GAME_BUTTONS.RETURN) {
+	       			// save game data
+	       			try {
+
+	       				JSONObject request = new JSONObject();
+	       				request.put("command", COMMAND.EXIT);
+	       				
+	       				m_app.sendMessageToBackend(request);
+	       			} catch (JSONException e) {
+	       				e.printStackTrace();
+	       			}
 	       			m_app.goToPreviousWindow();
 	       		 }
 	       		 else if (action == GAME_BUTTONS.INFO) {
