@@ -11,7 +11,9 @@ public abstract class Player{
 	{
 		this.sumOfCards = 0;
 	}
-	
+	public void removeFirstCard() {
+		my_cards.remove(0);
+	}	
 	public void addCard(Card c)
 	{
 		my_cards.add(c);
