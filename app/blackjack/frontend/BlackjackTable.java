@@ -36,6 +36,7 @@ public class BlackjackTable extends BlackjackWindow{
 	private ArrayList<JLabel> m_cardsLabels;
 	private JLabel m_hitLabel = null;
 	private JLabel m_standLabel = null;
+	private int[] m_sumOfCards = new int[2];
 
 	public void start() throws IOException {
 		
@@ -45,6 +46,7 @@ public class BlackjackTable extends BlackjackWindow{
 			JSONObject request = new JSONObject();
 			request.put("command", COMMAND.START_GAME);
 			response = m_app.sendMessageToBackend(request);
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -190,23 +192,32 @@ public class BlackjackTable extends BlackjackWindow{
 
 		    	JSONObject response = m_app.sendMessageToBackend(request);
 		    	
+		    	
 		    	Timer timer = new Timer();
 		    	timer.schedule(new TimerTask() {
 		    		  @Override
 		    		  public void run() {
-		    			cleanTable();
-		    			fillTable(response);
+		    			  
+		    			try {
+		    				int dealerSumOfCards = (int)((JSONObject)response.get("dealer")).get("sumOfCards");
+		    				if (dealerSumOfCards != m_sumOfCards[0]) {
+		    					m_sumOfCards[0] = (int)((JSONObject)response.get("dealer")).get("sumOfCards");
+		    					cleanTable();
+				    			fillTable(response);
+		    				}
+						} catch (JSONException e1) {
+							e1.printStackTrace();
+						}
 
 		    			GAME_STATUS status = m_app.getGameStatus();
 
 		    			if (status == GAME_STATUS.DEALER_WINS || status == GAME_STATUS.PLAYER_WINS || status == GAME_STATUS.TIE_GAME) {
 		    				endGame();
+		    				return;
 		    			}
 
-		    			else if (status == GAME_STATUS.DEALER_TURN) {
-							m_app.playAudio(APP_SOUNDS.CARD);
-							mouseClicked(e);
-						}
+						m_app.playAudio(APP_SOUNDS.CARD);
+						mouseClicked(e);
 
 		    		  }
 		    		}, 2*1000);
@@ -234,7 +245,7 @@ public class BlackjackTable extends BlackjackWindow{
 	private void endGame() {
 		hideHitAndStandButtons();
 
-		float timeout = 2.5f;
+		float timeout = 2f;
 		Timer timer = new Timer();
     	timer.schedule(new TimerTask() {
     		  @Override

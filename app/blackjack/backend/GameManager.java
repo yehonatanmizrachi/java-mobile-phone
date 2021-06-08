@@ -73,9 +73,11 @@ public class GameManager{
 		JSONObject d = new JSONObject();
 
 		d.put("cards", this.players[0].getMyCards());
+		d.put("sumOfCards", this.players[0].sumOfCards);
 		obj.put("dealer", d);
 		
 		p.put("cards", this.players[1].getMyCards());
+		p.put("sumOfCards", this.players[1].sumOfCards);
 		obj.put("player", p);
 		
 		obj.put("status", this.status);

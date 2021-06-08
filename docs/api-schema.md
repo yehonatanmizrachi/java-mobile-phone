@@ -12,9 +12,11 @@
 		"wins": Int;
 		"money": Double;
 		"totalGames": Int;
+		"sumOfCards": Int;
 	},
 	"dealer": {
 		"cards": [{"cardInfo": {"number": Int, "shape": CARD_SHAPE, "pic": String }}];
+		"sumOfCards": Int;
 	},
 	"status": GAME_STATUS
 	

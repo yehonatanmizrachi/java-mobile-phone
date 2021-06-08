@@ -124,7 +124,6 @@ public class BlackjackApp implements App {
 		try {
 			response = m_backend.sendCommand(json);
 			m_gameStatus = (GAME_STATUS)response.get("status");
-			System.out.print(m_gameStatus);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -157,29 +156,28 @@ public class BlackjackApp implements App {
 
 	public void playAudio(APP_SOUNDS sound) {
 
-//		clearAudio();
-//		
-//		m_sound = new Thread() {
-//			public void run() {
-//		        try{
-//		
-//		            FileInputStream fs = new FileInputStream(sound.getPath());
-//		            Player playMP3 = new Player(fs);
-//		
-//	            	playMP3.play();
-//			    }  
-//			    catch(Exception e){
-//			        System.out.println(e);
-//			    }
-//			}
-//		};
-//		
-//		m_sound.start();
+		clearAudio();
+		
+		m_sound = new Thread() {
+			public void run() {
+		        try{
+		
+		            FileInputStream fs = new FileInputStream(sound.getPath());
+		            Player playMP3 = new Player(fs);
+		
+	            	playMP3.play();
+			    }  
+			    catch(Exception e){
+			        System.out.println(e);
+			    }
+			}
+		};
+		
+		m_sound.start();
 	}
 	
 	public void clearAudio() {
 		if (m_sound != null) {
-			System.out.print("ss");
 			m_sound.stop();
 			m_sound = null;
 		}
