@@ -19,6 +19,12 @@ public class DeckOfCards {
 		this.reset();
 	}
 	
+	public Card getBOC() {
+		String pic = "./pics/cards/BOC.png";
+		Card c = new Card(-1,0,pic);
+		return c;
+	}
+	
 	// get card from the deck
 	public Card getCard() {
 		if(amount == 0) {
@@ -62,6 +68,7 @@ public class DeckOfCards {
 		}
 		return id;
 	}
+
 	// reset the deck of cards
 	public void reset() {
 		int i,j;

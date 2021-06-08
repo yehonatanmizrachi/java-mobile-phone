@@ -41,6 +41,9 @@ public class GameManager{
 			players[1].makeMove(cards_deck);
 		else if (command == COMMAND.STAND)
 		{
+			players[0].removeFirstCard();
+			players[0].addCard(cards_deck.getCard());
+			
 			int old_sum = players[0].sumOfCards;
 			players[0].makeMove(cards_deck);
 			this.status = GAME_STATUS.DEALER_TURN;
@@ -71,9 +74,9 @@ public class GameManager{
 		obj.put("dealer", d);
 		
 		p.put("cards", this.players[1].getMyCards());
-		p.put("money", ((User)players[1]).getMoney());
-		p.put("wins", ((User)players[1]).getWins());
-		p.put("totalGames", ((User)players[1]).getTotalGames());
+		// p.put("money", ((User)players[1]).getMoney());
+		// p.put("wins", ((User)players[1]).getWins());
+		// p.put("totalGames", ((User)players[1]).getTotalGames());
 		obj.put("player", p);
 		
 		obj.put("status", this.status);
@@ -94,8 +97,14 @@ public class GameManager{
 		cards_deck.reset();
 		for (int i = 0; i < numOfPlayers; i++)
 		{
-			players[i].addCard(cards_deck.getCard());
-			players[i].addCard(cards_deck.getCard());
+			if(i == 0) {
+				players[i].addCard(cards_deck.getBOC());
+				players[i].addCard(cards_deck.getCard());
+			}
+			else {
+				players[i].addCard(cards_deck.getCard());
+				players[i].addCard(cards_deck.getCard());
+			}
 		}	
 	}
 	
