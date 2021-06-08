@@ -74,9 +74,9 @@ public class GameManager{
 		obj.put("dealer", d);
 		
 		p.put("cards", this.players[1].getMyCards());
-		p.put("money", ((User)players[1]).getMoney());
-		p.put("wins", ((User)players[1]).getWins());
-		p.put("totalGames", ((User)players[1]).getTotalGames());
+		// p.put("money", ((User)players[1]).getMoney());
+		// p.put("wins", ((User)players[1]).getWins());
+		// p.put("totalGames", ((User)players[1]).getTotalGames());
 		obj.put("player", p);
 		
 		obj.put("status", this.status);
