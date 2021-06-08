@@ -115,13 +115,14 @@ public class GameManager{
 	private void checkGameStatus(int i){
 		
 		if(i == 0){ // during game
-			if(players[1].sumOfCards == 21 || players[0].sumOfCards > 21){
+			if((players[1].sumOfCards == 21 || players[0].sumOfCards > 21) && this.status != GAME_STATUS.PLAYER_WINS){
+				System.out.println("A");
 				this.status = GAME_STATUS.PLAYER_WINS;
 				((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal * 2);
 				((User)players[1]).setWins(1);
 			}
 			else{
-				if(players[1].sumOfCards > 21){
+				if(players[1].sumOfCards > 21 && this.status != GAME_STATUS.DEALER_WINS){
 					this.status = GAME_STATUS.DEALER_WINS;
 				}
 			}
@@ -129,17 +130,19 @@ public class GameManager{
 		
 		else{ // if GAME_STATUS == STANDS
 			
-			if (21 - players[0].sumOfCards < 21 - players[1].sumOfCards)
+			if (21 - players[0].sumOfCards < 21 - players[1].sumOfCards && this.status != GAME_STATUS.DEALER_WINS)
 				this.status = GAME_STATUS.DEALER_WINS;
 			else{
-				if(players[0].sumOfCards == players[1].sumOfCards){
+				if(players[0].sumOfCards == players[1].sumOfCards && this.status != GAME_STATUS.TIE_GAME){
 					this.status = GAME_STATUS.TIE_GAME;
 					((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal);
 				}
 				else{
-					this.status = GAME_STATUS.PLAYER_WINS;
-					((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal * 2);
-					((User)players[1]).setWins(1);
+					if (this.status != GAME_STATUS.PLAYER_WINS) {
+						this.status = GAME_STATUS.PLAYER_WINS;
+						((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal * 2);
+						((User)players[1]).setWins(1);
+					}
 				}
 			}
 		}
