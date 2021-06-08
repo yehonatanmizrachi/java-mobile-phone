@@ -7,8 +7,12 @@ import java.io.IOException;
 
 import javax.swing.JLabel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import blackjack.BlackjackApp;
 import blackjack.BlackjackApp.APP_WINDOWS;
+import blackjack.api.COMMAND;
 
 
 public class BlackjackStatistics extends BlackjackWindow{
@@ -23,18 +27,29 @@ public class BlackjackStatistics extends BlackjackWindow{
 
 	public void start() throws IOException {
 		
-		// TODO: get the data from the backend
-		// JSONObject response = m_app.sendMessageToBackend(null);
+		try {
 
-		int wins = 10, totalGames = 20;
-		float winnings = wins / (float)totalGames * 100;
+			JSONObject request = new JSONObject();
+			request.put("command", COMMAND.STATS);
+			
+			JSONObject response = m_app.sendMessageToBackend(request);
+			
+			int wins, totalGames;
+			double money;
+			wins = (int)response.get("wins");
+			totalGames = (int)response.get("totalGames");
+			money = (double)response.get("money");
+			float winnings = wins / (float)totalGames * 100;
+			
+			m_winningsLabel.setText(winnings + "%");
+	        m_moneyLabel.setText("$" + money);
 
-		int money = 20000;
-        
-        m_winningsLabel.setText(winnings + "%");
-        m_moneyLabel.setText("$" + money);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 
         m_frame.setVisible(true);
+
 	}
 	
 	private void init() {

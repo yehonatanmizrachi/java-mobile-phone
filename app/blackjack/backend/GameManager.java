@@ -56,7 +56,9 @@ public class GameManager{
 		}
 		else if (command == COMMAND.EXIT)
 			saveGame();
-		
+		else if (command == COMMAND.STATS) {
+			return getStatistics();
+		}
 		if(i == 0) {
 			checkGameStatus(i);
 		}
