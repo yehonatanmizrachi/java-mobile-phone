@@ -52,7 +52,8 @@ public class googleApp implements App {
 				   ToolsFuncs.printError("Illegal search");
 			}
 		}
-	
+		App.phone.returnToPhone();
+
 	}
 	
 	public String getAppContent() {
