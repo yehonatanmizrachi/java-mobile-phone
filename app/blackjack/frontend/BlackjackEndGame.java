@@ -25,19 +25,19 @@ public class BlackjackEndGame extends BlackjackWindow{
 	
 	public void start() throws IOException {
 
-		// save
+		// save game data
 		try {
+
 			JSONObject request = new JSONObject();
 			request.put("command", COMMAND.EXIT);
 			
 			m_app.sendMessageToBackend(request);
-
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		
 
-		// background
+		// background(win/loose/tie)
 		GAME_STATUS status = m_app.getGameStatus();		
 		String IMAGE_PATH;
 
@@ -89,5 +89,5 @@ public class BlackjackEndGame extends BlackjackWindow{
 	       	 }
        }; 
 	}
-	
+
 }

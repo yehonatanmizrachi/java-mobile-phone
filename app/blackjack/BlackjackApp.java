@@ -23,6 +23,7 @@ import src.App;
 
 public class BlackjackApp implements App {
 
+	@Override
 	public void run() throws IOException {
 		startWindow(APP_WINDOWS.MENU);
 	}
@@ -34,6 +35,7 @@ public class BlackjackApp implements App {
 			JSONObject request = new JSONObject();
 			request.put("command", COMMAND.STATS);
 			
+			// get statistics from the backend
 			JSONObject response = sendMessageToBackend(request);
 			int wins, totalGames;
 			double money;
@@ -47,6 +49,7 @@ public class BlackjackApp implements App {
 			content += "BlackJack app is empty\n";
 			e.printStackTrace();
 		}
+	
 		return content;
 	}
 
@@ -60,9 +63,10 @@ public class BlackjackApp implements App {
 
 	public BlackjackApp() {
 		
+		// backend
 		m_backend = new GameManager();
 		
-		// GUI windows
+		// frontend
 		final int MENU = APP_WINDOWS.MENU.ordinal();
 		final int TABLE = APP_WINDOWS.TABLE.ordinal();
 		final int INFO = APP_WINDOWS.INFO.ordinal();
@@ -163,7 +167,6 @@ public class BlackjackApp implements App {
 		            Player playMP3 = new Player(fs);
 		
 	            	playMP3.play();
-
 			    }  
 			    catch(Exception e){
 			        System.out.println(e);
@@ -183,6 +186,7 @@ public class BlackjackApp implements App {
 		}
 
 	}
+
 	// [width, height]
 	private int[][] APPS_SIZES = {
 			{590, 530},
@@ -207,4 +211,5 @@ public class BlackjackApp implements App {
 			"BlackJack - Statistics",
 			"BlackJack - End Game"
 	};
+
 }
