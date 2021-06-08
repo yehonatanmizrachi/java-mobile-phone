@@ -1,4 +1,5 @@
 package src;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -95,6 +96,7 @@ public class MyIphone {
 	        	buttons[index].setOpaque(false);
 	        	buttons[index].setContentAreaFilled(false);
 	        	buttons[index].setBorderPainted(false);
+	        	buttons[index].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
       	        			
         		label.add(buttons[app.ordinal()]);
         	}
@@ -111,6 +113,7 @@ public class MyIphone {
         google_button.setOpaque(false);
         google_button.setContentAreaFilled(false);
         google_button.setBorderPainted(false);
+        google_button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
         label.add(google_button);
         panel.add(label);
