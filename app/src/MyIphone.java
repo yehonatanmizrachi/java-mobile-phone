@@ -84,17 +84,24 @@ public class MyIphone {
 			BUTTONS_LOCATIONS[i][1] = INITIAL_Y + (BUTTON_WIDTH + BUTTON_PADDING)* (i / COLS);
     	}
     	
+    	boolean google = false;
         for (APPS app : APPS.values()) {
         	if(app != APPS.GOOGLE) {
-	        	int index = app.ordinal(); 
+	        	int index = app.ordinal();
+	        	int locationIndex = google ? index - 1 : index;
 	        	buttons[index] = new JButton();
 	        	buttons[index].addActionListener(getAppButtonEventListener(app));
-	        	buttons[index].setBounds(BUTTONS_LOCATIONS[index][0], BUTTONS_LOCATIONS[index][1], BUTTON_WIDTH, BUTTON_HEIGHT);
+	        	buttons[index].setBounds(BUTTONS_LOCATIONS[locationIndex][0], BUTTONS_LOCATIONS[locationIndex][1], BUTTON_WIDTH, BUTTON_HEIGHT);
 	        	buttons[index].setOpaque(false);
 	        	buttons[index].setContentAreaFilled(false);
 	        	buttons[index].setBorderPainted(false);
       	        			
-        		label.add(buttons[app.ordinal()]);}
+        		label.add(buttons[app.ordinal()]);
+        	}
+        	else {
+        		google = true;
+        	}
+        	
         }
         
         //google button
