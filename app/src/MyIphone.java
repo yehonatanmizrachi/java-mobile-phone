@@ -1,4 +1,5 @@
 package src;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -9,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,7 +24,6 @@ import javax.swing.JPanel;
 import Web.googleApp;
 import blackjack.BlackjackApp;
 import diary.DiaryApp;
-import javazoom.jl.player.Player;
 import media.MediaApp;
 import phoneBook.PhoneBookApp;
 import sms.SmsApp;
@@ -104,9 +103,9 @@ public class MyIphone {
 	        	buttons[index] = new JButton();
 	        	buttons[index].addActionListener(getAppButtonEventListener(app));
 	        	buttons[index].setBounds(BUTTONS_LOCATIONS[locationIndex][0], BUTTONS_LOCATIONS[locationIndex][1], BUTTON_WIDTH, BUTTON_HEIGHT);
-//	        	buttons[index].setOpaque(false);
-//	        	buttons[index].setContentAreaFilled(false);
-//	        	buttons[index].setBorderPainted(false);
+	        	buttons[index].setOpaque(false);
+	        	buttons[index].setContentAreaFilled(false);
+	        	buttons[index].setBorderPainted(false);
 	        	buttons[index].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	        	buttons[index].setToolTipText("Enti ten 100");
         		label.add(buttons[app.ordinal()]);
@@ -121,9 +120,9 @@ public class MyIphone {
         JButton google_button = new JButton();
         google_button.addActionListener(getAppButtonEventListener(APPS.GOOGLE));
         google_button.setBounds(27,275,235,25);
-//        google_button.setOpaque(false);
-//        google_button.setContentAreaFilled(false);
-//        google_button.setBorderPainted(false);
+        google_button.setOpaque(false);
+        google_button.setContentAreaFilled(false);
+        google_button.setBorderPainted(false);
         google_button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         google_button.setToolTipText("Click on me!");
         
@@ -132,8 +131,9 @@ public class MyIphone {
 
         //time label
         clock = new JLabel();
+        clock.setForeground(Color.white);
         clock.setBounds(30,237,200,50);
-        clock.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        clock.setFont(new Font(FONT_NAME, Font.ITALIC | Font.BOLD, FONT_SIZE));
         
         
         // clock thread

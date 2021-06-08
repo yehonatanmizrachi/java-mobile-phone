@@ -72,9 +72,9 @@ public abstract class BlackjackWindow {
 		JButton button = new JButton();
 		button.addActionListener(action);
 		button.setBounds(x, y, width, height);
-//		button.setOpaque(false);
-//		button.setContentAreaFilled(false);
-//		button.setBorderPainted(false);
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
 		
 		m_background.add(button);
 
