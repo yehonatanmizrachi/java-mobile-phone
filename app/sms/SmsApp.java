@@ -66,8 +66,9 @@ public class SmsApp extends ContactsApp {
 			catch (Exception e) {
 				ToolsFuncs.printError(e.getMessage());
 			}
-			App.phone.returnToPhone();
 		}
+		App.phone.returnToPhone();
+
 	}
 
 	
