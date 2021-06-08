@@ -59,6 +59,8 @@ public class BlackjackTable extends BlackjackWindow{
     	displayHitAndStandButtons();
     	
         fillTable(response);
+        
+        checkGameStatus();
 	}
 
 
@@ -162,9 +164,7 @@ public class BlackjackTable extends BlackjackWindow{
 	    		m_app.playAudio(APP_SOUNDS.CARD);
 		    	fillTable(response);
 
-		    	if (m_app.getGameStatus() == GAME_STATUS.DEALER_WINS || m_app.getGameStatus() == GAME_STATUS.PLAYER_WINS) {
-		    		endGame();
-		    	}
+		    	checkGameStatus();
 		    }  
 		});
 
@@ -202,10 +202,8 @@ public class BlackjackTable extends BlackjackWindow{
 							m_app.playAudio(APP_SOUNDS.CARD);
 							mouseClicked(e);
 						}
-						else {
-							m_frame.setVisible(false);
-							m_app.startWindow(APP_WINDOWS.END_GAME);
-						}
+						
+						checkGameStatus();
 						
 		    		  }
 		    		}, 2*1000);
@@ -233,7 +231,7 @@ public class BlackjackTable extends BlackjackWindow{
 	private void endGame() {
 		hideHitAndStandButtons();
 
-		int timeout = 2;
+		float timeout = 2.5f;
 		Timer timer = new Timer();
     	timer.schedule(new TimerTask() {
     		  @Override
@@ -241,7 +239,14 @@ public class BlackjackTable extends BlackjackWindow{
     			  m_frame.setVisible(false);
     			  m_app.startWindow(APP_WINDOWS.END_GAME);
     		  }
-		}, timeout*1000);
+		}, (int)timeout*1000);
+	}
+
+	private void checkGameStatus() {
+		GAME_STATUS status = m_app.getGameStatus();
+		if (status == GAME_STATUS.DEALER_WINS || status == GAME_STATUS.PLAYER_WINS) {
+			endGame();
+		}
 	}
 
 	private void hideHitAndStandButtons() {
