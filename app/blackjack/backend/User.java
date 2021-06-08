@@ -20,7 +20,7 @@ public class User extends Player {
 		this.sumOfCards = 0;
 		this.id = id;
 		try {
-		      File myObj = new File("./app/blackjack/players/" + "player" + id + ".txt");
+		      File myObj = new File("./app/blackjack/players/" + ".player" + id);
 		      Scanner myReader = new Scanner(myObj);
 		      int k = 0;
 		      while (myReader.hasNextLine()) {
@@ -40,7 +40,7 @@ public class User extends Player {
 		      }
 		      myReader.close();
 		    } catch (FileNotFoundException e) {
-		    	File yourFile = new File("./app/blackjack/players/" + "player" + id + ".txt");
+		    	File yourFile = new File("./app/blackjack/players/" + ".player" + id);
 		    	try {
 					yourFile.createNewFile();
 				} catch (IOException e1) {
@@ -52,7 +52,7 @@ public class User extends Player {
 		    	this.money = initial_money;
 		    	this.totalGames = 0;
 		    	try {
-				      FileWriter myWriter = new FileWriter("./app/blackjack/players/" + "player" + 1 + ".txt");
+				      FileWriter myWriter = new FileWriter("./app/blackjack/players/" + ".player" + 1);
 				      myWriter.write(this.money + "\n" + this.wins + "\n" + this.totalGames);
 				      myWriter.close();
 		    	} catch (IOException e1) {

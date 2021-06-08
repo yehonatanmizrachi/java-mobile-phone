@@ -152,7 +152,7 @@ public class GameManager{
 	{
 		User u = new User(1);
 		try {
-		      FileWriter myWriter = new FileWriter("./app/blackjack/players/" + "player" + 1 + ".txt");
+		      FileWriter myWriter = new FileWriter("./app/blackjack/players/" + ".player" + 1);
 		      myWriter.write(((User)players[1]).getMoney() + "\n" + ((User)players[1]).getWins() + "\n" + ((User)players[1]).getTotalGames());
 		      myWriter.close();
 		    } catch (IOException e) {
