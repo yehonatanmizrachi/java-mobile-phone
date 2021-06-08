@@ -7,7 +7,7 @@ public enum GAME_STATUS {
 	DEALER_WINS,
 	PLAYER_WINS,
 	TIE_GAME,
-	STOP,
+	STATS,
 	STAND,
 	END_GAME;
 }

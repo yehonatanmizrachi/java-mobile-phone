@@ -158,6 +158,7 @@ public class GameManager{
 		obj.put("money", u.getMoney());
 		obj.put("wins", u.getWins());
 		obj.put("totalGames", u.getTotalGames());
+		obj.put("status", GAME_STATUS.STATS);
 		return obj;
 	}
 }
