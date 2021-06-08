@@ -57,15 +57,13 @@ public abstract class Player{
 			
 			for(i = 0; i < numOfAS ;i++) {
 														
-				if(sum + 11 <= 21) {
-					
-					sum = sum + 11;
-					
-				}
-				else {
-					sum = sum + 1;
-				}
-				
+				if (numOfAS - i != 1)
+					sum += 1;
+				else if (sum + 11 <= 21)
+					sum += 11;
+				else
+					sum += 1;
+
 			}
 		}		
 		this.sumOfCards = sum;

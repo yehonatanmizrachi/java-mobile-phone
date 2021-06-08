@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import blackjack.api.CARD_SHAPE;
 import blackjack.api.COMMAND;
 import blackjack.api.GAME_STATUS;
 
@@ -96,8 +97,10 @@ public class GameManager{
 		for (int i = 0; i < numOfPlayers; i++)
 		{
 			if(i == 0) {
-				players[i].addCard(cards_deck.getBOC());
-				players[i].makeMove(cards_deck, 0);
+				// players[i].addCard(cards_deck.getBOC());
+				players[i].addCard(new Card(1,3, "./pics/cards/AH.png"));
+				players[i].addCard(new Card(1,3, "./pics/cards/AH.png"));
+				// players[i].makeMove(cards_deck, 0);
 			}
 			else {
 				players[i].makeMove(cards_deck, 0);
