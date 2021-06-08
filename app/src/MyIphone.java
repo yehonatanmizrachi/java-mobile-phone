@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -137,7 +138,7 @@ public class MyIphone {
         time_label.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
         time_label.setText(time);
         time_label.setForeground(Color.WHITE);
-
+        time_label.doLayout();
         
         label.add(google_button);
         panel.add(label);
