@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Web.googleApp;
 import blackjack.BlackjackApp;
 import diary.DiaryApp;
 import media.MediaApp;
@@ -44,6 +45,7 @@ public class MyIphone {
 		applications[APPS.DIARY.ordinal()] = diaryApp;		
 		applications[APPS.MEDIA.ordinal()] = new MediaApp();
 		applications[APPS.BLACKJACK.ordinal()] = new BlackjackApp();
+		applications[APPS.GOOGLE.ordinal()] = new googleApp();
 		
 		// run the screen GUI
 		startPhoneMainScreen();
@@ -83,17 +85,27 @@ public class MyIphone {
     	}
     	
         for (APPS app : APPS.values()) {
-        	int index = app.ordinal(); 
-        	buttons[index] = new JButton();
-        	buttons[index].addActionListener(getAppButtonEventListener(app));
-        	buttons[index].setBounds(BUTTONS_LOCATIONS[index][0], BUTTONS_LOCATIONS[index][1], BUTTON_WIDTH, BUTTON_HEIGHT);
-        	buttons[index].setOpaque(false);
-        	buttons[index].setContentAreaFilled(false);
-        	buttons[index].setBorderPainted(false);
-        		        			
-        	label.add(buttons[app.ordinal()]);
+        	if(app != APPS.GOOGLE) {
+	        	int index = app.ordinal(); 
+	        	buttons[index] = new JButton();
+	        	buttons[index].addActionListener(getAppButtonEventListener(app));
+	        	buttons[index].setBounds(BUTTONS_LOCATIONS[index][0], BUTTONS_LOCATIONS[index][1], BUTTON_WIDTH, BUTTON_HEIGHT);
+	        	buttons[index].setOpaque(false);
+	        	buttons[index].setContentAreaFilled(false);
+	        	buttons[index].setBorderPainted(false);
+      	        			
+        		label.add(buttons[app.ordinal()]);}
         }
         
+        //google button
+        JButton google_button = new JButton();
+        google_button.addActionListener(getAppButtonEventListener(APPS.GOOGLE));
+        google_button.setBounds(0,322,340,30);
+        google_button.setOpaque(false);
+        google_button.setContentAreaFilled(false);
+        google_button.setBorderPainted(false);
+        
+        label.add(google_button);
         panel.add(label);
 
         frame.add(panel); 
@@ -132,6 +144,7 @@ public class MyIphone {
 		MEDIA,
 		BLACKJACK,
 		DIARY,
+		GOOGLE,
 		GET_CONTENT
 	}
 }
