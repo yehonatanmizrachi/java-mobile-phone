@@ -178,7 +178,7 @@ public class BlackjackTable extends BlackjackWindow{
 		    public void mouseClicked(MouseEvent e)  
 		    {  
 		    	
-		    	cleanTable();
+		    	
 		    	hideHitAndStandButtons();
 
 		    	JSONObject request = new JSONObject();
@@ -195,6 +195,7 @@ public class BlackjackTable extends BlackjackWindow{
 		    	timer.schedule(new TimerTask() {
 		    		  @Override
 		    		  public void run() {
+		    			cleanTable();
 		    			fillTable(response);
 
 						if (m_app.getGameStatus() == GAME_STATUS.DEALER_TURN) {
