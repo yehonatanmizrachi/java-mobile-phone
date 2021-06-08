@@ -39,9 +39,8 @@ public class BlackjackStatistics extends BlackjackWindow{
 			wins = (int)response.get("wins");
 			totalGames = (int)response.get("totalGames");
 			money = (double)response.get("money");
-			float winnings = wins / (float)totalGames * 100;
 			
-			m_winningsLabel.setText(winnings + "%");
+			m_winningsLabel.setText(wins + "/" + totalGames);
 	        m_moneyLabel.setText("$" + money);
 
 		} catch (JSONException e) {
