@@ -4,22 +4,31 @@ import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics2D;
+<<<<<<< HEAD
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.font.TextLayout;
+=======
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+>>>>>>> 88b5647ccf22a122537bfecc9f20eee0425eb105
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.w3c.dom.Text;
 
 import Web.googleApp;
 import blackjack.BlackjackApp;
@@ -133,6 +142,26 @@ public class MyIphone {
         
         int FONT_SIZE = 30;
         String FONT_NAME = "Sans Serif";
+        String time = java.time.LocalTime.now().toString();
+        time = time.substring(0, time.length() - 13);
+        //time label
+        JLabel time_label = new JLabel();
+        JLabel time_label1 = new JLabel();
+        time_label1.setBounds(25, 94, 100, 50);
+        time_label1.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE-30));
+        time_label1.setText(time);
+        time_label1.setForeground(Color.WHITE);
+        time_label.setBounds(30,280,200,50);
+        time_label.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        time_label.setText(time);
+        time_label.setForeground(Color.WHITE);
+        time_label.doLayout();
+        
+        label.add(google_button);
+        panel.add(label);
+        
+        frame.add(time_label);
+        frame.add(time_label1);
 
         //time label
         clock = new JLabel();
@@ -198,7 +227,6 @@ public class MyIphone {
         frame.add(clock4);
         frame.add(clock5);
         frame.add(panel); 
-        
         frame.setSize(WIDTH, HEIGHT);  
         frame.setLocationRelativeTo(null);  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  

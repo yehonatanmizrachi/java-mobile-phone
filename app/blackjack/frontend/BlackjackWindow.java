@@ -76,8 +76,7 @@ public abstract class BlackjackWindow {
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
+		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		m_background.add(button);
 
