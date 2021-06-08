@@ -1,5 +1,7 @@
 package src;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -64,7 +66,7 @@ public class MyIphone {
 	private void startPhoneMainScreen() throws IOException {
 
 		// frame
-		String IMAGE_PATH = "pics/IPHONE.png";
+		String IMAGE_PATH = "pics/IPHONE2.png";
 		int WIDTH = 340, HEIGHT = 740;  
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
@@ -95,7 +97,8 @@ public class MyIphone {
 	        	buttons[index].setOpaque(false);
 	        	buttons[index].setContentAreaFilled(false);
 	        	buttons[index].setBorderPainted(false);
-      	        			
+	        	buttons[index].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	        	buttons[index].setToolTipText("Enti ten 100");
         		label.add(buttons[app.ordinal()]);
         	}
         	else {
@@ -111,11 +114,25 @@ public class MyIphone {
         google_button.setOpaque(false);
         google_button.setContentAreaFilled(false);
         google_button.setBorderPainted(false);
+        google_button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        google_button.setToolTipText("Click on me!");
         
+        int FONT_SIZE = 45;
+        String FONT_NAME = "Sans Serif";
+        //time label
+        JLabel time_label = new JLabel();
+        time_label.setBounds(30,280,200,50);
+        time_label.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        String time = java.time.LocalTime.now().toString();
+        time = time.substring(0, time.length() - 13);
+        time_label.setText(time);
+
         label.add(google_button);
         panel.add(label);
+        frame.add(time_label);
 
         frame.add(panel); 
+        
         frame.setSize(WIDTH, HEIGHT);  
         frame.setLocationRelativeTo(null);  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
