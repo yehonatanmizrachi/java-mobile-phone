@@ -200,7 +200,7 @@ public class BlackjackTable extends BlackjackWindow{
 
 		    			GAME_STATUS status = m_app.getGameStatus();
 
-		    			if (status == GAME_STATUS.DEALER_WINS || status == GAME_STATUS.PLAYER_WINS) {
+		    			if (status == GAME_STATUS.DEALER_WINS || status == GAME_STATUS.PLAYER_WINS || status == GAME_STATUS.TIE_GAME) {
 		    				endGame();
 		    			}
 
@@ -248,7 +248,7 @@ public class BlackjackTable extends BlackjackWindow{
 
 	private void checkGameStatus() {
 		GAME_STATUS status = m_app.getGameStatus();
-		if (status == GAME_STATUS.DEALER_WINS || status == GAME_STATUS.PLAYER_WINS) {
+		if (status == GAME_STATUS.DEALER_WINS || status == GAME_STATUS.PLAYER_WINS || status == GAME_STATUS.TIE_GAME) {
 			endGame();
 		}
 	}
@@ -277,7 +277,7 @@ public class BlackjackTable extends BlackjackWindow{
 	       			m_app.startWindow(APP_WINDOWS.INFO);
 	       		 }
 	       	 }
-       }; 
+       };
 	}
 
 }

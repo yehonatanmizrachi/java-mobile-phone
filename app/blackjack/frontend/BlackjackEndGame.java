@@ -9,8 +9,12 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import blackjack.BlackjackApp;
 import blackjack.BlackjackApp.APP_WINDOWS;
+import blackjack.api.COMMAND;
 import blackjack.api.GAME_STATUS;
 
 public class BlackjackEndGame extends BlackjackWindow{
@@ -21,7 +25,19 @@ public class BlackjackEndGame extends BlackjackWindow{
 	
 	public void start() throws IOException {
 
-		// background
+		// save game data
+		try {
+
+			JSONObject request = new JSONObject();
+			request.put("command", COMMAND.EXIT);
+			
+			m_app.sendMessageToBackend(request);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+
+		// background(win/loose/tie)
 		GAME_STATUS status = m_app.getGameStatus();		
 		String IMAGE_PATH;
 
@@ -42,7 +58,7 @@ public class BlackjackEndGame extends BlackjackWindow{
 		m_background = new JLabel(new ImageIcon(ImageIO.read(new File(IMAGE_PATH))));
 		m_background.setBounds(0, 0, m_width, m_height);
 		m_frame.add(m_background);
-
+		
 		// buttons
 		int BUTTON_WIDTH = 100, BUTTON_HEIGHT = 100, BUTTON_X = 130, BUTTON_Y = 110, PADD = 127;
 
@@ -73,5 +89,5 @@ public class BlackjackEndGame extends BlackjackWindow{
 	       	 }
        }; 
 	}
-	
+
 }

@@ -213,7 +213,7 @@ public class PhoneBookApp extends ContactsApp {
 		
 		while (input != 10)
 		{
-			ImageIcon contactsPic = ToolsFuncs.getMainPicture("Pic/CONTACTS.png",80,80);
+			ImageIcon contactsPic = ToolsFuncs.getMainPicture("pics/CONTACTS.png",80,80);
 			String questions = "Contacts\nPress:\n1- Add contact\n"
 					+ "2- Delete contact\n3- Print phone book\n"
 					+ "4- Search contact\n5- Sort by name\n6- Sort by phone number\n7- Reverse phonebook\n"
