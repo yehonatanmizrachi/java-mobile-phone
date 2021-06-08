@@ -21,7 +21,7 @@ public class DeckOfCards {
 	
 	public Card getBOC() {
 		String pic = "./pics/cards/BOC.png";
-		Card c = new Card(-1,0,pic);
+		Card c = new Card(0,0,pic);
 		return c;
 	}
 	
