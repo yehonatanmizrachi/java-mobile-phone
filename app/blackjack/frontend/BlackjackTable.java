@@ -49,6 +49,8 @@ public class BlackjackTable extends BlackjackWindow{
 			e.printStackTrace();
 		}
 
+		cleanTable();
+
     	m_frame.setVisible(true);
 
 		// play shuffling sound 🎧
@@ -157,11 +159,12 @@ public class BlackjackTable extends BlackjackWindow{
 
 		    	JSONObject response = m_app.sendMessageToBackend(request);
 		    	
-		    	// TODO
 	    		m_app.playAudio(APP_SOUNDS.CARD);
-		    	
-
 		    	fillTable(response);
+
+		    	if (m_app.getGameStatus() == GAME_STATUS.DEALER_WINS || m_app.getGameStatus() == GAME_STATUS.PLAYER_WINS) {
+		    		endGame();
+		    	}
 		    }  
 		});
 
@@ -187,13 +190,13 @@ public class BlackjackTable extends BlackjackWindow{
 
 		    	JSONObject response = m_app.sendMessageToBackend(request);
 		    	
-		    	fillTable(response);
 
 		    	Timer timer = new Timer();
 		    	timer.schedule(new TimerTask() {
 		    		  @Override
 		    		  public void run() {
-		    			  
+		    			fillTable(response);
+
 						if (m_app.getGameStatus() == GAME_STATUS.DEALER_TURN) {
 							m_app.playAudio(APP_SOUNDS.CARD);
 							mouseClicked(e);
@@ -224,6 +227,20 @@ public class BlackjackTable extends BlackjackWindow{
 		m_frame.add(m_hitLabel);
 		m_frame.add(m_standLabel);
 		refreshFrame();
+	}
+
+	private void endGame() {
+		hideHitAndStandButtons();
+
+		int timeout = 2;
+		Timer timer = new Timer();
+    	timer.schedule(new TimerTask() {
+    		  @Override
+    		  public void run() {
+    			  m_frame.setVisible(false);
+    			  m_app.startWindow(APP_WINDOWS.END_GAME);
+    		  }
+		}, timeout*1000);
 	}
 
 	private void hideHitAndStandButtons() {

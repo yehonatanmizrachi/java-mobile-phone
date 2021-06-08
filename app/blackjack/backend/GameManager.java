@@ -88,8 +88,7 @@ public class GameManager{
 		
 		if (((User)players[1]).getMoney() - betVal < 0)
 		{
-			this.status = GAME_STATUS.END_GAME;
-			return;
+			((User)players[1]).setMoney(((User)players[1]).getMoney() + betVal);
 		}
 		
 		((User)players[1]).setMoney(((User)players[1]).getMoney() - betVal);
