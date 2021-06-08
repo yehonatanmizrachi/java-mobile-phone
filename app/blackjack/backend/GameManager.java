@@ -114,7 +114,7 @@ public class GameManager{
 	private void checkGameStatus(int i){
 		
 		if(i == 0){ // during game
-			if(players[1].sumOfCards == 21){
+			if(players[1].sumOfCards == 21 || players[0].sumOfCards > 21){
 				this.status = GAME_STATUS.PLAYER_WINS;
 			}
 			else{
