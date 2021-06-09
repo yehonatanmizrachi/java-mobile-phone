@@ -141,7 +141,10 @@ public class BlackjackApp implements App {
 	public enum APP_SOUNDS {
 		MENU("sounds/menu.mp3"),
 		SHUFFLE("sounds/shuffling.mp3"),
-		CARD("sounds/card.mp3");
+		CARD("sounds/card.mp3"),
+		WIN("sounds/win.mp3"),
+		LOSE("sounds/lose.mp3"),
+		TIE("sounds/tie.mp3");
 
 		private String path;
 

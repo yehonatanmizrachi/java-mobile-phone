@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import blackjack.BlackjackApp;
+import blackjack.BlackjackApp.APP_SOUNDS;
 import blackjack.BlackjackApp.APP_WINDOWS;
 import blackjack.api.COMMAND;
 import blackjack.api.GAME_STATUS;
@@ -39,16 +40,20 @@ public class BlackjackEndGame extends BlackjackWindow{
 
 		// background(win/loose/tie)
 		GAME_STATUS status = m_app.getGameStatus();		
-		String IMAGE_PATH;
+		String IMAGE_PATH = "pics/";
+		APP_SOUNDS sound;
 
 		if (status == GAME_STATUS.PLAYER_WINS) {
-			IMAGE_PATH = "pics/YOUWON.png";
+			IMAGE_PATH += "YOUWON.png";
+			sound = APP_SOUNDS.WIN;
 		} 
 		else if  (status == GAME_STATUS.DEALER_WINS) {
-			IMAGE_PATH = "pics/GAMEOVER.png";
+			IMAGE_PATH += "GAMEOVER.png";
+			sound = APP_SOUNDS.LOSE;
 		}
 		else {
-			IMAGE_PATH = "pics/TIE.png";
+			IMAGE_PATH += "TIE.png";
+			sound = APP_SOUNDS.TIE;
 		}
 
 		if (m_background != null) {
@@ -67,6 +72,7 @@ public class BlackjackEndGame extends BlackjackWindow{
 
         m_frame.setVisible(true);
 
+        m_app.playAudio(sound);
 	}
 
 	private enum BUTTONS {
