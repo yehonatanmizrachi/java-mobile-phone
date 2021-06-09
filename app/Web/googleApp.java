@@ -38,8 +38,7 @@ public class googleApp implements App {
 					   this.num_search++;
 				   }
 				   else {
-					   ArrayList<String> tempArr =  this.last_search;
-					   this.last_search = new ArrayList<String>();
+					   ArrayList<String> tempArr =  new ArrayList<String>();
 					   for(int i = 1; i<this.num_search; i++) {
 						   tempArr.add(this.last_search.get(i));
 					   }
