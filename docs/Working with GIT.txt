@@ -1,0 +1,30 @@
+-----On the first time:-----
+git clone -URL_OF_PROJECT-
+cd NAME_OF_PROJECT
+
+----Creating a new feature branch:----
+git checkout develop
+git branch feature/XX
+
+----Developing a feature:----
+git checkout feature/XX
+Ctrl + S
+git status (red)
+git add .
+git status (green)
+git commit -m "commit message"
+At the end of the day: git push OR git push origin feature/XX
+
+----When the feature is completed:----
+git push OR git push origin feature/XX
+Create PR on github
+Confirm PR
+
+----Pull develop updates to your current branch:-----
+git checkout feature/XX
+git pull origin develop
+In case there is conflicts - solve them in VS code (or on github web)
+
+----Extra:-----
+git pull - from github to the local repo
+git log - view all the previous commits of the current branch.
