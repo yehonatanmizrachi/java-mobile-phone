@@ -9,7 +9,9 @@ This program implements mobile phone with several applications:
 ● Diary - Appointment management application.
 
 ● Media - An app that simulates playing songs or videos.
+
 ● Google Search - Google search application: Receives a search request and opens a suitable Google page.
+
 ● BlackJack Game - An app that implements a BlackJack game: User VS Dealer.
 
 We implemented our system according to OOP principles, and divides it to Backend - Fronted using JSON to communication.
