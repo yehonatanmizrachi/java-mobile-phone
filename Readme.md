@@ -1,5 +1,7 @@
 # Mobile phone realization with apps
+
 This program implements mobile phone with several applications:
+
 ● Contacts - Phonebook management app with several methods.
 ● SMS - An app for sending messages to various contacts.
 ● Diary - Appointment management application.
