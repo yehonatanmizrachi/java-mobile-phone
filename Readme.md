@@ -8,13 +8,13 @@
 
 ● Diary - Appointment management application.
 
-● Media - An app that simulates playing songs or videos.
+● Media - An app that simulates playing songs and videos.
 
 ● Google Search - Google search application: Receives a search request and opens a suitable Google page.
 
 ● BlackJack Game - An app that implements a BlackJack game: User VS Dealer.
 
-We implemented our system according to OOP principles, and divides it to Backend - Fronted using JSON to communication.
+We implemented our system according to OOP principles, and divides it to Backend - Fronted using JSON for communication.
 Also, for our GUI we have used: JOptionPane, JFrame ,JLabels, Music and Pics.  
 
 # UML link - draw.io
