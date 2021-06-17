@@ -14,7 +14,7 @@
 
 ● BlackJack Game - An app that implements a BlackJack game: User VS Dealer.
 
-We implemented our system according to OOP principles, and divides it to Backend - Fronted using JSON for communication.
+We implemented our system according to OOP principles, and divided it to Backend - Fronted using JSON for communication.
 Also, for our GUI we have used: JOptionPane, JFrame ,JLabels, Music and Pics.  
 
 # UML link - draw.io
