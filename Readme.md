@@ -1,6 +1,6 @@
 # Mobile phone realization with apps
 
-### This program implements mobile phone with several applications:
+### This program implements a mobile phone with several applications:
 
 ● Contacts - Phonebook management app with several methods.
 
@@ -15,6 +15,7 @@
 ● BlackJack Game - An app that implements a BlackJack game: User VS Dealer.
 
 We implemented our system according to OOP principles, and divides it to Backend - Fronted using JSON to communication.
+Also, for our GUI we have used: JOptionPane, JFrame ,JLabels, Music and Pics.  
 
 # UML link - draw.io
 
