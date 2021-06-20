@@ -124,11 +124,11 @@ public class MediaApp implements App{
 
 	private void addMedia(String name, float length, int type) {
 		if (type == MEDIA_TYPE.VIDEO.ordinal()) {
-			Media temp = new MusicMedia(name, length);
+			Media temp = new VideoMedia(name, length);
 			mediaList.add(temp);
 		}
 		else {
-			Media temp = new VideoMedia(name, length);
+			Media temp = new MusicMedia(name, length);
 			mediaList.add(temp);
 		}
 	}
