@@ -17,6 +17,8 @@
 We implemented our system according to OOP principles, and divided it to Backend - Fronted using JSON for communication.
 Also, for our GUI we have used: JOptionPane, JFrame ,JLabels, Music and Pics.  
 
+To run the program open: app -> src -> MyIphone.java and run it.
+
 # UML link - draw.io
 
 https://drive.google.com/file/d/1BhWTOfFhSiSLO6ZeSvqNYclcsLmOue4q/view?usp=sharing
